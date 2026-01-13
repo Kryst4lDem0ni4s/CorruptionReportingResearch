@@ -435,3 +435,48 @@ class Layer5CounterEvidence:
             "evidence_strength": evidence_strength,
             "false_positive_reduction": max(0, original_score - posterior_score) > 0.2
         }
+
+"""from backend.utils.math_utils import MathUtils, bayesian_aggregate
+from backend.utils.time_utils import TimeUtils, now
+
+class CounterEvidenceLayer:
+    PRESUMPTION_OF_INNOCENCE = 1.3
+    IDENTITY_VERIFICATION_BONUS = 1.2
+    
+    def process_counter_evidence(self, submission_id: str, counter_evidence: dict):
+        
+        # Get original submission
+        original = self.storage.get_submission(submission_id)
+        original_score = original.get('credibility_score', 0.5)
+        
+        # Process counter-evidence
+        counter_score = counter_evidence.get('credibility_score', 0.5)
+        is_verified = counter_evidence.get('identity_verified', False)
+        
+        # Apply weights
+        counter_weight = self.PRESUMPTION_OF_INNOCENCE
+        if is_verified:
+            counter_weight *= self.IDENTITY_VERIFICATION_BONUS
+        
+        # Bayesian update
+        prior = original_score
+        likelihood = 1 - counter_score  # Inverse for counter-evidence
+        
+        new_score = MathUtils.bayesian_update(prior, likelihood, counter_weight)
+        
+        # Calculate confidence
+        confidence = MathUtils.calculate_confidence_score(
+            new_score,
+            num_samples=2,  # Original + counter
+            min_samples=3
+        )
+        
+        return {
+            'submission_id': submission_id,
+            'original_score': original_score,
+            'counter_score': counter_score,
+            'updated_score': new_score,
+            'confidence': confidence,
+            'timestamp': now()
+        }
+"""
