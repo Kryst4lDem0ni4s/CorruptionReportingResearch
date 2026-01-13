@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Submit Counter-Evidence - Corruption Reporting System">
+    <meta name="robots" content="noindex, nofollow">
+    <title>Counter-Evidence Submission - Corruption Reporting System</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="/css/submission.css">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="/assets/favicon.ico">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container">
+            <a class="navbar-brand" href="/">
+                <i class="bi bi-shield-check"></i>
+                Corruption Reporting System
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/">
+                            <i class="bi bi-upload"></i> Submit Evidence
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/review.html">
+                            <i class="bi bi-list-check"></i> Review Submissions
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/counter.html">
+                            <i class="bi bi-shield-exclamation"></i> Counter Evidence
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/help.html">
+                            <i class="bi bi-question-circle"></i> Help
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container my-5">
+        <!-- Hero Section -->
+        <div class="row mb-4">
+            <div class="col-lg-8 mx-auto text-center">
+                <h1 class="display-4 mb-3">
+                    <i class="bi bi-shield-exclamation text-warning"></i>
+                    Submit Counter-Evidence
+                </h1>
+                <p class="lead text-muted">
+                    If you have been falsely accused, submit counter-evidence to defend yourself.
+                    Your submission will be reviewed using Bayesian aggregation with presumption of innocence.
+                </p>
+                <div class="alert alert-warning" role="alert">
+                    <i class="bi bi-info-circle"></i>
+                    <strong>Fair Process:</strong> Counter-evidence is weighted with a 1.3× presumption-of-innocence bonus.
+                    Identity-verified submissions receive additional 1.2× credibility boost.
+                </div>
+            </div>
+        </div>
+
+        <!-- Counter-Evidence Form -->
+        <div class="row">
+            <div class="col-lg-8 mx-auto">
+                <div class="card shadow-sm">
+                    <div class="card-header bg-warning">
+                        <h5 class="mb-0">
+                            <i class="bi bi-shield-exclamation"></i>
+                            Counter-Evidence Submission Form
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                        <form id="counter-evidence-form" novalidate>
+                            <!-- Original Submission ID -->
+                            <div class="mb-4">
+                                <label for="original-submission-id" class="form-label">
+                                    <strong>Original Submission ID</strong>
+                                    <span class="text-danger">*</span>
+                                </label>
+                                <input 
+                                    type="text" 
+                                    class="form-control" 
+                                    id="original-submission-id" 
+                                    name="original_submission_id"
+                                    required
+                                    placeholder="Enter the ID of the submission you're responding to">
+                                <div class="form-text">
+                                    <i class="bi bi-link-45deg"></i>
+                                    The submission ID you received or found in the review page
+                                </div>
+                                <div class="invalid-feedback">
+                                    Please provide the original submission ID.
+                                </div>
+                            </div>
+
+                            <!-- Counter-Narrative -->
+                            <div class="mb-4">
+                                <label for="counter-narrative" class="form-label">
+                                    <strong>Your Defense Statement</strong>
+                                    <span class="text-danger">*</span>
+                                </label>
+                                <textarea 
+                                    class="form-control" 
+                                    id="counter-narrative" 
+                                    name="counter_narrative"
+                                    rows="8" 
+                                    required
+                                    minlength="50"
+                                    maxlength="5000"
+                                    placeholder="Provide detailed counter-evidence and explanation. Minimum 50 characters required."></textarea>
+                                <div class="form-text">
+                                    <span id="counter-char-count">0</span> / 5000 characters 
+                                    (minimum 50 required)
+                                </div>
+                                <div class="invalid-feedback">
+                                    Please provide a detailed defense statement (at least 50 characters).
+                                </div>
+                            </div>
+
+                            <!-- Counter-Evidence Files -->
+                            <div class="mb-4">
+                                <label for="counter-evidence-files" class="form-label">
+                                    <strong>Supporting Evidence Files</strong>
+                                    <span class="text-danger">*</span>
+                                </label>
+                                <input 
+                                    class="form-control" 
+                                    type="file" 
+                                    id="counter-evidence-files" 
+                                    name="counter_evidence_files"
+                                    accept="image/*,audio/*,video/*,.pdf,.doc,.docx"
+                                    multiple
+                                    required>
+                                <div class="form-text">
+                                    <i class="bi bi-paperclip"></i>
+                                    Upload documents, images, or recordings that support your defense
+                                    <br>
+                                    Max size: 10MB per image, 20MB per audio, 50MB per video, 5MB per document
+                                </div>
+                                <div class="invalid-feedback">
+                                    Please upload at least one supporting evidence file.
+                                </div>
+                                
+                                <!-- File Preview -->
+                                <div id="counter-file-preview" class="mt-3"></div>
+                            </div>
+
+                            <!-- Identity Verification (Optional) -->
+                            <div class="mb-4">
+                                <div class="card bg-light">
+                                    <div class="card-body">
+                                        <h6 class="card-title">
+                                            <i class="bi bi-person-check"></i>
+                                            Identity Verification (Optional but Recommended)
+                                        </h6>
+                                        <p class="card-text small">
+                                            Verifying your identity increases your credibility score by 1.2×. 
+                                            Your identity remains confidential and is only used for verification.
+                                        </p>
+                                        
+                                        <div class="form-check mb-2">
+                                            <input 
+                                                class="form-check-input" 
+                                                type="checkbox" 
+                                                id="verify-identity-check">
+                                            <label class="form-check-label" for="verify-identity-check">
+                                                I want to verify my identity for increased credibility
+                                            </label>
+                                        </div>
+
+                                        <div id="identity-verification-fields" style="display: none;">
+                                            <div class="row">
+                                                <div class="col-md-6 mb-2">
+                                                    <label for="full-name" class="form-label small">Full Name</label>
+                                                    <input 
+                                                        type="text" 
+                                                        class="form-control form-control-sm" 
+                                                        id="full-name" 
+                                                        name="full_name">
+                                                </div>
+                                                <div class="col-md-6 mb-2">
+                                                    <label for="id-number" class="form-label small">ID Number (Last 4 digits)</label>
+                                                    <input 
+                                                        type="text" 
+                                                        class="form-control form-control-sm" 
+                                                        id="id-number" 
+                                                        name="id_number"
+                                                        maxlength="4"
+                                                        pattern="[0-9]{4}">
+                                                </div>
+                                                <div class="col-12 mb-2">
+                                                    <label for="verification-doc" class="form-label small">
+                                                        Verification Document (ID, Passport, etc.)
+                                                    </label>
+                                                    <input 
+                                                        type="file" 
+                                                        class="form-control form-control-sm" 
+                                                        id="verification-doc" 
+                                                        name="verification_document"
+                                                        accept="image/*,.pdf">
+                                                </div>
+                                            </div>
+                                            <small class="text-muted">
+                                                <i class="bi bi-lock"></i>
+                                                Your identity information is encrypted and never shared publicly
+                                            </small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Contact Information (Optional) -->
+                            <div class="mb-4">
+                                <label for="counter-contact" class="form-label">
+                                    <strong>Secure Contact Method (Optional)</strong>
+                                </label>
+                                <input 
+                                    type="text" 
+                                    class="form-control" 
+                                    id="counter-contact" 
+                                    name="counter_contact"
+                                    placeholder="Encrypted email, secure messaging ID, etc. (optional)"
+                                    maxlength="200">
+                                <div class="form-text">
+                                    <i class="bi bi-envelope-lock"></i>
+                                    Use encrypted channels only (e.g., ProtonMail, Signal)
+                                </div>
+                            </div>
+
+                            <!-- Declaration -->
+                            <div class="mb-4">
+                                <div class="form-check">
+                                    <input 
+                                        class="form-check-input" 
+                                        type="checkbox" 
+                                        id="counter-declaration" 
+                                        required>
+                                    <label class="form-check-label" for="counter-declaration">
+                                        I declare that the counter-evidence provided is truthful and accurate
+                                        <span class="text-danger">*</span>
+                                    </label>
+                                    <div class="invalid-feedback">
+                                        You must confirm this declaration.
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Submit Button -->
+                            <div class="d-grid gap-2">
+                                <button type="submit" class="btn btn-warning btn-lg" id="counter-submit-b
