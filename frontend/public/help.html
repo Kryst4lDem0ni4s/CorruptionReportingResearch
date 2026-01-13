@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Help & Documentation - Corruption Reporting System">
+    <meta name="robots" content="noindex, nofollow">
+    <title>Help & Documentation - Corruption Reporting System</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/main.css">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="/assets/favicon.ico">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container">
+            <a class="navbar-brand" href="/">
+                <i class="bi bi-shield-check"></i>
+                Corruption Reporting System
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/">
+                            <i class="bi bi-upload"></i> Submit Evidence
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/review.html">
+                            <i class="bi bi-list-check"></i> Review Submissions
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/counter.html">
+                            <i class="bi bi-shield-exclamation"></i> Counter Evidence
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/help.html">
+                            <i class="bi bi-question-circle"></i> Help
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container my-5">
+        <!-- Header -->
+        <div class="row mb-4">
+            <div class="col-lg-10 mx-auto text-center">
+                <h1 class="display-4 mb-3">
+                    <i class="bi bi-book text-primary"></i>
+                    Help & Documentation
+                </h1>
+                <p class="lead text-muted">
+                    Comprehensive guide to using the Corruption Reporting System
+                </p>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-10 mx-auto">
+                <!-- Quick Start -->
+                <div class="card shadow-sm mb-4">
+                    <div class="card-header bg-primary text-white">
+                        <h4 class="mb-0">
+                            <i class="bi bi-lightning-charge"></i>
+                            Quick Start Guide
+                        </h4>
+                    </div>
+                    <div class="card-body">
+                        <ol class="lead">
+                            <li class="mb-2">Go to the <a href="/">submission page</a></li>
+                            <li class="mb-2">Write a detailed narrative (minimum 50 characters)</li>
+                            <li class="mb-2">Upload supporting evidence files</li>
+                            <li class="mb-2">Submit anonymously and save your submission ID</li>
+                            <li class="mb-2">Check <a href="/review.html">submission status</a> using your ID</li>
+                        </ol>
+                    </div>
+                </div>
+
+                <!-- FAQ -->
+                <div class="card shadow-sm mb-4">
+                    <div class="card-header bg-success text-white">
+                        <h4 class="mb-0">
+                            <i class="bi bi-question-circle"></i>
+                            Frequently Asked Questions
+                        </h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="accordion" id="faqAccordion">
+                            <!-- How does anonymity work? -->
+                            <div class="accordion-item">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#faq1">
+                                        <i class="bi bi-shield-lock me-2"></i> How does anonymity work?
+                                    </button>
+                                </h2>
+                                <div id="faq1" class="accordion-collapse collapse show" data-bs-parent="#faqAccordion">
+                                    <div class="accordion-body">
+                                        <p>Your identity is protected through multiple layers:</p>
+                                        <ul>
+                                            <li><strong>SHA-256 Pseudonyms:</strong> Your identity is replaced with a cryptographic hash</li>
+                                            <li><strong>AES-256 Encryption:</strong> All data is encrypted at rest</li>
+                                            <li><strong>EXIF Stripping:</strong> Metadata is removed from images</li>
+                                            <li><strong>No Personal Data:</strong> We never ask for or store personal information</li>
+                                        </ul>
+                                        <p class="mb-0">Your submission is linked only to a pseudonym that cannot be traced back to you.</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- What evidence should I submit? -->
+                            <div class="accordion-item">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq2">
+                                        <i class="bi bi-file-earmark-text me-2"></i> What evidence should I submit?
+                                    </button>
+                                </h2>
+                                <div id="faq2" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                                    <div class="accordion-body">
+                                        <p><strong>Acceptable Evidence Types:</strong></p>
+                                        <ul>
+                                            <li><strong>Images:</strong> Photos of documents, locations, or incidents (JPG, PNG - max 10MB)</li>
+                                            <li><strong>Audio:</strong> Recorded conversations or statements (MP3, WAV - max 20MB)</li>
+                                            <li><strong>Video:</strong> Video recordings of incidents (MP4, AVI - max 50MB)</li>
+                                            <li><strong>Documents:</strong> PDFs, Word documents (max 5MB)</li>
+                                        </ul>
+                                        <p><strong>Tips for Strong Evidence:</strong></p>
+                                        <ul>
+                                            <li>Provide clear, high-quality files</li>
+                                            <li>Include multiple pieces of corroborating evidence</li>
+                                            <li>Ensure files are authentic and unaltered</li>
+                                            <li>Include contextual information in your narrative</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- How is evidence verified? -->
+                            <div class="accordion-item">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq3">
+                                        <i class="bi bi-cpu me-2"></i> How is evidence verified?
+                                    </button>
+                                </h2>
+                                <div id="faq3" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                                    <div class="accordion-body">
+                                        <p>Evidence goes through 6 validation layers:</p>
+                                        <ol>
+                                            <li><strong>Anonymous Submission Gateway:</strong> Creates secure pseudonyms</li>
+                                            <li><strong>Credibility Assessment:</strong> AI analyzes for deepfakes using CLIP model</li>
+                                            <li><strong>Coordination Detection:</strong> Checks for coordinated attack patterns</li>
+                                            <li><strong>Byzantine Consensus:</strong> 15-20 validators review submission</li>
+                                            <li><strong>Counter-Evidence Processing:</strong> Allows defense submissions</li>
+                                            <li><strong>Forensic Report Generation:</strong> Creates legally compliant reports</li>
+                                        </ol>
+                                        <p class="mb-0">Each layer uses free, pre-trained AI models to ensure fair and accurate assessment.</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- What is a credibility score? -->
+                            <div class="accordion-item">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq4">
+                                        <i class="bi bi-bar-chart me-2"></i> What is a credibility score?
+                                    </button>
+                                </h2>
+                                <div id="faq4" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                                    <div class="accordion-body">
+                                        <p>The credibility score (0.0 - 1.0) indicates evidence authenticity:</p>
+                                        <ul>
+                                            <li><strong>0.90 - 1.00:</strong> <span class="badge bg-success">Highly Credible</span> - Strong authentic evidence</li>
+                                            <li><strong>0.75 - 0.89:</strong> <span class="badge bg-success">Credible</span> - Likely authentic</li>
+                                            <li><strong>0.50 - 0.74:</strong> <span class="badge bg-warning">Uncertain</span> - Requires review</li>
+                                            <li><strong>0.25 - 0.49:</strong> <span class="badge bg-danger">Questionable</span> - Likely manipulated</li>
+                                            <li><strong>0.00 - 0.24:</strong> <span class="badge bg-danger">Not Credible</span> - Strong signs of manipulation</li>
+                                        </ul>
+                                        <p><strong>Factors Affecting Score:</strong></p>
+                                        <ul>
+                                            <li>Deepfake detection results</li>
+                                            <li>Cross-modal consistency (matching text, image, audio)</li>
+                                            <li>Validator consensus</li>
+                                            <li>Coordination detection</li>
+                                            <li>Counter-evidence (if submitted)</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- How do I submit counter-evidence? -->
+                            <div class="accordion-item">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq5">
+                                        <i class="bi bi-shield-exclamation me-2"></i> How do I submit counter-evidence?
+                                    </button>
+                                </h2>
+                                <div id="faq5" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                                    <div class="accordion-body">
+                                        <p>If you've been falsely accused, you can submit counter-evidence:</p>
+                                        <ol>
+                                            <li>Go to the <a href="/counter.html">counter-evidence page</a></li>
+                                            <li>Enter the original submission ID you're responding to</li>
+                                            <li>Write a detailed defense statement</li>
+                                            <li>Upload supporting evidence</li>
+                                            <li>Optionally verify your identity (recommended for 1.2× credibility boost)</li>
+                                            <li>Submit for Bayesian aggregation</li>
+                                        </ol>
+                                        <p><strong>Fair Process Guarantees:</strong></p>
+                                        <ul>
+                                            <li><strong>1.3× Presumption of Innocence:</strong> Counter-evidence receives automatic credibility boost</li>
+                                            <li><strong>1.2× Identity Verification Bonus:</strong> Additional boost if you verify identity</li>
+                                            <li><strong>Bayesian Aggregation:</strong> Evidence is combined fairly using statistical methods</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- What happens after submission? -->
+                            <div class="accordion-item">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq6">
+                                        <i class="bi bi-hourglass-split me-2"></i> What happens after submission?
+                                    </button>
+                                </h2>
+                                <div id="faq6" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                                    <div class="accordion-body">
+                                        <p><strong>Processing Timeline:</strong></p>
+                                        <ol>
+                                            <li><strong>Immediate:</strong> Pseudonym generation and encryption (1-2 seconds)</li>
+                                            <li><strong>1-2 minutes:</strong> Deepfake detection and credibility assessment</li>
+                                            <li><strong>2-5 minutes:</strong> Coordination detection and graph analysis</li>
+                                            <li><strong>5-10 minutes:</strong> Validator consensus simulation</li>
+                                            <li><strong>10-15 minutes:</strong> Report generation and finalization</li>
+                                        </ol>
+                                        <p><strong>You can:</strong></p>
+                                        <ul>
+                                            <li>Check status on the <a href="/review.html">review page</a> using your submission ID</li>
+                                            <li>Download the forensic report (PDF) once processing is complete</li>
+                                            <li>Submit counter-evidence if you disagree with findings</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- How long is data stored? -->
+                            <div class="accordion-item">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq7">
+                                        <i class="bi bi-clock-history me-2"></i> How long is data stored?
+                                    </button>
+                                </h2>
+                                <div id="faq7" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                                    <div class="accordion-body">
+                                        <p><strong>Data Retention Policy:</strong></p>
+                                        <ul>
+                                            <li><strong>Active Submissions:</strong> 90 days in primary storage</li>
+                                            <li><strong>Archived Submissions:</strong> Moved to compressed archive after 90 days</li>
+                                            <li><strong>Hash Chain:</strong> Permanently maintained for integrity verification</li>
+                                            <li><strong>Reports:</strong> Available for download during active period</li>
+                                        </ul>
+                                        <p class="mb-0"><strong>Note:</strong> Download your report PDF within 90 days. After archival, retrieval requires manual request.</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Is this system legally valid? -->
+                            <div class="accordion-item">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq8">
+                                        <i class="bi bi-file-earmark-ruled me-2"></i> Is this system legally valid?
+                                    </button>
+                                </h2>
+                                <div id="faq8" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                                    <div class="accordion-body">
+                                        <p><strong>Legal Compliance:</strong></p>
+                                        <ul>
+                                            <li><strong>Section 45 Compliance:</strong> Reports follow forensic documentation standards</li>
+                                            <li><strong>Chain of Custody:</strong> Hash chain maintains evidence integrity</li>
+                                            <li><strong>Cryptographic Proof:</strong> SHA-256 hashing provides tamper detection</li>
+                                            <li><strong>Audit Trail:</strong> All processing steps are logged</li>
+                                        </ul>
+                                        <p><strong>Limitations:</strong></p>
+                                        <ul>
+                                            <li>This is a research prototype, not a production legal system</li>
+                                            <li>Reports may be used as supporting evidence but may require expert witness testimony</li>
+                                            <li>Consult legal professionals for admissibility in specific jurisdictions</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Technical Details -->
+                <div class="card shadow-sm mb-4">
+                    <div class="card-header bg-info text-white">
+                        <h4 class="mb-0">
+                            <i class="bi bi-gear"></i>
+                            Technical Details
+                        </h4>
+                    </div>
+                    <div class="card-body">
+                        <h5>System Architecture</h5>
+                        <p>The system uses a 6-layer architecture:</p>
+                        
+                        <div class="row mb-3">
+                            <div class="col-md-4">
+                                <div class="card h-100 border-primary">
+                                    <div class="card-body">
+                                        <h6 class="card-title">Layer 1: Anonymity</h6>
+                                        <p class="card-text small">
+                                            <strong>Technology:</strong> SHA-256, AES-256<br>
+                                            <strong>Function:</strong> Pseudonym generation, encryption
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="card h-100 border-success">
+                                    <div class="card-body">
+                                        <h6 class="card-title">Layer 2: Credibility</h6>
+                                        <p class="card-text small">
+                                            <strong>Model:</strong> CLIP (OpenAI)<br>
+                                            <strong>Function:</strong> Deepfake detection, authenticity scoring
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="card h-100 border-warning">
+                                    <div class="card-body">
+                                        <h6 class="card-title">Layer 3: Coordination</h6>
+                                        <p class="card-text small">
+                                            <strong>Algorithm:</strong> NetworkX + Louvain<br>
+                                            <strong>Function:</strong> Attack detection, clustering
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="card h-100 border-danger">
+                                    <div class="card-body">
+                                        <h6 class="card-title">Layer 4: Consensus</h6>
+                                        <p class="card-text small">
+                                            <strong>Method:</strong> Byzantine Fault Tolerance<br>
+                                            <strong>Function:</strong> Validator voting, consensus
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="card h-100 border-secondary">
+                                    <div class="card-body">
+                                        <h6 class="card-title">Layer 5: Counter-Evidence</h6>
+                                        <p class="card-text small">
+                                            <strong>Method:</strong> Bayesian Aggregation<br>
+                                            <strong>Function:</strong> Fair defense processing
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="card h-100 border-dark">
+                                    <div class="card-body">
+                                        <h6 class="card-title">Layer 6: Reporting</h6>
+                                        <p class="card-text small">
+                                            <strong>Library:</strong> ReportLab<br>
+                                            <strong>Function:</strong> PDF report generation
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <h5 class="mt-4">AI Models Used</h5>
+                        <table class="table table-sm table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Model</th>
+                                    <th>Purpose</th>
+                                    <th>Size</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>openai/clip-vit-base-patch32</td>
+                                    <td>Image deepfake detection</td>
+                                    <td>~350MB</td>
+                                </tr>
+                                <tr>
+                                    <td>facebook/wav2vec2-base</td>
+                                    <td>Audio feature extraction</td>
+                                    <td>~360MB</td>
+                                </tr>
+                                <tr>
+                                    <td>sentence-transformers/all-MiniLM-L6-v2</td>
+                                    <td>Text embeddings</td>
+                                    <td>~80MB</td>
+                                </tr>
+                                <tr>
+                                    <td>Salesforce/blip-image-captioning-base</td>
+                                    <td>Image captioning</td>
+                                    <td>~990MB</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <h5 class="mt-4">API Endpoints</h5>
+                        <ul>
+                            <li><code>POST /api/v1/submissions</code> - Submit evidence</li>
+                            <li><code>GET /api/v1/submissions/{id}</code> - Get submission status</li>
+                            <li><code>POST /api/v1/counter-evidence</code> - Submit counter-evidence</li>
+                            <li><code>GET /api/v1/reports/{id}</code> - Download report PDF</li>
+                            <li><code>GET /api/v1/health</code> - Check system health</li>
+                        </ul>
+                        <p>
+                            <a href="/api/v1/docs" class="btn btn-sm btn-outline-info" target="_blank">
+                                <i class="bi bi-book"></i> View Full API Documentation
+                            </a>
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Support -->
+                <div class="card shadow-sm mb-4 border-warning">
+                    <div class="card-header bg-warning">
+                        <h4 class="mb-0">
+                            <i class="bi bi-life-preserver"></i>
+                            Support & Contact
+                        </h4>
+                    </div>
+                    <div class="card-body">
+                        <p><strong>For Technical Support:</strong></p>
+                        <ul>
+                            <li>Check the <a href="/error.html">error page</a> for common issues</li>
+                            <li>Review API documentation: <a href="/api/v1/docs" target="_blank">/api/v1/docs</a></li>
+                            <li>Check system health: <a href="/api/v1/health" target="_blank">/api/v1/health</a></li>
+                        </ul>
+                        
+                        <p><strong>Research Information:</strong></p>
+                        <ul>
+                            <li>This is a research prototype for academic publication</li>
+                            <li>Zero-cost deployment using free, pre-trained ML models</li>
+                            <li>Designed for resource-constrained NGOs and grassroots organizations</li>
+                        </ul>
+
+                        <div class="alert alert-info mt-3">
+                            <i class="bi bi-info-circle"></i>
+                            <strong>Note:</strong> This system is a proof-of-concept prototype. 
+                            For production deployment, additional security hardening and infrastructure are recommended.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white mt-5 py-4">
+        <div class="container text-center">
+            <p class="mb-2">
+                <strong>Corruption Reporting System</strong> - Research Prototype v1.0.0
+            </p>
+            <p class="text-muted small mb-0">
+                Zero-cost deployment using free ML models and open-source tools
+            </p>
+            <p class="text-muted small">
+                <a href="/help.html" class="text-white">Help</a> | 
+                <a href="/api/v1/docs" class="text-white" target="_blank">API Docs</a>
+            </p>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Custom JS -->
+    <script src="/js/utils.js"></script>
+</body>
+</html>

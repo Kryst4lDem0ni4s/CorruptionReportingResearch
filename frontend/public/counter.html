@@ -267,4 +267,230 @@
 
                             <!-- Submit Button -->
                             <div class="d-grid gap-2">
-                                <button type="submit" class="btn btn-warning btn-lg" id="counter-submit-b
+                                <button type="submit" class="btn btn-warning btn-lg" id="counter-submit-btn">
+                                    <i class="bi bi-send"></i>
+                                    Submit Counter-Evidence
+                                </button>
+                                <button type="reset" class="btn btn-outline-secondary">
+                                    <i class="bi bi-x-circle"></i>
+                                    Clear Form
+                                </button>
+                            </div>
+                        </form>
+
+                        <!-- Progress Bar -->
+                        <div id="counter-upload-progress" class="mt-4" style="display: none;">
+                            <div class="progress" style="height: 30px;">
+                                <div 
+                                    id="counter-progress-bar" 
+                                    class="progress-bar progress-bar-striped progress-bar-animated bg-warning" 
+                                    role="progressbar" 
+                                    style="width: 0%;">
+                                    0%
+                                </div>
+                            </div>
+                            <p class="text-center mt-2 text-muted" id="counter-progress-text">
+                                Processing counter-evidence...
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Success Message -->
+                <div id="counter-success-message" class="alert alert-success mt-4" style="display: none;">
+                    <h5 class="alert-heading">
+                        <i class="bi bi-check-circle"></i>
+                        Counter-Evidence Submitted Successfully!
+                    </h5>
+                    <p>Your counter-evidence has been submitted and will be processed with presumption of innocence.</p>
+                    <hr>
+                    <p class="mb-0">
+                        <strong>Counter-Submission ID:</strong> <code id="counter-submission-id"></code>
+                        <button class="btn btn-sm btn-outline-success ms-2" id="copy-counter-id-btn">
+                            <i class="bi bi-clipboard"></i> Copy ID
+                        </button>
+                    </p>
+                    <p class="mt-2 mb-0">
+                        <strong>Credibility Boost:</strong> 
+                        <span id="credibility-boost-info">1.3× (Presumption of Innocence)</span>
+                    </p>
+                    <div class="mt-3">
+                        <a href="/review.html" class="btn btn-success">
+                            <i class="bi bi-eye"></i> View Status
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Error Message -->
+                <div id="counter-error-message" class="alert alert-danger mt-4" style="display: none;">
+                    <h5 class="alert-heading">
+                        <i class="bi bi-exclamation-triangle"></i>
+                        Submission Failed
+                    </h5>
+                    <p id="counter-error-text"></p>
+                    <button class="btn btn-outline-danger" onclick="location.reload()">
+                        <i class="bi bi-arrow-clockwise"></i> Try Again
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Information Cards -->
+        <div class="row mt-5">
+            <div class="col-md-4 mb-3">
+                <div class="card h-100 border-warning">
+                    <div class="card-body text-center">
+                        <i class="bi bi-scale text-warning" style="font-size: 3rem;"></i>
+                        <h5 class="card-title mt-3">Presumption of Innocence</h5>
+                        <p class="card-text">
+                            Counter-evidence receives a 1.3× credibility boost, 
+                            ensuring fair evaluation with presumption of innocence.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-3">
+                <div class="card h-100 border-info">
+                    <div class="card-body text-center">
+                        <i class="bi bi-person-check-fill text-info" style="font-size: 3rem;"></i>
+                        <h5 class="card-title mt-3">Identity Verification</h5>
+                        <p class="card-text">
+                            Verify your identity for an additional 1.2× credibility bonus.
+                            Your information remains confidential.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-3">
+                <div class="card h-100 border-success">
+                    <div class="card-body text-center">
+                        <i class="bi bi-calculator-fill text-success" style="font-size: 3rem;"></i>
+                        <h5 class="card-title mt-3">Bayesian Aggregation</h5>
+                        <p class="card-text">
+                            Evidence is combined using Bayesian inference to update 
+                            the credibility assessment fairly.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white mt-5 py-4">
+        <div class="container text-center">
+            <p class="mb-2">
+                <strong>Corruption Reporting System</strong> - Research Prototype v1.0.0
+            </p>
+            <p class="text-muted small mb-0">
+                Fair counter-evidence processing with presumption of innocence
+            </p>
+            <p class="text-muted small">
+                <a href="/help.html" class="text-white">Help</a> | 
+                <a href="/api/v1/docs" class="text-white" target="_blank">API Docs</a>
+            </p>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Custom JS -->
+    <script src="/js/utils.js"></script>
+    <script src="/js/api.js"></script>
+    <script src="/js/counter.js"></script>
+    <script src="/js/error_handler.js"></script>
+
+    <script>
+        // Character counter
+        const counterNarrativeInput = document.getElementById('counter-narrative');
+        const counterCharCount = document.getElementById('counter-char-count');
+        
+        counterNarrativeInput.addEventListener('input', function() {
+            counterCharCount.textContent = this.value.length;
+            
+            // Visual feedback
+            if (this.value.length < 50) {
+                counterCharCount.style.color = 'red';
+            } else if (this.value.length < 100) {
+                counterCharCount.style.color = 'orange';
+            } else {
+                counterCharCount.style.color = 'green';
+            }
+        });
+
+        // File preview
+        const counterFileInput = document.getElementById('counter-evidence-files');
+        const counterFilePreview = document.getElementById('counter-file-preview');
+        
+        counterFileInput.addEventListener('change', function() {
+            counterFilePreview.innerHTML = '';
+            
+            if (this.files.length === 0) return;
+            
+            const previewContainer = document.createElement('div');
+            previewContainer.className = 'alert alert-secondary';
+            
+            let html = '<strong>Selected Files:</strong><ul class="mb-0 mt-2">';
+            
+            for (let file of this.files) {
+                const sizeInMB = (file.size / 1024 / 1024).toFixed(2);
+                const icon = getFileIcon(file.type);
+                html += `<li><i class="bi ${icon}"></i> ${file.name} (${sizeInMB} MB)</li>`;
+            }
+            
+            html += '</ul>';
+            previewContainer.innerHTML = html;
+            counterFilePreview.appendChild(previewContainer);
+        });
+
+        function getFileIcon(mimeType) {
+            if (mimeType.startsWith('image/')) return 'bi-file-image';
+            if (mimeType.startsWith('audio/')) return 'bi-file-music';
+            if (mimeType.startsWith('video/')) return 'bi-file-play';
+            if (mimeType.includes('pdf')) return 'bi-file-pdf';
+            return 'bi-file-earmark';
+        }
+
+        // Identity verification toggle
+        const verifyIdentityCheck = document.getElementById('verify-identity-check');
+        const identityFields = document.getElementById('identity-verification-fields');
+        
+        verifyIdentityCheck.addEventListener('change', function() {
+            identityFields.style.display = this.checked ? 'block' : 'none';
+            
+            // Update required status
+            const fields = identityFields.querySelectorAll('input');
+            fields.forEach(field => {
+                if (this.checked) {
+                    field.setAttribute('required', 'required');
+                } else {
+                    field.removeAttribute('required');
+                }
+            });
+        });
+
+        // Copy submission ID
+        document.addEventListener('click', function(e) {
+            if (e.target.id === 'copy-counter-id-btn' || e.target.parentElement.id === 'copy-counter-id-btn') {
+                const submissionId = document.getElementById('counter-submission-id').textContent;
+                navigator.clipboard.writeText(submissionId).then(() => {
+                    const btn = document.getElementById('copy-counter-id-btn');
+                    const originalHTML = btn.innerHTML;
+                    btn.innerHTML = '<i class="bi bi-check"></i> Copied!';
+                    setTimeout(() => {
+                        btn.innerHTML = originalHTML;
+                    }, 2000);
+                });
+            }
+        });
+
+        // Pre-fill original submission ID from URL parameter
+        const urlParams = new URLSearchParams(window.location.search);
+        const originalId = urlParams.get('submission_id');
+        if (originalId) {
+            document.getElementById('original-submission-id').value = originalId;
+        }
+    </script>
+</body>
+</html>
