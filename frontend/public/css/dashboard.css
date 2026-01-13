@@ -1,0 +1,639 @@
+/*
+ * Corruption Reporting System - Dashboard Layout Styles
+ * Version: 1.0.0
+ * Description: Styles for review dashboard, status displays, and metrics visualization
+ */
+
+/* ============================================
+   SEARCH SECTION
+   ============================================ */
+#search-form {
+    animation: fadeIn 0.3s ease;
+}
+
+#submission-id-input {
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 1rem;
+    letter-spacing: 0.5px;
+}
+
+#submission-id-input:focus {
+    border-color: #0d6efd;
+    box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+}
+
+/* ============================================
+   SUBMISSION DETAILS CONTAINER
+   ============================================ */
+#submission-details {
+    animation: slideInUp 0.4s ease;
+}
+
+/* Status Header Color Coding */
+#status-header {
+    transition: background-color 0.3s ease;
+}
+
+#status-header.status-pending {
+    background-color: #ffc107;
+}
+
+#status-header.status-processing {
+    background-color: #0dcaf0;
+}
+
+#status-header.status-completed {
+    background-color: #198754;
+}
+
+#status-header.status-failed {
+    background-color: #dc3545;
+}
+
+/* ============================================
+   STATUS BADGE
+   ============================================ */
+#status-badge {
+    font-size: 0.875rem;
+    font-weight: 600;
+    padding: 0.5rem 1rem;
+    border-radius: 50px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    animation: pulse 2s infinite;
+}
+
+#status-badge.badge-pending {
+    background-color: #ffc107;
+    color: #000;
+}
+
+#status-badge.badge-processing {
+    background-color: #0dcaf0;
+    color: #000;
+}
+
+#status-badge.badge-completed {
+    background-color: #198754;
+    color: #fff;
+}
+
+#status-badge.badge-failed {
+    background-color: #dc3545;
+    color: #fff;
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.7; }
+}
+
+/* ============================================
+   SUBMISSION INFO DISPLAY
+   ============================================ */
+#display-submission-id,
+#display-pseudonym {
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 0.9rem;
+    background-color: #e9ecef;
+    padding: 0.4rem 0.6rem;
+    border-radius: 0.25rem;
+    word-break: break-all;
+}
+
+#display-status,
+#display-stage,
+#display-timestamp,
+#display-location,
+#display-file-count {
+    font-weight: 600;
+    color: #495057;
+}
+
+/* ============================================
+   PROCESSING PROGRESS BAR
+   ============================================ */
+#processing-progress {
+    transition: width 0.6s ease;
+    font-weight: 700;
+    font-size: 0.875rem;
+}
+
+#progress-description {
+    display: block;
+    margin-top: 0.5rem;
+    font-style: italic;
+    color: #6c757d;
+}
+
+/* Progress Stages */
+.progress-stage-1 { width: 20%; background-color: #0dcaf0; }
+.progress-stage-2 { width: 40%; background-color: #0d6efd; }
+.progress-stage-3 { width: 60%; background-color: #6610f2; }
+.progress-stage-4 { width: 80%; background-color: #d63384; }
+.progress-stage-5 { width: 100%; background-color: #198754; }
+
+/* ============================================
+   CREDIBILITY ASSESSMENT CARD
+   ============================================ */
+#credibility-card {
+    animation: slideInLeft 0.4s ease;
+}
+
+#credibility-score {
+    font-weight: 700;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+#credibility-score.score-high {
+    color: #198754;
+}
+
+#credibility-score.score-medium {
+    color: #ffc107;
+}
+
+#credibility-score.score-low {
+    color: #dc3545;
+}
+
+/* Credibility Bar Colors */
+#credibility-bar {
+    transition: width 0.8s ease, background-color 0.3s ease;
+    font-weight: 600;
+}
+
+#credibility-bar.credibility-high {
+    background-color: #198754;
+}
+
+#credibility-bar.credibility-medium {
+    background-color: #ffc107;
+}
+
+#credibility-bar.credibility-low {
+    background-color: #dc3545;
+}
+
+#credibility-level {
+    font-weight: 700;
+    font-size: 1.1rem;
+}
+
+#credibility-level.level-high {
+    color: #198754;
+}
+
+#credibility-level.level-medium {
+    color: #ffc107;
+}
+
+#credibility-level.level-low {
+    color: #dc3545;
+}
+
+/* ============================================
+   DEEPFAKE DETECTION DISPLAY
+   ============================================ */
+#deepfake-score,
+#deepfake-confidence,
+#deepfake-analysis {
+    font-weight: 600;
+}
+
+#deepfake-score.authentic {
+    color: #198754;
+}
+
+#deepfake-score.suspicious {
+    color: #dc3545;
+}
+
+/* ============================================
+   METRICS TABLE
+   ============================================ */
+#metrics-table {
+    font-size: 0.9rem;
+}
+
+#metrics-table tr {
+    transition: background-color 0.15s ease;
+}
+
+#metrics-table tr:hover {
+    background-color: #f8f9fa;
+}
+
+#metrics-table td {
+    padding: 0.75rem;
+    vertical-align: middle;
+}
+
+#metrics-table td:first-child {
+    font-weight: 600;
+    color: #495057;
+}
+
+#metrics-table td:last-child {
+    font-family: 'Courier New', Courier, monospace;
+    text-align: right;
+}
+
+/* ============================================
+   CONSENSUS RESULTS CARD
+   ============================================ */
+#consensus-card {
+    animation: slideInRight 0.4s ease;
+}
+
+#consensus-agreement,
+#validator-count,
+#consensus-status {
+    font-weight: 700;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+#consensus-agreement.agreement-high {
+    color: #198754;
+}
+
+#consensus-agreement.agreement-medium {
+    color: #ffc107;
+}
+
+#consensus-agreement.agreement-low {
+    color: #dc3545;
+}
+
+/* ============================================
+   COORDINATION DETECTION CARD
+   ============================================ */
+#coordination-card {
+    animation: slideInUp 0.5s ease;
+}
+
+#coordination-risk {
+    font-weight: 700;
+    font-size: 1.1rem;
+}
+
+#coordination-risk.risk-none {
+    color: #198754;
+}
+
+#coordination-risk.risk-low {
+    color: #ffc107;
+}
+
+#coordination-risk.risk-high {
+    color: #dc3545;
+}
+
+#coordination-warning {
+    border-left: 4px solid #ffc107;
+    animation: shake 0.5s ease;
+}
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+    20%, 40%, 60%, 80% { transform: translateX(5px); }
+}
+
+/* ============================================
+   ACTION BUTTONS
+   ============================================ */
+#download-report-btn,
+#refresh-btn,
+#submit-counter-btn {
+    transition: all 0.3s ease;
+    font-weight: 600;
+}
+
+#download-report-btn:hover,
+#refresh-btn:hover,
+#submit-counter-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+#download-report-btn:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+}
+
+#download-report-btn:disabled:hover {
+    transform: translateY(0);
+    box-shadow: none;
+}
+
+/* ============================================
+   LOADING STATE
+   ============================================ */
+#loading-state {
+    animation: fadeIn 0.3s ease;
+}
+
+#loading-state .spinner-border {
+    animation: spinner-border 0.75s linear infinite;
+}
+
+@keyframes spinner-border {
+    to { transform: rotate(360deg); }
+}
+
+/* ============================================
+   ERROR STATE
+   ============================================ */
+#error-state {
+    animation: slideInDown 0.4s ease;
+}
+
+#error-message {
+    font-weight: 600;
+    color: #842029;
+}
+
+/* ============================================
+   RECENT SUBMISSIONS LIST
+   ============================================ */
+#recent-submissions {
+    min-height: 200px;
+}
+
+#recent-submissions .list-group-item {
+    transition: all 0.2s ease;
+    cursor: pointer;
+}
+
+#recent-submissions .list-group-item:hover {
+    background-color: #f8f9fa;
+    transform: translateX(5px);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+#recent-submissions .submission-id {
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 0.85rem;
+    color: #6c757d;
+}
+
+#recent-submissions .submission-status {
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+#recent-submissions .submission-timestamp {
+    font-size: 0.75rem;
+    color: #adb5bd;
+}
+
+/* ============================================
+   ACCORDION ENHANCEMENTS
+   ============================================ */
+.accordion-button {
+    font-weight: 600;
+    transition: background-color 0.15s ease;
+}
+
+.accordion-button:not(.collapsed) {
+    color: #0d6efd;
+    background-color: #e7f1ff;
+}
+
+.accordion-button::after {
+    transition: transform 0.2s ease;
+}
+
+.accordion-body {
+    animation: fadeIn 0.2s ease;
+}
+
+/* ============================================
+   METRIC VISUALIZATION
+   ============================================ */
+.metric-value {
+    font-size: 2rem;
+    font-weight: 700;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+.metric-label {
+    font-size: 0.875rem;
+    color: #6c757d;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.metric-icon {
+    font-size: 3rem;
+    opacity: 0.2;
+    position: absolute;
+    right: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+/* ============================================
+   SCORE VISUALIZATION
+   ============================================ */
+.score-container {
+    position: relative;
+    padding: 1.5rem;
+    border-radius: 0.5rem;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    text-align: center;
+}
+
+.score-container .score {
+    font-size: 3rem;
+    font-weight: 700;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+.score-container .label {
+    font-size: 1rem;
+    opacity: 0.9;
+    margin-top: 0.5rem;
+}
+
+/* ============================================
+   STATUS TIMELINE
+   ============================================ */
+.status-timeline {
+    position: relative;
+    padding-left: 2rem;
+}
+
+.status-timeline::before {
+    content: '';
+    position: absolute;
+    left: 0.5rem;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background-color: #dee2e6;
+}
+
+.status-timeline-item {
+    position: relative;
+    padding-bottom: 1.5rem;
+}
+
+.status-timeline-item::before {
+    content: '';
+    position: absolute;
+    left: -1.5rem;
+    top: 0.25rem;
+    width: 1rem;
+    height: 1rem;
+    border-radius: 50%;
+    background-color: #dee2e6;
+    border: 2px solid white;
+    box-shadow: 0 0 0 2px #dee2e6;
+}
+
+.status-timeline-item.completed::before {
+    background-color: #198754;
+    box-shadow: 0 0 0 2px #198754;
+}
+
+.status-timeline-item.active::before {
+    background-color: #0d6efd;
+    box-shadow: 0 0 0 2px #0d6efd;
+    animation: pulse-ring 1.5s infinite;
+}
+
+@keyframes pulse-ring {
+    0% { box-shadow: 0 0 0 2px #0d6efd; }
+    50% { box-shadow: 0 0 0 6px rgba(13, 110, 253, 0.3); }
+    100% { box-shadow: 0 0 0 2px #0d6efd; }
+}
+
+/* ============================================
+   CARD HOVER EFFECTS
+   ============================================ */
+.dashboard-card {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.dashboard-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+}
+
+/* ============================================
+   RESPONSIVE DASHBOARD
+   ============================================ */
+@media (max-width: 767.98px) {
+    #credibility-score,
+    #consensus-agreement,
+    #validator-count,
+    #consensus-status {
+        font-size: 2rem;
+    }
+    
+    .metric-value {
+        font-size: 1.5rem;
+    }
+    
+    .metric-icon {
+        font-size: 2rem;
+    }
+    
+    .score-container .score {
+        font-size: 2rem;
+    }
+    
+    #display-submission-id,
+    #display-pseudonym {
+        font-size: 0.75rem;
+    }
+}
+
+@media (max-width: 575.98px) {
+    .d-grid.gap-2.d-md-flex {
+        gap: 0.5rem !important;
+    }
+    
+    .d-grid.gap-2.d-md-flex .btn {
+        font-size: 0.875rem;
+        padding: 0.5rem 0.75rem;
+    }
+}
+
+/* ============================================
+   ANIMATIONS
+   ============================================ */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes slideInUp {
+    from {
+        transform: translateY(30px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes slideInDown {
+    from {
+        transform: translateY(-30px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes slideInLeft {
+    from {
+        transform: translateX(-30px);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes slideInRight {
+    from {
+        transform: translateX(30px);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+/* ============================================
+   PRINT STYLES
+   ============================================ */
+@media print {
+    #search-form,
+    #refresh-btn,
+    #submit-counter-btn,
+    .no-print {
+        display: none !important;
+    }
+    
+    #submission-details {
+        page-break-inside: avoid;
+    }
+    
+    .card {
+        box-shadow: none;
+        border: 1px solid #dee2e6;
+        page-break-inside: avoid;
+    }
+}
