@@ -374,3 +374,51 @@ class BLIPModel(BaseModel):
                 'batch_processing'
             ]
         }
+
+"""Integration Examples
+Using Wav2Vec2 in Layer 2 (Credibility Assessment)
+python
+# backend/core/layer2_credibility.py
+
+from backend.models.model_cache import get_wav2vec_model
+
+class CredibilityAssessmentLayer:
+    def __init__(self):
+        self.audio_model = get_wav2vec_model()
+    
+    def analyze_audio_evidence(self, audio_path: str) -> dict:
+        
+        # Extract features and analyze
+        analysis = self.audio_model.analyze_audio_authenticity(audio_path)
+        
+        return {
+            'authenticity_score': analysis['authenticity_score'],
+            'has_artifacts': analysis['artifacts']['total_artifacts'] > 5,
+            'analysis': analysis
+        }
+Using BLIP in Layer 2 (Cross-Modal Verification)
+python
+# backend/core/layer2_credibility.py
+
+from backend.models.model_cache import get_blip_model
+
+class CredibilityAssessmentLayer:
+    def __init__(self):
+        self.caption_model = get_blip_model()
+    
+    def verify_image_narrative_consistency(
+        self,
+        image_path: str,
+        narrative: str
+    ) -> dict:
+        
+        result = self.caption_model.verify_image_text_consistency(
+            image_path,
+            narrative
+        )
+        
+        return {
+            'is_consistent': result['is_consistent'],
+            'similarity': result['similarity_score'],
+            'generated_caption': result['generated_caption']
+        }"""
