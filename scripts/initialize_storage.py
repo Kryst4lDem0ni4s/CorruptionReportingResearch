@@ -184,6 +184,144 @@ def verify_structure(base_dir: Path = Path('backend/data')) -> bool:
     
     return all_valid
 
+def create_initial_json_files(base_dir: Path) -> None:
+    """
+    Create initial JSON files with proper structure.
+    
+    Args:
+        base_dir: Base data directory
+    """
+    from datetime import datetime
+    import json
+    
+    logger.info("Creating initial JSON files...")
+    
+    current_time = datetime.now().isoformat()
+    
+    # 1. Chain JSON - Hash chain state
+    chain_data = {
+        "version": "1.0.0",
+        "created_at": current_time,
+        "last_updated": current_time,
+        "genesis_block": {
+            "block_number": 0,
+            "timestamp": current_time,
+            "previous_hash": "0" * 64,
+            "data": "Genesis Block - Corruption Reporting System v1.0",
+            "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "nonce": 0
+        },
+        "blocks": [],
+        "total_blocks": 0,
+        "chain_verified": True,
+        "verification_timestamp": current_time,
+        "metadata": {
+            "algorithm": "SHA-256",
+            "encoding": "UTF-8",
+            "block_time_target_seconds": 60,
+            "max_block_size_bytes": 1048576,
+            "description": "Blockchain-inspired hash chain for tamper detection"
+        }
+    }
+    
+    # 2. Validators JSON - Validator pool state
+    validators_data = {
+        "version": "1.0.0",
+        "created_at": current_time,
+        "last_updated": current_time,
+        "validators": [],
+        "total_validators": 0,
+        "active_validators": 0,
+        "configuration": {
+            "min_validators": 15,
+            "max_validators": 20,
+            "devils_advocate_ratio": 0.1,
+            "consensus_threshold": 0.66,
+            "validator_weights": {
+                "default": 1.0,
+                "expert": 1.5,
+                "devils_advocate": 1.0
+            },
+            "voting_rounds": 3,
+            "timeout_seconds": 300
+        },
+        "statistics": {
+            "total_votes_cast": 0,
+            "consensus_reached_count": 0,
+            "consensus_failed_count": 0,
+            "average_agreement_ratio": 0.0,
+            "average_convergence_time_seconds": 0.0
+        },
+        "metadata": {
+            "description": "Simulated Byzantine Fault Tolerant validator pool",
+            "consensus_algorithm": "Weighted Majority Voting",
+            "fault_tolerance": "Up to 33% malicious validators"
+        }
+    }
+    
+    # 3. Index JSON - Fast lookup index
+    index_data = {
+        "version": "1.0.0",
+        "created_at": current_time,
+        "last_updated": current_time,
+        "submissions": {},
+        "total_submissions": 0,
+        "indices": {
+            "by_status": {
+                "pending": [],
+                "processing": [],
+                "completed": [],
+                "failed": []
+            },
+            "by_date": {},
+            "by_credibility_score": {
+                "high": [],
+                "medium": [],
+                "low": [],
+                "unscored": []
+            },
+            "by_pseudonym": {},
+            "coordinated_groups": []
+        },
+        "statistics": {
+            "total_evidence_files": 0,
+            "total_reports_generated": 0,
+            "average_credibility_score": 0.0,
+            "coordination_detected_count": 0,
+            "counter_evidence_submissions": 0
+        },
+        "performance": {
+            "average_processing_time_seconds": 0.0,
+            "cache_hit_ratio": 0.0,
+            "storage_size_bytes": 0,
+            "last_cleanup_timestamp": current_time
+        },
+        "metadata": {
+            "description": "Fast lookup index for submissions and analytics",
+            "index_type": "in-memory-backed",
+            "rebuild_on_startup": True,
+            "auto_optimize": True
+        }
+    }
+    
+    # Write files
+    files_to_create = {
+        'chain.json': chain_data,
+        'validators.json': validators_data,
+        'index.json': index_data
+    }
+    
+    for filename, data in files_to_create.items():
+        file_path = base_dir / filename
+        
+        if not file_path.exists():
+            with open(file_path, 'w', encoding='utf-8') as f:
+                json.dump(data, f, indent=2, ensure_ascii=False)
+            logger.info(f"✓ Created: {file_path}")
+        else:
+            logger.debug(f"File already exists: {file_path}")
+
+
 
 def main():
     """Main entry point."""

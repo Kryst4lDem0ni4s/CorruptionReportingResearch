@@ -1,0 +1,43 @@
+{
+  "version": "1.0.0",
+  "created_at": "2026-01-13T21:33:00+05:30",
+  "last_updated": "2026-01-13T21:33:00+05:30",
+  "submissions": {},
+  "total_submissions": 0,
+  "indices": {
+    "by_status": {
+      "pending": [],
+      "processing": [],
+      "completed": [],
+      "failed": []
+    },
+    "by_date": {},
+    "by_credibility_score": {
+      "high": [],
+      "medium": [],
+      "low": [],
+      "unscored": []
+    },
+    "by_pseudonym": {},
+    "coordinated_groups": []
+  },
+  "statistics": {
+    "total_evidence_files": 0,
+    "total_reports_generated": 0,
+    "average_credibility_score": 0.0,
+    "coordination_detected_count": 0,
+    "counter_evidence_submissions": 0
+  },
+  "performance": {
+    "average_processing_time_seconds": 0.0,
+    "cache_hit_ratio": 0.0,
+    "storage_size_bytes": 0,
+    "last_cleanup_timestamp": "2026-01-13T21:33:00+05:30"
+  },
+  "metadata": {
+    "description": "Fast lookup index for submissions and analytics",
+    "index_type": "in-memory-backed",
+    "rebuild_on_startup": true,
+    "auto_optimize": true
+  }
+}

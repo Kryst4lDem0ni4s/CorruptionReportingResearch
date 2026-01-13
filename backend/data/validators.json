@@ -1,0 +1,33 @@
+{
+  "version": "1.0.0",
+  "created_at": "2026-01-13T21:33:00+05:30",
+  "last_updated": "2026-01-13T21:33:00+05:30",
+  "validators": [],
+  "total_validators": 0,
+  "active_validators": 0,
+  "configuration": {
+    "min_validators": 15,
+    "max_validators": 20,
+    "devils_advocate_ratio": 0.1,
+    "consensus_threshold": 0.66,
+    "validator_weights": {
+      "default": 1.0,
+      "expert": 1.5,
+      "devils_advocate": 1.0
+    },
+    "voting_rounds": 3,
+    "timeout_seconds": 300
+  },
+  "statistics": {
+    "total_votes_cast": 0,
+    "consensus_reached_count": 0,
+    "consensus_failed_count": 0,
+    "average_agreement_ratio": 0.0,
+    "average_convergence_time_seconds": 0.0
+  },
+  "metadata": {
+    "description": "Simulated Byzantine Fault Tolerant validator pool",
+    "consensus_algorithm": "Weighted Majority Voting",
+    "fault_tolerance": "Up to 33% malicious validators"
+  }
+}
