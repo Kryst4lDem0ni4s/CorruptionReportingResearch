@@ -800,3 +800,36 @@ class Layer3Coordination:
                 'total_submissions': 0,
                 'flagged_submissions': 0
             }
+
+
+"""from backend.utils.text_utils import TextUtils, extract_features
+from backend.utils.graph_utils import GraphUtils, detect_coordination
+
+class CoordinationDetectionLayer:
+    def analyze_submissions(self, submissions: List[Dict]):
+        
+        # Extract stylometric features
+        for submission in submissions:
+            if 'narrative' in submission:
+                features = extract_features(submission['narrative'])
+                submission['stylometric_features'] = features
+        
+        # Create graph
+        G = GraphUtils.create_submission_graph(
+            submissions,
+            similarity_threshold=0.3
+        )
+        
+        # Detect communities and patterns
+        communities, patterns = detect_coordination(G)
+        
+        # Calculate graph metrics
+        metrics = GraphUtils.calculate_graph_metrics(G)
+        
+        return {
+            'graph': G,
+            'communities': communities,
+            'suspicious_patterns': patterns,
+            'metrics': metrics
+        }
+"""
