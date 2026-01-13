@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Anonymous Corruption Evidence Submission System">
+    <meta name="robots" content="noindex, nofollow">
+    <title>Anonymous Evidence Submission - Corruption Reporting System</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="/css/submission.css">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="/assets/favicon.ico">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container">
+            <a class="navbar-brand" href="/">
+                <i class="bi bi-shield-check"></i>
+                Corruption Reporting System
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/">
+                            <i class="bi bi-upload"></i> Submit Evidence
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/review.html">
+                            <i class="bi bi-list-check"></i> Review Submissions
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/counter.html">
+                            <i class="bi bi-shield-exclamation"></i> Counter Evidence
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/help.html">
+                            <i class="bi bi-question-circle"></i> Help
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container my-5">
+        <!-- Hero Section -->
+        <div class="row mb-4">
+            <div class="col-lg-8 mx-auto text-center">
+                <h1 class="display-4 mb-3">
+                    <i class="bi bi-shield-lock text-primary"></i>
+                    Anonymous Evidence Submission
+                </h1>
+                <p class="lead text-muted">
+                    Submit corruption evidence securely and anonymously. 
+                    Your identity is protected through cryptographic pseudonyms.
+                </p>
+                <div class="alert alert-info" role="alert">
+                    <i class="bi bi-info-circle"></i>
+                    <strong>Privacy Guaranteed:</strong> We use SHA-256 hashing and AES-256 encryption to protect your identity.
+                    No personal information is stored or transmitted.
+                </div>
+            </div>
+        </div>
+
+        <!-- Submission Form -->
+        <div class="row">
+            <div class="col-lg-8 mx-auto">
+                <div class="card shadow-sm">
+                    <div class="card-header bg-primary text-white">
+                        <h5 class="mb-0">
+                            <i class="bi bi-file-earmark-text"></i>
+                            Evidence Submission Form
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                        <form id="submission-form" novalidate>
+                            <!-- Narrative -->
+                            <div class="mb-4">
+                                <label for="narrative" class="form-label">
+                                    <strong>Detailed Narrative</strong>
+                                    <span class="text-danger">*</span>
+                                </label>
+                                <textarea 
+                                    class="form-control" 
+                                    id="narrative" 
+                                    name="narrative"
+                                    rows="8" 
+                                    required
+                                    minlength="50"
+                                    maxlength="5000"
+                                    placeholder="Describe the corruption incident in detail. Include who, what, when, where, and why. Minimum 50 characters required."></textarea>
+                                <div class="form-text">
+                                    <span id="char-count">0</span> / 5000 characters 
+                                    (minimum 50 required)
+                                </div>
+                                <div class="invalid-feedback">
+                                    Please provide a detailed narrative (at least 50 characters).
+                                </div>
+                            </div>
+
+                            <!-- Evidence Files -->
+                            <div class="mb-4">
+                                <label for="evidence-files" class="form-label">
+                                    <strong>Evidence Files</strong>
+                                    <span class="text-danger">*</span>
+                                </label>
+                                <input 
+                                    class="form-control" 
+                                    type="file" 
+                                    id="evidence-files" 
+                                    name="evidence_files"
+                                    accept="image/*,audio/*,video/*,.pdf,.doc,.docx"
+                                    multiple
+                                    required>
+                                <div class="form-text">
+                                    <i class="bi bi-paperclip"></i>
+                                    Supported: Images (JPG, PNG), Audio (MP3, WAV), Video (MP4, AVI), Documents (PDF)
+                                    <br>
+                                    Max size: 10MB per image, 20MB per audio, 50MB per video, 5MB per document
+                                </div>
+                                <div class="invalid-feedback">
+                                    Please upload at least one evidence file.
+                                </div>
+                                
+                                <!-- File Preview -->
+                                <div id="file-preview" class="mt-3"></div>
+                            </div>
+
+                            <!-- Location (Optional) -->
+                            <div class="mb-4">
+                                <label for="location" class="form-label">
+                                    <strong>Location (Optional)</strong>
+                                </label>
+                                <input 
+                                    type="text" 
+                                    class="form-control" 
+                                    id="location" 
+                                    name="location"
+                                    placeholder="City, State, or Region (optional)"
+                                    maxlength="200">
+                                <div class="form-text">
+                                    <i class="bi bi-geo-alt"></i>
+                                    Location helps with investigation but is optional
+                                </div>
+                            </div>
+
+                            <!-- Accused Person/Organization (Optional) -->
+                            <div class="mb-4">
+                                <label for="accused" class="form-label">
+                                    <strong>Accused Person/Organization (Optional)</strong>
+                                </label>
+                                <input 
+                                    type="text" 
+                                    class="form-control" 
+                                    id="accused" 
+                                    name="accused"
+                                    placeholder="Name of person or organization (optional)"
+                                    maxlength="200">
+                            </div>
+
+                            <!-- Incident Date (Optional) -->
+                            <div class="mb-4">
+                                <label for="incident-date" class="form-label">
+                                    <strong>Incident Date (Optional)</strong>
+                                </label>
+                                <input 
+                                    type="date" 
+                                    class="form-control" 
+                                    id="incident-date" 
+                                    name="incident_date"
+                                    max="">
+                            </div>
+
+                            <!-- Anonymous Contact (Optional) -->
+                            <div class="mb-4">
+                                <label for="contact" class="form-label">
+                                    <strong>Anonymous Contact Method (Optional)</strong>
+                                </label>
+                                <input 
+                                    type="text" 
+                                    class="form-control" 
+                                    id="contact" 
+                                    name="contact"
+                                    placeholder="Encrypted email, secure messaging ID, etc. (optional)"
+                                    maxlength="200">
+                                <div class="form-text">
+                                    <i class="bi bi-envelope-lock"></i>
+                                    Use encrypted channels only (e.g., ProtonMail, Signal)
+                                </div>
+                            </div>
+
+                            <!-- Terms Agreement -->
+                            <div class="mb-4">
+                                <div class="form-check">
+                                    <input 
+                                        class="form-check-input" 
+                                        type="checkbox" 
+                                        id="terms-agree" 
+                                        required>
+                                    <label class="form-check-label" for="terms-agree">
+                                        I confirm that the information provided is truthful to the best of my knowledge
+                                        <span class="text-danger">*</span>
+                                    </label>
+                                    <div class="invalid-feedback">
+                                        You must agree to proceed.
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Submit Button -->
+                            <div class="d-grid gap-2">
+                                <button type="submit" class="btn btn-primary btn-lg" id="submit-btn">
+                                    <i class="bi bi-send"></i>
+                                    Submit Evidence Anonymously
+                                </button>
+                                <button type="reset" class="btn btn-outline-secondary">
+                                    <i class="bi bi-x-circle"></i>
+                                    Clear Form
+                                </button>
+                            </div>
+                        </form>
+
+                        <!-- Progress Bar -->
+                        <div id="upload-progress" class="mt-4" style="display: none;">
+                            <div class="progress" style="height: 30px;">
+                                <div 
+                                    id="progress-bar" 
+                                    class="progress-bar progress-bar-striped progress-bar-animated" 
+                                    role="progressbar" 
+                                    style="width: 0%;">
+                                    0%
+                                </div>
+                            </div>
+                            <p class="text-center mt-2 text-muted" id="progress-text">
+                                Processing submission...
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Success Message -->
+                <div id="success-message" class="alert alert-success mt-4" style="display: none;">
+                    <h5 class="alert-heading">
+                        <i class="bi bi-check-circle"></i>
+                        Submission Successful!
+                    </h5>
+                    <p>Your evidence has been submitted successfully and is being processed.</p>
+                    <hr>
+                    <p class="mb-0">
+                        <strong>Submission ID:</strong> <code id="submission-id"></code>
+                        <button class="btn btn-sm btn-outline-success ms-2" id="copy-id-btn">
+                            <i class="bi bi-clipboard"></i> Copy ID
+                        </button>
+                    </p>
+                    <p class="mt-2 mb-0">
+                        <strong>Anonymous Pseudonym:</strong> <code id="pseudonym"></code>
+                    </p>
+                    <div class="mt-3">
+                        <a href="/review.html" class="btn btn-success">
+                            <i class="bi bi-eye"></i> View Submission Status
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Error Message -->
+                <div id="error-message" class="alert alert-danger mt-4" style="display: none;">
+                    <h5 class="alert-heading">
+                        <i class="bi bi-exclamation-triangle"></i>
+                        Submission Failed
+                    </h5>
+                    <p id="error-text"></p>
+                    <button class="btn btn-outline-danger" onclick="location.reload()">
+                        <i class="bi bi-arrow-clockwise"></i> Try Again
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Information Cards -->
+        <div class="row mt-5">
+            <div class="col-md-4 mb-3">
+                <div class="card h-100 border-primary">
+                    <div class="card-body text-center">
+                        <i class="bi bi-shield-lock-fill text-primary" style="font-size: 3rem;"></i>
+                        <h5 class="card-title mt-3">Complete Anonymity</h5>
+                        <p class="card-text">
+                            Your identity is protected using cryptographic pseudonyms. 
+                            No personal information is stored.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-3">
+                <div class="card h-100 border-success">
+                    <div class="card-body text-center">
+                        <i class="bi bi-cpu-fill text-success" style="font-size: 3rem;"></i>
+                        <h5 class="card-title mt-3">AI Verification</h5>
+                        <p class="card-text">
+                            Evidence is automatically analyzed using AI to detect deepfakes 
+                            and assess credibility.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-3">
+                <div class="card h-100 border-info">
+                    <div class="card-body text-center">
+                        <i class="bi bi-people-fill text-info" style="font-size: 3rem;"></i>
+                        <h5 class="card-title mt-3">Consensus Validation</h5>
+                        <p class="card-text">
+                            Multiple validators review submissions using Byzantine consensus 
+                            for fair assessment.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white mt-5 py-4">
+        <div class="container text-center">
+            <p class="mb-2">
+                <strong>Corruption Reporting System</strong> - Research Prototype v1.0.0
+            </p>
+            <p class="text-muted small mb-0">
+                Zero-cost deployment using free ML models and open-source tools
+            </p>
+            <p class="text-muted small">
+                <a href="/help.html" class="text-white">Help</a> | 
+                <a href="/api/v1/docs" class="text-white" target="_blank">API Docs</a>
+            </p>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Custom JS -->
+    <script src="/js/utils.js"></script>
+    <script src="/js/api.js"></script>
+    <script src="/js/submission.js"></script>
+    <script src="/js/error_handler.js"></script>
+
+    <script>
+        // Set max date to today
+        document.getElementById('incident-date').setAttribute('max', new Date().toISOString().split('T')[0]);
+
+        // Character counter
+        const narrativeInput = document.getElementById('narrative');
+        const charCount = document.getElementById('char-count');
+        
+        narrativeInput.addEventListener('input', function() {
+            charCount.textContent = this.value.length;
+            
+            // Visual feedback
+            if (this.value.length < 50) {
+                charCount.style.color = 'red';
+            } else if (this.value.length < 100) {
+                charCount.style.color = 'orange';
+            } else {
+                charCount.style.color = 'green';
+            }
+        });
+
+        // File preview
+        const fileInput = document.getElementById('evidence-files');
+        const filePreview = document.getElementById('file-preview');
+        
+        fileInput.addEventListener('change', function() {
+            filePreview.innerHTML = '';
+            
+            if (this.files.length === 0) return;
+            
+            const previewContainer = document.createElement('div');
+            previewContainer.className = 'alert alert-secondary';
+            
+            let html = '<strong>Selected Files:</strong><ul class="mb-0 mt-2">';
+            
+            for (let file of this.files) {
+                const sizeInMB = (file.size / 1024 / 1024).toFixed(2);
+                const icon = getFileIcon(file.type);
+                html += `<li><i class="bi ${icon}"></i> ${file.name} (${sizeInMB} MB)</li>`;
+            }
+            
+            html += '</ul>';
+            previewContainer.innerHTML = html;
+            filePreview.appendChild(previewContainer);
+        });
+
+        function getFileIcon(mimeType) {
+            if (mimeType.startsWith('image/')) return 'bi-file-image';
+            if (mimeType.startsWith('audio/')) return 'bi-file-music';
+            if (mimeType.startsWith('video/')) return 'bi-file-play';
+            if (mimeType.includes('pdf')) return 'bi-file-pdf';
+            return 'bi-file-earmark';
+        }
+
+        // Copy submission ID
+        document.addEventListener('click', function(e) {
+            if (e.target.id === 'copy-id-btn' || e.target.parentElement.id === 'copy-id-btn') {
+                const submissionId = document.getElementById('submission-id').textContent;
+                navigator.clipboard.writeText(submissionId).then(() => {
+                    const btn = document.getElementById('copy-id-btn');
+                    const originalHTML = btn.innerHTML;
+                    btn.innerHTML = '<i class="bi bi-check"></i> Copied!';
+                    setTimeout(() => {
+                        btn.innerHTML = originalHTML;
+                    }, 2000);
+                });
+            }
+        });
+    </script>
+</body>
+</html>
