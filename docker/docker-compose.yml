@@ -1,0 +1,198 @@
+# =============================================================================
+# Corruption Reporting System - Docker Compose (Production)
+# Version: 1.0.0
+# Description: Multi-container orchestration for production deployment
+#
+# Usage:
+#   docker-compose -f docker/docker-compose.yml up -d
+#   docker-compose -f docker/docker-compose.yml down
+#   docker-compose -f docker/docker-compose.yml logs -f
+# =============================================================================
+
+version: '3.8'
+
+# =============================================================================
+# Services
+# =============================================================================
+services:
+  # ---------------------------------------------------------------------------
+  # Backend Service (Python FastAPI)
+  # ---------------------------------------------------------------------------
+  backend:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile.backend
+      target: production
+      args:
+        - PRELOAD_MODELS=false
+    
+    image: corruption-backend:latest
+    container_name: corruption-backend
+    
+    restart: unless-stopped
+    
+    ports:
+      - "8000:8000"
+    
+    volumes:
+      # Data persistence
+      - backend-data:/app/backend/data
+      # Configuration (read-only)
+      - ../config.prod.yaml:/app/config.prod.yaml:ro
+      # Logs
+      - backend-logs:/app/logs
+    
+    environment:
+      # Application settings
+      - CONFIG_ENV=production
+      - PYTHONUNBUFFERED=1
+      - LOG_LEVEL=info
+      
+      # Performance settings
+      - MAX_WORKERS=2
+      - WORKER_CLASS=uvicorn.workers.UvicornWorker
+      - TIMEOUT=120
+      
+      # Security settings
+      - ALLOWED_ORIGINS=http://localhost:3000,http://frontend:3000
+      
+      # Resource limits
+      - MAX_MEMORY=4GB
+    
+    healthcheck:
+      test: ["CMD", "python", "/app/scripts/health_check.py", "--json"]
+      interval: 30s
+      timeout: 10s
+      start_period: 60s
+      retries: 3
+    
+    networks:
+      - corruption-network
+    
+    deploy:
+      resources:
+        limits:
+          cpus: '2.0'
+          memory: 4G
+        reservations:
+          cpus: '1.0'
+          memory: 2G
+    
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+  
+  # ---------------------------------------------------------------------------
+  # Frontend Service (Node.js Express)
+  # ---------------------------------------------------------------------------
+  frontend:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile.frontend
+      target: production
+    
+    image: corruption-frontend:latest
+    container_name: corruption-frontend
+    
+    restart: unless-stopped
+    
+    ports:
+      - "3000:3000"
+    
+    environment:
+      # Application settings
+      - NODE_ENV=production
+      - PORT=3000
+      
+      # Backend connection
+      - BACKEND_URL=http://backend:8000
+      - BACKEND_HOST=backend
+      - BACKEND_PORT=8000
+      
+      # Logging
+      - LOG_LEVEL=info
+    
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000/health"]
+      interval: 30s
+      timeout: 5s
+      start_period: 10s
+      retries: 3
+    
+    depends_on:
+      backend:
+        condition: service_healthy
+    
+    networks:
+      - corruption-network
+    
+    deploy:
+      resources:
+        limits:
+          cpus: '1.0'
+          memory: 512M
+        reservations:
+          cpus: '0.5'
+          memory: 256M
+    
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+# =============================================================================
+# Networks
+# =============================================================================
+networks:
+  corruption-network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.20.0.0/16
+
+# =============================================================================
+# Volumes
+# =============================================================================
+volumes:
+  # Backend data persistence
+  backend-data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: ${PWD}/backend/data
+  
+  # Backend logs
+  backend-logs:
+    driver: local
+
+# =============================================================================
+# Notes
+# =============================================================================
+# 
+# Production Deployment:
+#   1. Set environment variables in .env file
+#   2. Run: docker-compose -f docker/docker-compose.yml up -d
+#   3. Check logs: docker-compose -f docker/docker-compose.yml logs -f
+#   4. Health check: curl http://localhost:8000/health
+#
+# Scaling:
+#   docker-compose -f docker/docker-compose.yml up -d --scale backend=3
+#
+# Monitoring:
+#   docker-compose -f docker/docker-compose.yml ps
+#   docker-compose -f docker/docker-compose.yml top
+#
+# Backup:
+#   docker-compose -f docker/docker-compose.yml exec backend python /app/scripts/backup.py
+#
+# Stop:
+#   docker-compose -f docker/docker-compose.yml down
+#
+# Clean up (WARNING: deletes volumes):
+#   docker-compose -f docker/docker-compose.yml down -v
+#
+# =============================================================================

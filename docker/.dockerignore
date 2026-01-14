@@ -1,0 +1,127 @@
+# =============================================================================
+# Docker Ignore File
+# Exclude files from Docker build context for faster builds
+# =============================================================================
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+pip-wheel-metadata/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Virtual environments
+venv/
+env/
+ENV/
+.venv
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Node.js
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.npm
+
+# Testing
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+coverage/
+*.cover
+
+# Data directories (use volumes instead)
+backend/data/submissions/*
+backend/data/evidence/*
+backend/data/reports/*
+backend/data/cache/*
+!backend/data/**/.gitkeep
+
+# Logs
+*.log
+logs/
+
+# Backups
+backups/
+
+# Git
+.git/
+.gitignore
+.gitattributes
+
+# Documentation (not needed in container)
+docs/
+*.md
+!README.md
+
+# Evaluation results
+evaluation/results/
+evaluation/datasets/faceforensics/*
+evaluation/datasets/celebdf/*
+evaluation/datasets/synthetic_attacks/*
+
+# Test fixtures
+tests/fixtures/real_images/*
+tests/fixtures/fake_images/*
+!tests/fixtures/**/.gitkeep
+
+# Jupyter notebooks
+notebooks/
+*.ipynb
+.ipynb_checkpoints
+
+# Docker files (don't need to copy into container)
+docker-compose*.yml
+Dockerfile*
+.dockerignore
+
+# CI/CD
+.github/
+
+# Monitoring configs (not needed in app container)
+monitoring/
+
+# Environment files (use environment variables)
+.env
+.env.*
+!.env.example
+
+# Temporary files
+temp/
+tmp/
+*.tmp
+*.temp
+
+# OS files
+Thumbs.db
+.DS_Store
+
+# Archives
+*.zip
+*.tar.gz
+*.rar

@@ -1,0 +1,250 @@
+# =============================================================================
+# Corruption Reporting System - Docker Compose (Development)
+# Version: 1.0.0
+# Description: Multi-container orchestration for development environment
+#
+# Usage:
+#   docker-compose -f docker/docker-compose.dev.yml up
+#   docker-compose -f docker/docker-compose.dev.yml down
+#   docker-compose -f docker/docker-compose.dev.yml logs -f backend
+# =============================================================================
+
+version: '3.8'
+
+# =============================================================================
+# Services
+# =============================================================================
+services:
+  # ---------------------------------------------------------------------------
+  # Backend Service (Python FastAPI) - Development
+  # ---------------------------------------------------------------------------
+  backend:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile.backend
+      target: development
+    
+    image: corruption-backend:dev
+    container_name: corruption-backend-dev
+    
+    restart: unless-stopped
+    
+    ports:
+      - "8000:8000"
+      # Expose additional port for debugging
+      - "5678:5678"
+    
+    volumes:
+      # Hot reload - mount source code
+      - ../backend:/app/backend
+      - ../config.yaml:/app/config.yaml
+      - ../config.dev.yaml:/app/config.dev.yaml
+      - ../scripts:/app/scripts
+      
+      # Data persistence
+      - ../backend/data:/app/backend/data
+      
+      # Exclude Python cache
+      - /app/backend/__pycache__
+      - /app/backend/**/__pycache__
+      
+      # Model cache (to avoid re-downloading)
+      - model-cache:/root/.cache/huggingface
+    
+    environment:
+      # Application settings
+      - CONFIG_ENV=development
+      - PYTHONUNBUFFERED=1
+      - LOG_LEVEL=debug
+      
+      # Development settings
+      - DEBUG=true
+      - RELOAD=true
+      
+      # Security settings (relaxed for development)
+      - ALLOWED_ORIGINS=*
+      
+      # Debugging
+      - PYTHONDONTWRITEBYTECODE=1
+    
+    command: >
+      uvicorn main:app
+      --host 0.0.0.0
+      --port 8000
+      --reload
+      --log-level debug
+    
+    healthcheck:
+      test: ["CMD", "python", "/app/scripts/health_check.py", "--json"]
+      interval: 30s
+      timeout: 10s
+      start_period: 60s
+      retries: 3
+    
+    networks:
+      - corruption-network-dev
+    
+    stdin_open: true
+    tty: true
+  
+  # ---------------------------------------------------------------------------
+  # Frontend Service (Node.js Express) - Development
+  # ---------------------------------------------------------------------------
+  frontend:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile.frontend
+      target: development
+    
+    image: corruption-frontend:dev
+    container_name: corruption-frontend-dev
+    
+    restart: unless-stopped
+    
+    ports:
+      - "3000:3000"
+      # Expose additional port for debugging
+      - "9229:9229"
+    
+    volumes:
+      # Hot reload - mount source code
+      - ../frontend:/app/frontend
+      - ../package.json:/app/package.json
+      
+      # Exclude node_modules
+      - /app/node_modules
+      - /app/frontend/node_modules
+    
+    environment:
+      # Application settings
+      - NODE_ENV=development
+      - PORT=3000
+      - DEBUG=*
+      
+      # Backend connection
+      - BACKEND_URL=http://backend:8000
+      - BACKEND_HOST=backend
+      - BACKEND_PORT=8000
+      
+      # Debugging
+      - NODE_OPTIONS=--inspect=0.0.0.0:9229
+    
+    command: >
+      node
+      --watch
+      server.js
+    
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000/health"]
+      interval: 30s
+      timeout: 5s
+      start_period: 10s
+      retries: 3
+    
+    depends_on:
+      backend:
+        condition: service_healthy
+    
+    networks:
+      - corruption-network-dev
+    
+    stdin_open: true
+    tty: true
+
+  # ---------------------------------------------------------------------------
+  # Testing Service (Optional) - Run tests in container
+  # ---------------------------------------------------------------------------
+  test:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile.backend
+      target: development
+    
+    image: corruption-backend:dev
+    container_name: corruption-test
+    
+    volumes:
+      - ../backend:/app/backend
+      - ../tests:/app/tests
+      - ../scripts:/app/scripts
+      - test-cache:/root/.cache
+    
+    environment:
+      - CONFIG_ENV=test
+      - PYTHONUNBUFFERED=1
+      - LOG_LEVEL=warning
+    
+    command: >
+      pytest
+      /app/tests
+      -v
+      --cov=/app/backend
+      --cov-report=html:/app/tests/coverage
+      --cov-report=term
+    
+    networks:
+      - corruption-network-dev
+    
+    profiles:
+      - testing
+    
+    depends_on:
+      - backend
+
+# =============================================================================
+# Networks
+# =============================================================================
+networks:
+  corruption-network-dev:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.21.0.0/16
+
+# =============================================================================
+# Volumes
+# =============================================================================
+volumes:
+  # Model cache to avoid re-downloading in development
+  model-cache:
+    driver: local
+  
+  # Test cache
+  test-cache:
+    driver: local
+
+# =============================================================================
+# Notes
+# =============================================================================
+# 
+# Development Workflow:
+#   1. Start services: docker-compose -f docker/docker-compose.dev.yml up
+#   2. Code changes auto-reload (hot reload enabled)
+#   3. View logs: docker-compose -f docker/docker-compose.dev.yml logs -f
+#   4. Access backend: http://localhost:8000
+#   5. Access frontend: http://localhost:3000
+#   6. API docs: http://localhost:8000/docs
+#
+# Debugging:
+#   Backend (Python):
+#     - Attach debugger to port 5678
+#   Frontend (Node.js):
+#     - Attach debugger to port 9229
+#
+# Running Tests:
+#   docker-compose -f docker/docker-compose.dev.yml --profile testing up test
+#
+# Interactive Shell:
+#   Backend: docker-compose -f docker/docker-compose.dev.yml exec backend bash
+#   Frontend: docker-compose -f docker/docker-compose.dev.yml exec frontend sh
+#
+# Rebuild After Dependency Changes:
+#   docker-compose -f docker/docker-compose.dev.yml up --build
+#
+# Stop Services:
+#   docker-compose -f docker/docker-compose.dev.yml down
+#
+# View Resource Usage:
+#   docker-compose -f docker/docker-compose.dev.yml stats
+#
+# =============================================================================
