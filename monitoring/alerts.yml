@@ -1,0 +1,497 @@
+# Prometheus Alert Rules
+# Corruption Reporting System - Alert Configuration
+# Version: 1.0.0
+# Date: January 14, 2026
+
+groups:
+  # =============================================================================
+  # CRITICAL ALERTS - Immediate Action Required
+  # =============================================================================
+  - name: critical_alerts
+    interval: 30s
+    rules:
+      # Backend API Down
+      - alert: BackendAPIDown
+        expr: up{job="backend-api"} == 0
+        for: 1m
+        labels:
+          severity: critical
+          component: backend
+          layer: application
+        annotations:
+          summary: "Backend API is down"
+          description: "The FastAPI backend has been down for more than 1 minute. Immediate investigation required."
+          impact: "All evidence submission and processing stopped"
+          action: "Check backend logs, restart service if needed"
+
+      # Frontend Server Down
+      - alert: FrontendServerDown
+        expr: up{job="frontend-server"} == 0
+        for: 2m
+        labels:
+          severity: critical
+          component: frontend
+          layer: presentation
+        annotations:
+          summary: "Frontend server is down"
+          description: "The Node.js frontend server has been unreachable for more than 2 minutes."
+          impact: "Users cannot access the application"
+          action: "Check frontend server status and restart if necessary"
+
+      # High Error Rate
+      - alert: HighErrorRate
+        expr: |
+          (
+            rate(http_requests_total{job="backend-api",status=~"5.."}[5m]) 
+            / 
+            rate(http_requests_total{job="backend-api"}[5m])
+          ) > 0.1
+        for: 5m
+        labels:
+          severity: critical
+          component: backend
+          layer: application
+        annotations:
+          summary: "High API error rate detected"
+          description: "More than 10% of API requests are returning 5xx errors for the last 5 minutes."
+          impact: "Significant service degradation affecting users"
+          action: "Check application logs for exceptions, review recent deployments"
+
+      # Memory Exhaustion
+      - alert: MemoryExhaustion
+        expr: process_memory_percent{job="backend-api"} > 90
+        for: 3m
+        labels:
+          severity: critical
+          component: backend
+          layer: infrastructure
+        annotations:
+          summary: "Backend memory usage critically high"
+          description: "Backend process is using more than 90% of available memory."
+          impact: "Risk of OOM kills and service crashes"
+          action: "Investigate memory leaks, consider restarting service, review ML model caching"
+
+      # Hash Chain Integrity Failure
+      - alert: HashChainIntegrityFailure
+        expr: hash_chain_validation_failures_total > 0
+        for: 1m
+        labels:
+          severity: critical
+          component: security
+          layer: cryptography
+        annotations:
+          summary: "Hash chain integrity compromised"
+          description: "Hash chain validation has failed, indicating potential tampering."
+          impact: "Evidence integrity cannot be guaranteed"
+          action: "IMMEDIATE: Stop accepting submissions, investigate data corruption, restore from backup"
+
+  # =============================================================================
+  # HIGH PRIORITY ALERTS - Action Required Soon
+  # =============================================================================
+  - name: high_priority_alerts
+    interval: 1m
+    rules:
+      # High Response Time
+      - alert: HighResponseTime
+        expr: |
+          histogram_quantile(0.95, 
+            rate(http_request_duration_seconds_bucket{job="backend-api"}[5m])
+          ) > 5
+        for: 5m
+        labels:
+          severity: high
+          component: backend
+          layer: application
+        annotations:
+          summary: "High API response time"
+          description: "95th percentile response time is above 5 seconds."
+          impact: "Poor user experience, potential timeout errors"
+          action: "Check ML model performance, review database queries, analyze slow endpoints"
+
+      # ML Model Loading Failures
+      - alert: MLModelLoadingFailure
+        expr: model_loading_failures_total > 0
+        for: 2m
+        labels:
+          severity: high
+          component: ml-models
+          layer: model
+        annotations:
+          summary: "ML model failed to load"
+          description: "One or more ML models failed to load into memory."
+          impact: "Credibility assessment unavailable, submissions may fail"
+          action: "Check model cache, verify transformers library, review disk space"
+
+      # Queue Buildup
+      - alert: QueueBuildup
+        expr: queue_pending_jobs{job="queue-worker"} > 50
+        for: 10m
+        labels:
+          severity: high
+          component: queue
+          layer: worker
+        annotations:
+          summary: "Background job queue building up"
+          description: "More than 50 jobs pending in queue for over 10 minutes."
+          impact: "Delayed processing of submissions"
+          action: "Check worker health, scale workers if possible, investigate slow jobs"
+
+      # High CPU Usage
+      - alert: HighCPUUsage
+        expr: process_cpu_percent{job="backend-api"} > 85
+        for: 10m
+        labels:
+          severity: high
+          component: backend
+          layer: infrastructure
+        annotations:
+          summary: "High CPU utilization"
+          description: "Backend CPU usage above 85% for 10 minutes."
+          impact: "Degraded performance, slower response times"
+          action: "Investigate CPU-intensive operations, review ML inference optimizations"
+
+      # Consensus Not Converging
+      - alert: ConsensusNotConverging
+        expr: layer4_consensus_iterations_avg > 15
+        for: 5m
+        labels:
+          severity: high
+          component: consensus
+          layer: core-logic
+        annotations:
+          summary: "Consensus algorithm not converging efficiently"
+          description: "Average consensus iterations exceeding 15, indicating validator disagreement."
+          impact: "Slow decision-making, increased computational cost"
+          action: "Review validator pool diversity, check for coordinated attacks"
+
+      # Rate Limiter Threshold Reached
+      - alert: RateLimiterThresholdReached
+        expr: rate(rate_limiter_blocked_total{job="rate-limiter"}[5m]) > 10
+        for: 5m
+        labels:
+          severity: high
+          component: security
+          layer: security
+        annotations:
+          summary: "High rate of blocked requests"
+          description: "More than 10 requests per second being blocked by rate limiter."
+          impact: "Potential DoS attack in progress"
+          action: "Investigate source IPs, consider IP blocking, review rate limits"
+
+  # =============================================================================
+  # MEDIUM PRIORITY ALERTS - Monitoring Required
+  # =============================================================================
+  - name: medium_priority_alerts
+    interval: 2m
+    rules:
+      # Elevated Error Rate
+      - alert: ElevatedErrorRate
+        expr: |
+          (
+            rate(http_requests_total{job="backend-api",status=~"5.."}[10m]) 
+            / 
+            rate(http_requests_total{job="backend-api"}[10m])
+          ) > 0.05
+        for: 10m
+        labels:
+          severity: medium
+          component: backend
+          layer: application
+        annotations:
+          summary: "Elevated error rate"
+          description: "Error rate is between 5-10% for the last 10 minutes."
+          impact: "Some users experiencing errors"
+          action: "Monitor closely, review error logs"
+
+      # High Storage Usage
+      - alert: HighStorageUsage
+        expr: storage_used_percent{job="storage-metrics"} > 80
+        for: 5m
+        labels:
+          severity: medium
+          component: storage
+          layer: data
+        annotations:
+          summary: "Storage usage above 80%"
+          description: "File storage is approaching capacity limits."
+          impact: "Risk of running out of storage, new submissions may fail"
+          action: "Review cleanup policies, archive old data, consider storage expansion"
+
+      # Low Credibility Scores
+      - alert: LowCredibilityScores
+        expr: layer2_credibility_score_avg < 0.4
+        for: 15m
+        labels:
+          severity: medium
+          component: credibility
+          layer: core-logic
+        annotations:
+          summary: "Low average credibility scores"
+          description: "Average credibility score below 0.4 for 15 minutes."
+          impact: "High volume of low-quality or fake submissions"
+          action: "Investigate submission sources, review for coordinated fake content"
+
+      # Coordination Detection Alert
+      - alert: CoordinationDetected
+        expr: rate(layer3_coordination_detected_total[10m]) > 2
+        for: 5m
+        labels:
+          severity: medium
+          component: coordination
+          layer: core-logic
+        annotations:
+          summary: "Coordinated attack pattern detected"
+          description: "Multiple coordinated submissions detected in short time frame."
+          impact: "Potential organized disinformation campaign"
+          action: "Review submission patterns, consider enhanced validation"
+
+      # Slow ML Inference
+      - alert: SlowMLInference
+        expr: model_inference_duration_seconds{job="ml-models"} > 10
+        for: 5m
+        labels:
+          severity: medium
+          component: ml-models
+          layer: model
+        annotations:
+          summary: "ML model inference taking too long"
+          description: "Model inference time exceeding 10 seconds."
+          impact: "Slow submission processing, poor user experience"
+          action: "Check model optimization, review batch processing, consider caching"
+
+      # Counter-Evidence Spike
+      - alert: CounterEvidenceSpike
+        expr: rate(layer5_counter_evidence_total[10m]) > 5
+        for: 10m
+        labels:
+          severity: medium
+          component: counter-evidence
+          layer: core-logic
+        annotations:
+          summary: "Unusual spike in counter-evidence submissions"
+          description: "Counter-evidence submission rate unusually high."
+          impact: "Potential coordinated defense campaign"
+          action: "Review counter-evidence quality, check for abuse patterns"
+
+  # =============================================================================
+  # LOW PRIORITY ALERTS - Informational
+  # =============================================================================
+  - name: low_priority_alerts
+    interval: 5m
+    rules:
+      # Increased Request Rate
+      - alert: IncreasedRequestRate
+        expr: |
+          rate(http_requests_total{job="backend-api"}[10m]) 
+          > 
+          rate(http_requests_total{job="backend-api"}[1h] offset 1d) * 2
+        for: 30m
+        labels:
+          severity: low
+          component: backend
+          layer: application
+        annotations:
+          summary: "Request rate doubled compared to yesterday"
+          description: "API request rate is 2x higher than the same time yesterday."
+          impact: "Increased load on system"
+          action: "Monitor performance, prepare for scaling if trend continues"
+
+      # Memory Usage Warning
+      - alert: MemoryUsageWarning
+        expr: process_memory_percent{job="backend-api"} > 70
+        for: 15m
+        labels:
+          severity: low
+          component: backend
+          layer: infrastructure
+        annotations:
+          summary: "Memory usage elevated"
+          description: "Backend memory usage above 70%."
+          impact: "Approaching memory limits"
+          action: "Monitor memory trends, review for memory leaks"
+
+      # CPU Usage Warning
+      - alert: CPUUsageWarning
+        expr: process_cpu_percent{job="backend-api"} > 70
+        for: 15m
+        labels:
+          severity: low
+          component: backend
+          layer: infrastructure
+        annotations:
+          summary: "CPU usage elevated"
+          description: "Backend CPU usage above 70%."
+          impact: "Higher than normal CPU utilization"
+          action: "Monitor CPU trends, review workload"
+
+      # Long Queue Processing Time
+      - alert: LongQueueProcessingTime
+        expr: queue_processing_duration_seconds > 300
+        for: 10m
+        labels:
+          severity: low
+          component: queue
+          layer: worker
+        annotations:
+          summary: "Queue jobs taking longer than expected"
+          description: "Background jobs taking more than 5 minutes to process."
+          impact: "Slower than expected processing"
+          action: "Review job complexity, check for optimization opportunities"
+
+      # Model Cache Miss Rate High
+      - alert: HighCacheMissRate
+        expr: model_cache_miss_rate > 0.3
+        for: 30m
+        labels:
+          severity: low
+          component: ml-models
+          layer: model
+        annotations:
+          summary: "High model cache miss rate"
+          description: "Cache miss rate above 30% for ML models."
+          impact: "Increased model loading time"
+          action: "Review cache strategy, consider increasing cache size"
+
+  # =============================================================================
+  # RESEARCH & EVALUATION ALERTS
+  # =============================================================================
+  - name: research_alerts
+    interval: 5m
+    rules:
+      # Low AUROC Score
+      - alert: LowAUROCScore
+        expr: evaluation_auroc_score < 0.75
+        for: 30m
+        labels:
+          severity: medium
+          component: evaluation
+          layer: research
+        annotations:
+          summary: "AUROC score below research target"
+          description: "Current AUROC score is below the 0.75 MVP target."
+          impact: "Research quality metrics not meeting goals"
+          action: "Review model performance, analyze error patterns, consider retraining"
+
+      # Consensus Convergence Slow
+      - alert: ConsensusConvergenceSlow
+        expr: layer4_consensus_convergence_time_seconds > 60
+        for: 15m
+        labels:
+          severity: low
+          component: consensus
+          layer: research
+        annotations:
+          summary: "Consensus convergence slower than expected"
+          description: "Consensus taking more than 60 seconds to converge."
+          impact: "Research metrics affected, slower processing"
+          action: "Analyze validator disagreements, review consensus parameters"
+
+      # Low Counter-Evidence Impact
+      - alert: LowCounterEvidenceImpact
+        expr: layer5_counter_evidence_impact_percent < 15
+        for: 1h
+        labels:
+          severity: low
+          component: counter-evidence
+          layer: research
+        annotations:
+          summary: "Counter-evidence impact below target"
+          description: "Counter-evidence reducing false positives by less than 15% (target: 20%+)."
+          impact: "Research goal not met"
+          action: "Review Bayesian aggregation weights, analyze counter-evidence quality"
+
+  # =============================================================================
+  # SECURITY ALERTS
+  # =============================================================================
+  - name: security_alerts
+    interval: 1m
+    rules:
+      # Validation Failures
+      - alert: ValidationFailures
+        expr: rate(validation_failures_total[5m]) > 5
+        for: 5m
+        labels:
+          severity: high
+          component: security
+          layer: validation
+        annotations:
+          summary: "High rate of validation failures"
+          description: "More than 5 validation failures per second."
+          impact: "Potential malicious input attempts"
+          action: "Review validation logs, check for attack patterns"
+
+      # Crypto Operation Failures
+      - alert: CryptoOperationFailures
+        expr: crypto_operation_failures_total > 0
+        for: 1m
+        labels:
+          severity: high
+          component: security
+          layer: cryptography
+        annotations:
+          summary: "Cryptographic operations failing"
+          description: "Encryption or hashing operations are failing."
+          impact: "Security guarantees compromised"
+          action: "Check crypto service, verify key integrity"
+
+      # Anonymous Submission Pattern Anomaly
+      - alert: AnonymousSubmissionAnomaly
+        expr: layer1_anonymity_violations_total > 0
+        for: 1m
+        labels:
+          severity: high
+          component: security
+          layer: anonymity
+        annotations:
+          summary: "Anonymity violation detected"
+          description: "Potential de-anonymization attempt detected."
+          impact: "Submitter anonymity at risk"
+          action: "Review anonymity layer, check for metadata leaks"
+
+  # =============================================================================
+  # DATA INTEGRITY ALERTS
+  # =============================================================================
+  - name: data_integrity_alerts
+    interval: 2m
+    rules:
+      # Storage Corruption
+      - alert: StorageCorruption
+        expr: storage_corruption_detected_total > 0
+        for: 1m
+        labels:
+          severity: critical
+          component: storage
+          layer: data
+        annotations:
+          summary: "Data corruption detected"
+          description: "Storage integrity checks have failed."
+          impact: "Data loss or corruption risk"
+          action: "IMMEDIATE: Stop writes, restore from backup, investigate cause"
+
+      # Index Inconsistency
+      - alert: IndexInconsistency
+        expr: storage_index_inconsistencies_total > 0
+        for: 5m
+        labels:
+          severity: high
+          component: storage
+          layer: data
+        annotations:
+          summary: "Storage index inconsistency"
+          description: "Index file does not match stored submissions."
+          impact: "Data retrieval issues, potential data loss"
+          action: "Rebuild index, verify data integrity"
+
+      # Backup Failure
+      - alert: BackupFailure
+        expr: backup_failures_total > 0
+        for: 1m
+        labels:
+          severity: high
+          component: storage
+          layer: data
+        annotations:
+          summary: "Backup operation failed"
+          description: "Scheduled backup has failed."
+          impact: "No recent backup available for disaster recovery"
+          action: "Investigate backup service, run manual backup"
