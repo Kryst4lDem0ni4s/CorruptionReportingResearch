@@ -1,0 +1,215 @@
+# ============================================
+# CORRUPTION REPORTING SYSTEM
+# Matplotlib Style Configuration
+# Version: 1.0.0
+# Description: Publication-quality figure styling
+# ============================================
+
+# ============================================
+# FIGURE PROPERTIES
+# ============================================
+
+# Figure size and DPI
+figure.figsize      : 10, 6
+figure.dpi          : 100
+figure.autolayout   : False
+figure.titlesize    : 14
+figure.titleweight  : bold
+
+# Subplot spacing
+figure.subplot.left   : 0.125
+figure.subplot.right  : 0.9
+figure.subplot.bottom : 0.11
+figure.subplot.top    : 0.88
+figure.subplot.wspace : 0.2
+figure.subplot.hspace : 0.2
+
+# ============================================
+# FONT PROPERTIES
+# ============================================
+
+font.family         : sans-serif
+font.sans-serif     : DejaVu Sans, Arial, Helvetica, sans-serif
+font.size           : 11
+font.weight         : normal
+
+# ============================================
+# AXES PROPERTIES
+# ============================================
+
+# Axes appearance
+axes.linewidth      : 1.5
+axes.titlesize      : 14
+axes.titleweight    : bold
+axes.titlepad       : 10
+axes.labelsize      : 12
+axes.labelweight    : bold
+axes.labelpad       : 6
+axes.labelcolor     : black
+
+# Axes spines
+axes.spines.left    : True
+axes.spines.bottom  : True
+axes.spines.top     : False
+axes.spines.right   : False
+
+# Axes grid
+axes.grid           : True
+axes.grid.axis      : both
+axes.grid.which     : major
+
+# Axes colors
+axes.facecolor      : white
+axes.edgecolor      : black
+
+# Axes limits
+axes.autolimit_mode : data
+axes.xmargin        : 0.05
+axes.ymargin        : 0.05
+
+# ============================================
+# GRID PROPERTIES
+# ============================================
+
+grid.color          : gray
+grid.linestyle      : --
+grid.linewidth      : 0.8
+grid.alpha          : 0.3
+
+# ============================================
+# TICK PROPERTIES
+# ============================================
+
+# X-axis ticks
+xtick.major.size    : 5
+xtick.major.width   : 1.5
+xtick.minor.size    : 3
+xtick.minor.width   : 1.0
+xtick.labelsize     : 10
+xtick.direction     : out
+xtick.color         : black
+
+# Y-axis ticks
+ytick.major.size    : 5
+ytick.major.width   : 1.5
+ytick.minor.size    : 3
+ytick.minor.width   : 1.0
+ytick.labelsize     : 10
+ytick.direction     : out
+ytick.color         : black
+
+# ============================================
+# LINE PROPERTIES
+# ============================================
+
+lines.linewidth     : 2.0
+lines.linestyle     : -
+lines.marker        : None
+lines.markersize    : 6
+lines.markeredgewidth : 1.0
+lines.antialiased   : True
+
+# ============================================
+# PATCH PROPERTIES
+# ============================================
+
+patch.linewidth     : 1.0
+patch.facecolor     : #4A90E2
+patch.edgecolor     : black
+patch.antialiased   : True
+
+# ============================================
+# LEGEND PROPERTIES
+# ============================================
+
+legend.fontsize     : 10
+legend.frameon      : True
+legend.framealpha   : 0.8
+legend.facecolor    : white
+legend.edgecolor    : black
+legend.shadow       : True
+legend.fancybox     : True
+legend.loc          : best
+legend.borderpad    : 0.5
+legend.labelspacing : 0.5
+legend.handlelength : 2.0
+
+# ============================================
+# ERRORBAR PROPERTIES
+# ============================================
+
+errorbar.capsize    : 5
+
+# ============================================
+# HISTOGRAM PROPERTIES
+# ============================================
+
+hist.bins           : auto
+
+# ============================================
+# SCATTER PROPERTIES
+# ============================================
+
+scatter.marker      : o
+
+# ============================================
+# IMAGE PROPERTIES
+# ============================================
+
+image.cmap          : viridis
+image.interpolation : nearest
+image.aspect        : auto
+
+# ============================================
+# CONTOUR PROPERTIES
+# ============================================
+
+contour.negative_linestyle : dashed
+
+# ============================================
+# SAVE PROPERTIES
+# ============================================
+
+savefig.dpi         : 300
+savefig.format      : png
+savefig.bbox        : tight
+savefig.pad_inches  : 0.1
+savefig.transparent : False
+
+# ============================================
+# PDF PROPERTIES
+# ============================================
+
+pdf.compression     : 6
+pdf.fonttype        : 42
+
+# ============================================
+# PS/EPS PROPERTIES
+# ============================================
+
+ps.fonttype         : 42
+ps.useafm           : False
+
+# ============================================
+# SVG PROPERTIES
+# ============================================
+
+svg.fonttype        : path
+
+# ============================================
+# COLOR CYCLE
+# ============================================
+
+# Publication-quality color palette
+axes.prop_cycle : cycler('color', ['2E86AB', 'A23B72', 'F18F01', 'C73E1D', '6A994E', 'BC4B51', '8E7DBE', 'F77F00'])
+
+# ============================================
+# MATHTEXT PROPERTIES
+# ============================================
+
+mathtext.fontset    : dejavusans
+mathtext.default    : regular
+
+# ============================================
+# END OF STYLE CONFIGURATION
+# ============================================
