@@ -1,0 +1,422 @@
+# Prometheus Configuration
+# Corruption Reporting System - Monitoring Setup
+# Version: 1.0.0
+# Date: January 14, 2026
+
+# Global configuration
+global:
+  # How frequently to scrape targets by default
+  scrape_interval: 15s
+  
+  # How long until a scrape request times out
+  scrape_timeout: 10s
+  
+  # How frequently to evaluate rules
+  evaluation_interval: 15s
+  
+  # Labels to attach to any time series or alerts when communicating with external systems
+  external_labels:
+    cluster: 'corruption-reporting-prototype'
+    environment: 'production'
+    replica: '1'
+
+# Alertmanager configuration
+alerting:
+  alertmanagers:
+    - static_configs:
+        - targets:
+          # - 'localhost:9093'  # Uncomment when Alertmanager is deployed
+      timeout: 10s
+
+# Load rules once and periodically evaluate them according to the global 'evaluation_interval'
+rule_files:
+  - 'alerts.yml'
+  # - 'recording_rules.yml'  # Optional: for recording rules
+
+# Scrape configurations
+scrape_configs:
+  # =============================================================================
+  # Prometheus Self-Monitoring
+  # =============================================================================
+  - job_name: 'prometheus'
+    scrape_interval: 15s
+    static_configs:
+      - targets: ['localhost:9090']
+        labels:
+          service: 'prometheus'
+          component: 'monitoring'
+
+  # =============================================================================
+  # FastAPI Backend - Main Application Metrics
+  # =============================================================================
+  - job_name: 'backend-api'
+    scrape_interval: 10s
+    scrape_timeout: 5s
+    metrics_path: '/metrics'
+    static_configs:
+      - targets: ['localhost:8000']
+        labels:
+          service: 'backend'
+          component: 'api'
+          layer: 'application'
+    
+    # Relabel configurations for better metric organization
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: instance
+        replacement: 'backend-api'
+      
+      - source_labels: [__address__]
+        target_label: __param_target
+      
+      - source_labels: [__param_target]
+        target_label: instance
+      
+      - target_label: __address__
+        replacement: 'localhost:8000'
+
+  # =============================================================================
+  # Backend Health Check Endpoint
+  # =============================================================================
+  - job_name: 'backend-health'
+    scrape_interval: 30s
+    scrape_timeout: 10s
+    metrics_path: '/health'
+    static_configs:
+      - targets: ['localhost:8000']
+        labels:
+          service: 'backend'
+          component: 'health'
+          check_type: 'liveness'
+    
+    # Custom metrics extraction from health endpoint
+    metric_relabel_configs:
+      - source_labels: [__name__]
+        regex: 'up'
+        target_label: health_status
+        replacement: 'healthy'
+
+  # =============================================================================
+  # Node.js Frontend Server
+  # =============================================================================
+  - job_name: 'frontend-server'
+    scrape_interval: 15s
+    scrape_timeout: 5s
+    metrics_path: '/metrics'  # If frontend exposes metrics
+    static_configs:
+      - targets: ['localhost:3000']
+        labels:
+          service: 'frontend'
+          component: 'web-server'
+          layer: 'presentation'
+    
+    # Optional: HTTP probe for frontend availability
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: instance
+        replacement: 'frontend-server'
+
+  # =============================================================================
+  # System-Level Metrics (Node Exporter)
+  # =============================================================================
+  - job_name: 'node-exporter'
+    scrape_interval: 30s
+    scrape_timeout: 10s
+    static_configs:
+      - targets: 
+          # - 'localhost:9100'  # Uncomment if Node Exporter is installed
+        labels:
+          service: 'system'
+          component: 'node-exporter'
+          layer: 'infrastructure'
+
+  # =============================================================================
+  # Custom Application Metrics - ML Models
+  # =============================================================================
+  - job_name: 'ml-models'
+    scrape_interval: 60s
+    scrape_timeout: 30s
+    metrics_path: '/api/metrics/models'
+    static_configs:
+      - targets: ['localhost:8000']
+        labels:
+          service: 'backend'
+          component: 'ml-inference'
+          layer: 'model'
+    
+    # Only scrape when models are loaded
+    metric_relabel_configs:
+      - source_labels: [__name__]
+        regex: 'model_.*'
+        action: keep
+
+  # =============================================================================
+  # Custom Application Metrics - Storage & Data
+  # =============================================================================
+  - job_name: 'storage-metrics'
+    scrape_interval: 60s
+    scrape_timeout: 15s
+    metrics_path: '/api/metrics/storage'
+    static_configs:
+      - targets: ['localhost:8000']
+        labels:
+          service: 'backend'
+          component: 'storage'
+          layer: 'data'
+
+  # =============================================================================
+  # Custom Application Metrics - Submission Processing
+  # =============================================================================
+  - job_name: 'submission-processing'
+    scrape_interval: 30s
+    scrape_timeout: 10s
+    metrics_path: '/api/metrics/submissions'
+    static_configs:
+      - targets: ['localhost:8000']
+        labels:
+          service: 'backend'
+          component: 'submissions'
+          layer: 'business-logic'
+    
+    # Track submission-related metrics
+    metric_relabel_configs:
+      - source_labels: [__name__]
+        regex: 'submission_.*|consensus_.*|credibility_.*'
+        action: keep
+
+  # =============================================================================
+  # Custom Application Metrics - 6-Layer System
+  # =============================================================================
+  - job_name: 'layer-metrics'
+    scrape_interval: 30s
+    scrape_timeout: 10s
+    metrics_path: '/api/metrics/layers'
+    static_configs:
+      - targets: ['localhost:8000']
+        labels:
+          service: 'backend'
+          component: 'layers'
+          layer: 'core-logic'
+    
+    # Metrics for each layer
+    metric_relabel_configs:
+      - source_labels: [__name__]
+        regex: 'layer[1-6]_.*'
+        action: keep
+      
+      - source_labels: [__name__]
+        regex: 'layer1_.*'
+        target_label: layer_name
+        replacement: 'anonymity'
+      
+      - source_labels: [__name__]
+        regex: 'layer2_.*'
+        target_label: layer_name
+        replacement: 'credibility'
+      
+      - source_labels: [__name__]
+        regex: 'layer3_.*'
+        target_label: layer_name
+        replacement: 'coordination'
+      
+      - source_labels: [__name__]
+        regex: 'layer4_.*'
+        target_label: layer_name
+        replacement: 'consensus'
+      
+      - source_labels: [__name__]
+        regex: 'layer5_.*'
+        target_label: layer_name
+        replacement: 'counter_evidence'
+      
+      - source_labels: [__name__]
+        regex: 'layer6_.*'
+        target_label: layer_name
+        replacement: 'reporting'
+
+  # =============================================================================
+  # Custom Application Metrics - Rate Limiting
+  # =============================================================================
+  - job_name: 'rate-limiter'
+    scrape_interval: 15s
+    scrape_timeout: 5s
+    metrics_path: '/api/metrics/rate-limiter'
+    static_configs:
+      - targets: ['localhost:8000']
+        labels:
+          service: 'backend'
+          component: 'rate-limiter'
+          layer: 'security'
+
+  # =============================================================================
+  # Custom Application Metrics - Hash Chain & Crypto
+  # =============================================================================
+  - job_name: 'security-metrics'
+    scrape_interval: 60s
+    scrape_timeout: 15s
+    metrics_path: '/api/metrics/security'
+    static_configs:
+      - targets: ['localhost:8000']
+        labels:
+          service: 'backend'
+          component: 'security'
+          layer: 'cryptography'
+    
+    metric_relabel_configs:
+      - source_labels: [__name__]
+        regex: 'hash_chain_.*|crypto_.*|validation_.*'
+        action: keep
+
+  # =============================================================================
+  # Custom Application Metrics - Queue Processing
+  # =============================================================================
+  - job_name: 'queue-worker'
+    scrape_interval: 30s
+    scrape_timeout: 10s
+    metrics_path: '/api/metrics/queue'
+    static_configs:
+      - targets: ['localhost:8000']
+        labels:
+          service: 'backend'
+          component: 'queue'
+          layer: 'worker'
+    
+    metric_relabel_configs:
+      - source_labels: [__name__]
+        regex: 'queue_.*|worker_.*|job_.*'
+        action: keep
+
+  # =============================================================================
+  # Blackbox Exporter - External Probes (Optional)
+  # =============================================================================
+  - job_name: 'blackbox-http'
+    scrape_interval: 30s
+    scrape_timeout: 10s
+    metrics_path: '/probe'
+    params:
+      module: [http_2xx]
+    static_configs:
+      - targets:
+          - 'http://localhost:3000'          # Frontend
+          - 'http://localhost:8000/health'   # Backend health
+          - 'http://localhost:8000/docs'     # API docs
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: __param_target
+      
+      - source_labels: [__param_target]
+        target_label: instance
+      
+      - target_label: __address__
+        replacement: 'localhost:9115'  # Blackbox exporter address (if installed)
+
+  # =============================================================================
+  # Custom Metrics - Research Evaluation
+  # =============================================================================
+  - job_name: 'evaluation-metrics'
+    scrape_interval: 300s  # 5 minutes
+    scrape_timeout: 60s
+    metrics_path: '/api/metrics/evaluation'
+    static_configs:
+      - targets: ['localhost:8000']
+        labels:
+          service: 'backend'
+          component: 'evaluation'
+          layer: 'research'
+    
+    metric_relabel_configs:
+      - source_labels: [__name__]
+        regex: 'evaluation_.*|benchmark_.*|research_.*'
+        action: keep
+
+# Remote write configuration (optional - for long-term storage)
+# remote_write:
+#   - url: 'http://localhost:9009/api/v1/push'
+#     queue_config:
+#       capacity: 10000
+#       max_shards: 50
+#       min_shards: 1
+#       max_samples_per_send: 5000
+#       batch_send_deadline: 5s
+#       min_backoff: 30ms
+#       max_backoff: 100ms
+
+# Remote read configuration (optional - for querying remote storage)
+# remote_read:
+#   - url: 'http://localhost:9009/api/v1/read'
+#     read_recent: true
+
+# Storage configuration
+storage:
+  tsdb:
+    # Data retention period
+    retention.time: 30d
+    
+    # Maximum storage size
+    retention.size: 10GB
+    
+    # Path to storage directory
+    path: ./prometheus-data
+    
+    # Compression
+    wal_compression: true
+
+# Query configuration
+# query:
+#   # Maximum number of samples a single query can load into memory
+#   max_samples: 50000000
+#   
+#   # Maximum time a query may take before being aborted
+#   timeout: 2m
+#   
+#   # Maximum number of queries executed concurrently
+#   max_concurrency: 20
+#   
+#   # Look-back delta for instant queries
+#   lookback_delta: 5m
+
+# Tracing configuration (optional - for distributed tracing)
+# tracing:
+#   endpoint: 'localhost:4318'
+#   client_type: 'grpc'
+#   sampling_fraction: 0.1
+#   insecure: true
+
+# Deployment:
+# bash
+# # Start Prometheus
+# prometheus --config.file=monitoring/prometheus.yml
+
+# # Access Prometheus UI
+# http://localhost:9090
+
+# # Query metrics
+# http://localhost:9090/graph
+# Query Examples:
+# text
+# # Request rate
+# rate(http_requests_total[5m])
+
+# # Error rate
+# rate(http_requests_total{status=~"5.."}[5m])
+
+# # ML model latency
+# histogram_quantile(0.95, rate(model_inference_duration_seconds_bucket[5m]))
+
+# # Submission throughput
+# rate(submission_total[1m])
+
+# # Layer-specific metrics
+# layer2_credibility_score_avg
+
+# # Queue size
+# queue_pending_jobs
+
+# # Node Exporter (system metrics)
+# wget https://github.com/prometheus/node_exporter/releases/download/v1.7.0/node_exporter-1.7.0.linux-amd64.tar.gz
+
+# # Blackbox Exporter (HTTP probing)
+# wget https://github.com/prometheus/blackbox_exporter/releases/download/v0.24.0/blackbox_exporter-0.24.0.linux-amd64.tar.gz
+
+# # Alertmanager (alerting)
+# wget https://github.com/prometheus/alertmanager/releases/download/v0.26.0/alertmanager-0.26.0.linux-amd64.tar.gz
