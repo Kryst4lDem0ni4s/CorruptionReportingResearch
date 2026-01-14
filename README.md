@@ -1,2 +1,2 @@
 # CorruptionReportingResearch
-Corruption Reporting Research Experiment
+Corruption Reporting Academic Research Experiment
