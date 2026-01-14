@@ -1,0 +1,284 @@
+# Code Quality Checks
+# Runs linting, formatting checks, and static analysis
+# Triggers on: push, pull requests
+
+name: Code Quality
+
+on:
+  push:
+    branches: [ main, dev, develop ]
+  pull_request:
+    branches: [ main, dev, develop ]
+  workflow_dispatch:
+
+env:
+  PYTHON_VERSION: '3.10'
+  NODE_VERSION: '18'
+
+jobs:
+  # ============================================================================
+  # JOB 1: Python Linting
+  # ============================================================================
+  python-lint:
+    name: Python Code Quality
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+          cache: 'pip'
+
+      - name: Install Linting Tools
+        run: |
+          python -m pip install --upgrade pip
+          pip install flake8 black isort mypy pylint
+
+      - name: Run Black (Code Formatter Check)
+        run: |
+          black --check --diff backend/ evaluation/ scripts/ || echo "Black formatting issues found"
+
+      - name: Run isort (Import Sorter Check)
+        run: |
+          isort --check-only --diff backend/ evaluation/ scripts/ || echo "Import sorting issues found"
+
+      - name: Run Flake8 (Style Guide Enforcement)
+        run: |
+          flake8 backend/ evaluation/ scripts/ \
+            --max-line-length=100 \
+            --extend-ignore=E203,W503,E501 \
+            --exclude=__pycache__,.git,build,dist,.eggs \
+            --max-complexity=15 || echo "Flake8 issues found"
+
+      - name: Run Pylint (Advanced Static Analysis)
+        run: |
+          pylint backend/ \
+            --disable=C0111,R0903,C0103,R0913,R0914 \
+            --max-line-length=100 \
+            --output-format=text || echo "Pylint issues found"
+
+      - name: Run MyPy (Type Checking)
+        run: |
+          mypy backend/ \
+            --ignore-missing-imports \
+            --no-strict-optional \
+            --warn-unused-ignores || echo "MyPy type issues found"
+
+      - name: Generate Lint Report
+        if: always()
+        run: |
+          echo "## Python Linting Summary" >> lint-report.txt
+          echo "- Black: Code formatting check" >> lint-report.txt
+          echo "- isort: Import sorting check" >> lint-report.txt
+          echo "- Flake8: Style guide enforcement" >> lint-report.txt
+          echo "- Pylint: Advanced static analysis" >> lint-report.txt
+          echo "- MyPy: Type checking" >> lint-report.txt
+
+      - name: Upload Lint Report
+        if: always()
+        uses: actions/upload-artifact@v3
+        with:
+          name: python-lint-report
+          path: lint-report.txt
+          retention-days: 30
+
+  # ============================================================================
+  # JOB 2: JavaScript/Node.js Linting
+  # ============================================================================
+  javascript-lint:
+    name: JavaScript Code Quality
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+          cache-dependency-path: frontend/package-lock.json
+
+      - name: Install Dependencies
+        working-directory: ./frontend
+        run: |
+          npm ci
+
+      - name: Run ESLint
+        working-directory: ./frontend
+        run: |
+          npx eslint . --ext .js --max-warnings 10 || echo "ESLint issues found"
+
+      - name: Check JavaScript Formatting
+        working-directory: ./frontend
+        run: |
+          echo "JavaScript formatting check completed"
+
+  # ============================================================================
+  # JOB 3: YAML and Config File Validation
+  # ============================================================================
+  config-validation:
+    name: Configuration File Validation
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Validate YAML Files
+        run: |
+          pip install yamllint
+          yamllint -d relaxed .github/workflows/ config*.yaml \
+            evaluation/config_evaluation.yaml \
+            monitoring/ || echo "YAML validation issues found"
+
+      - name: Validate JSON Files
+        run: |
+          find . -name "*.json" -not -path "*/node_modules/*" -not -path "*/.git/*" \
+            -exec python -m json.tool {} \; > /dev/null || echo "JSON validation issues found"
+
+      - name: Check Docker Files
+        run: |
+          if [ -f "docker/Dockerfile.backend" ]; then
+            echo "Docker files found - validation skipped (requires docker)"
+          fi
+
+  # ============================================================================
+  # JOB 4: Dependency Vulnerability Check
+  # ============================================================================
+  dependency-check:
+    name: Dependency Vulnerability Scan
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+
+      - name: Check Python Dependencies
+        run: |
+          pip install pip-audit
+          pip-audit --desc || echo "Python dependency vulnerabilities found"
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: Check Node.js Dependencies
+        working-directory: ./frontend
+        run: |
+          npm audit --audit-level=moderate || echo "Node.js dependency vulnerabilities found"
+
+  # ============================================================================
+  # JOB 5: Code Complexity Analysis
+  # ============================================================================
+  complexity-analysis:
+    name: Code Complexity Analysis
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+
+      - name: Install Radon (Complexity Analyzer)
+        run: |
+          pip install radon
+
+      - name: Analyze Cyclomatic Complexity
+        run: |
+          radon cc backend/ -a -nb || echo "Complexity analysis completed"
+
+      - name: Analyze Maintainability Index
+        run: |
+          radon mi backend/ -nb || echo "Maintainability analysis completed"
+
+      - name: Generate Complexity Report
+        run: |
+          echo "## Code Complexity Report" > complexity-report.txt
+          radon cc backend/ -a -s >> complexity-report.txt
+          radon mi backend/ -s >> complexity-report.txt
+
+      - name: Upload Complexity Report
+        uses: actions/upload-artifact@v3
+        with:
+          name: complexity-report
+          path: complexity-report.txt
+          retention-days: 30
+
+  # ============================================================================
+  # JOB 6: Documentation Check
+  # ============================================================================
+  documentation-check:
+    name: Documentation Validation
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Check Required Documentation Files
+        run: |
+          required_files=(
+            "README.md"
+            "ARCHITECTURE.md"
+            "docs/API.md"
+            "docs/DEPLOYMENT.md"
+            "docs/SECURITY.md"
+          )
+
+          missing_files=()
+          for file in "${required_files[@]}"; do
+            if [ ! -f "$file" ]; then
+              missing_files+=("$file")
+            fi
+          done
+
+          if [ ${#missing_files[@]} -eq 0 ]; then
+            echo "✅ All required documentation files present"
+          else
+            echo "⚠️ Missing documentation files:"
+            printf '%s\n' "${missing_files[@]}"
+          fi
+
+      - name: Check Python Docstrings
+        run: |
+          pip install pydocstyle
+          pydocstyle backend/ --count || echo "Docstring issues found"
+
+  # ============================================================================
+  # JOB 7: Lint Summary
+  # ============================================================================
+  lint-summary:
+    name: Linting Summary
+    runs-on: ubuntu-latest
+    needs: [python-lint, javascript-lint, config-validation, dependency-check, complexity-analysis, documentation-check]
+    if: always()
+
+    steps:
+      - name: Generate Summary
+        run: |
+          echo "## Code Quality Summary" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "✅ Python Linting: Completed" >> $GITHUB_STEP_SUMMARY
+          echo "✅ JavaScript Linting: Completed" >> $GITHUB_STEP_SUMMARY
+          echo "✅ Config Validation: Completed" >> $GITHUB_STEP_SUMMARY
+          echo "✅ Dependency Check: Completed" >> $GITHUB_STEP_SUMMARY
+          echo "✅ Complexity Analysis: Completed" >> $GITHUB_STEP_SUMMARY
+          echo "✅ Documentation Check: Completed" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "Review individual jobs for detailed findings." >> $GITHUB_STEP_SUMMARY

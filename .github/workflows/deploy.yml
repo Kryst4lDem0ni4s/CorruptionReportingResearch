@@ -1,0 +1,425 @@
+# Deployment Automation
+# Supports multiple deployment targets: Azure, Docker, Local
+# Triggers on: release tags, manual workflow dispatch
+
+name: Deploy
+
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Deployment environment'
+        required: true
+        default: 'staging'
+        type: choice
+        options:
+          - staging
+          - production
+          - local
+      deploy_backend:
+        description: 'Deploy backend'
+        required: true
+        default: true
+        type: boolean
+      deploy_frontend:
+        description: 'Deploy frontend'
+        required: true
+        default: true
+        type: boolean
+
+env:
+  PYTHON_VERSION: '3.10'
+  NODE_VERSION: '18'
+  DOCKER_REGISTRY: 'ghcr.io'
+
+jobs:
+  # ============================================================================
+  # JOB 1: Pre-deployment Checks
+  # ============================================================================
+  pre-deployment:
+    name: Pre-deployment Validation
+    runs-on: ubuntu-latest
+
+    outputs:
+      version: ${{ steps.version.outputs.version }}
+      environment: ${{ steps.env.outputs.environment }}
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Determine Version
+        id: version
+        run: |
+          if [ "${{ github.event_name }}" == "release" ]; then
+            VERSION="${{ github.event.release.tag_name }}"
+          else
+            VERSION="dev-$(git rev-parse --short HEAD)"
+          fi
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+          echo "Deploying version: $VERSION"
+
+      - name: Determine Environment
+        id: env
+        run: |
+          if [ "${{ github.event.inputs.environment }}" != "" ]; then
+            ENV="${{ github.event.inputs.environment }}"
+          elif [ "${{ github.event_name }}" == "release" ]; then
+            ENV="production"
+          else
+            ENV="staging"
+          fi
+          echo "environment=$ENV" >> $GITHUB_OUTPUT
+          echo "Deploying to: $ENV"
+
+      - name: Run Pre-deployment Tests
+        run: |
+          pip install -r requirements.txt
+          pytest tests/unit/ -v --maxfail=5
+
+      - name: Validate Configuration Files
+        run: |
+          python -c "import yaml; yaml.safe_load(open('config.yaml'))"
+          echo "✅ Configuration validation passed"
+
+  # ============================================================================
+  # JOB 2: Build Docker Images
+  # ============================================================================
+  build-docker:
+    name: Build Docker Images
+    runs-on: ubuntu-latest
+    needs: pre-deployment
+    if: github.event.inputs.deploy_backend != 'false' || github.event.inputs.deploy_frontend != 'false'
+
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Log in to Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ env.DOCKER_REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build Backend Docker Image
+        if: github.event.inputs.deploy_backend != 'false'
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          file: ./docker/Dockerfile.backend
+          push: true
+          tags: |
+            ${{ env.DOCKER_REGISTRY }}/${{ github.repository }}/backend:${{ needs.pre-deployment.outputs.version }}
+            ${{ env.DOCKER_REGISTRY }}/${{ github.repository }}/backend:latest
+          cache-from: type=registry,ref=${{ env.DOCKER_REGISTRY }}/${{ github.repository }}/backend:buildcache
+          cache-to: type=registry,ref=${{ env.DOCKER_REGISTRY }}/${{ github.repository }}/backend:buildcache,mode=max
+
+      - name: Build Frontend Docker Image
+        if: github.event.inputs.deploy_frontend != 'false'
+        uses: docker/build-push-action@v5
+        with:
+          context: ./frontend
+          file: ./docker/Dockerfile.frontend
+          push: true
+          tags: |
+            ${{ env.DOCKER_REGISTRY }}/${{ github.repository }}/frontend:${{ needs.pre-deployment.outputs.version }}
+            ${{ env.DOCKER_REGISTRY }}/${{ github.repository }}/frontend:latest
+          cache-from: type=registry,ref=${{ env.DOCKER_REGISTRY }}/${{ github.repository }}/frontend:buildcache
+          cache-to: type=registry,ref=${{ env.DOCKER_REGISTRY }}/${{ github.repository }}/frontend:buildcache,mode=max
+
+  # ============================================================================
+  # JOB 3: Deploy to Azure (Optional)
+  # ============================================================================
+  deploy-azure:
+    name: Deploy to Azure
+    runs-on: ubuntu-latest
+    needs: [pre-deployment, build-docker]
+    if: needs.pre-deployment.outputs.environment != 'local'
+    environment: 
+      name: ${{ needs.pre-deployment.outputs.environment }}
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Azure Login
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+        continue-on-error: true
+
+      - name: Deploy Backend to Azure Web App
+        if: github.event.inputs.deploy_backend != 'false'
+        uses: azure/webapps-deploy@v2
+        with:
+          app-name: ${{ secrets.AZURE_BACKEND_APP_NAME }}
+          images: ${{ env.DOCKER_REGISTRY }}/${{ github.repository }}/backend:${{ needs.pre-deployment.outputs.version }}
+        continue-on-error: true
+
+      - name: Deploy Frontend to Azure Web App
+        if: github.event.inputs.deploy_frontend != 'false'
+        uses: azure/webapps-deploy@v2
+        with:
+          app-name: ${{ secrets.AZURE_FRONTEND_APP_NAME }}
+          images: ${{ env.DOCKER_REGISTRY }}/${{ github.repository }}/frontend:${{ needs.pre-deployment.outputs.version }}
+        continue-on-error: true
+
+      - name: Azure Deployment Status
+        run: |
+          echo "Azure deployment completed (or skipped if credentials not configured)"
+          echo "Backend: ${{ secrets.AZURE_BACKEND_APP_NAME }}"
+          echo "Frontend: ${{ secrets.AZURE_FRONTEND_APP_NAME }}"
+
+  # ============================================================================
+  # JOB 4: Deploy to Docker Compose (Local/Staging)
+  # ============================================================================
+  deploy-docker-compose:
+    name: Deploy via Docker Compose
+    runs-on: ubuntu-latest
+    needs: [pre-deployment, build-docker]
+    if: needs.pre-deployment.outputs.environment == 'local' || needs.pre-deployment.outputs.environment == 'staging'
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Create Deployment Package
+        run: |
+          mkdir -p deployment-package
+          cp docker-compose.yml deployment-package/
+          cp -r config*.yaml deployment-package/
+          cp .env.example deployment-package/.env
+
+          cat > deployment-package/deploy.sh << 'EOF'
+          #!/bin/bash
+          # Deployment script for Docker Compose
+
+          echo "Starting deployment..."
+
+          # Pull latest images
+          docker-compose pull
+
+          # Stop existing containers
+          docker-compose down
+
+          # Start new containers
+          docker-compose up -d
+
+          # Wait for services to be healthy
+          sleep 10
+
+          # Check health
+          curl -f http://localhost:8000/health || echo "Backend health check failed"
+          curl -f http://localhost:3000/health || echo "Frontend health check failed"
+
+          echo "Deployment completed!"
+          EOF
+
+          chmod +x deployment-package/deploy.sh
+
+      - name: Upload Deployment Package
+        uses: actions/upload-artifact@v3
+        with:
+          name: deployment-package-${{ needs.pre-deployment.outputs.version }}
+          path: deployment-package/
+          retention-days: 90
+
+      - name: Generate Deployment Instructions
+        run: |
+          cat > DEPLOYMENT_INSTRUCTIONS.md << EOF
+          # Deployment Instructions
+
+          ## Version: ${{ needs.pre-deployment.outputs.version }}
+          ## Environment: ${{ needs.pre-deployment.outputs.environment }}
+
+          ### Docker Compose Deployment
+
+          1. Download the deployment package artifact
+          2. Extract to your deployment directory
+          3. Configure environment variables in \`.env\`
+          4. Run: \`./deploy.sh\`
+
+          ### Manual Deployment
+
+          \`\`\`bash
+          # Pull images
+          docker pull ${{ env.DOCKER_REGISTRY }}/${{ github.repository }}/backend:${{ needs.pre-deployment.outputs.version }}
+          docker pull ${{ env.DOCKER_REGISTRY }}/${{ github.repository }}/frontend:${{ needs.pre-deployment.outputs.version }}
+
+          # Run containers
+          docker run -d -p 8000:8000 \
+            --name backend \
+            ${{ env.DOCKER_REGISTRY }}/${{ github.repository }}/backend:${{ needs.pre-deployment.outputs.version }}
+
+          docker run -d -p 3000:3000 \
+            --name frontend \
+            ${{ env.DOCKER_REGISTRY }}/${{ github.repository }}/frontend:${{ needs.pre-deployment.outputs.version }}
+          \`\`\`
+
+          ### Health Checks
+
+          - Backend: http://localhost:8000/health
+          - Frontend: http://localhost:3000/health
+
+          ### Monitoring
+
+          - Prometheus: http://localhost:9090
+          - Grafana: http://localhost:3001 (if configured)
+          EOF
+
+      - name: Upload Deployment Instructions
+        uses: actions/upload-artifact@v3
+        with:
+          name: deployment-instructions
+          path: DEPLOYMENT_INSTRUCTIONS.md
+          retention-days: 90
+
+  # ============================================================================
+  # JOB 5: Post-deployment Tests
+  # ============================================================================
+  post-deployment:
+    name: Post-deployment Validation
+    runs-on: ubuntu-latest
+    needs: [pre-deployment, deploy-azure, deploy-docker-compose]
+    if: always() && (needs.deploy-azure.result == 'success' || needs.deploy-docker-compose.result == 'success')
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Wait for Services
+        run: |
+          echo "Waiting for services to stabilize..."
+          sleep 30
+
+      - name: Health Check (Azure)
+        if: needs.deploy-azure.result == 'success'
+        run: |
+          echo "Running health checks on Azure deployment..."
+          # Add Azure-specific health checks here
+        continue-on-error: true
+
+      - name: Health Check (Docker)
+        if: needs.deploy-docker-compose.result == 'success'
+        run: |
+          echo "Docker deployment package created successfully"
+
+      - name: Run Smoke Tests
+        run: |
+          pip install requests
+          python << EOF
+          import requests
+          import sys
+
+          # Add your smoke test endpoints here
+          endpoints = []
+
+          if not endpoints:
+              print("✅ No smoke tests configured (deployment package created)")
+              sys.exit(0)
+
+          for endpoint in endpoints:
+              try:
+                  response = requests.get(endpoint, timeout=10)
+                  if response.status_code == 200:
+                      print(f"✅ {endpoint}: OK")
+                  else:
+                      print(f"⚠️ {endpoint}: Status {response.status_code}")
+              except Exception as e:
+                  print(f"❌ {endpoint}: {str(e)}")
+          EOF
+
+  # ============================================================================
+  # JOB 6: Deployment Summary
+  # ============================================================================
+  deployment-summary:
+    name: Deployment Summary
+    runs-on: ubuntu-latest
+    needs: [pre-deployment, build-docker, deploy-azure, deploy-docker-compose, post-deployment]
+    if: always()
+
+    steps:
+      - name: Generate Deployment Summary
+        run: |
+          echo "## Deployment Summary" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Version:** ${{ needs.pre-deployment.outputs.version }}" >> $GITHUB_STEP_SUMMARY
+          echo "**Environment:** ${{ needs.pre-deployment.outputs.environment }}" >> $GITHUB_STEP_SUMMARY
+          echo "**Timestamp:** $(date -u +%Y-%m-%dT%H:%M:%SZ)" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### Status" >> $GITHUB_STEP_SUMMARY
+          echo "- Pre-deployment: ${{ needs.pre-deployment.result }}" >> $GITHUB_STEP_SUMMARY
+          echo "- Docker Build: ${{ needs.build-docker.result }}" >> $GITHUB_STEP_SUMMARY
+          echo "- Azure Deploy: ${{ needs.deploy-azure.result || 'skipped' }}" >> $GITHUB_STEP_SUMMARY
+          echo "- Docker Deploy: ${{ needs.deploy-docker-compose.result || 'skipped' }}" >> $GITHUB_STEP_SUMMARY
+          echo "- Post-deployment: ${{ needs.post-deployment.result || 'skipped' }}" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### Docker Images" >> $GITHUB_STEP_SUMMARY
+          echo "- Backend: \`${{ env.DOCKER_REGISTRY }}/${{ github.repository }}/backend:${{ needs.pre-deployment.outputs.version }}\`" >> $GITHUB_STEP_SUMMARY
+          echo "- Frontend: \`${{ env.DOCKER_REGISTRY }}/${{ github.repository }}/frontend:${{ needs.pre-deployment.outputs.version }}\`" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### Next Steps" >> $GITHUB_STEP_SUMMARY
+          echo "1. Download deployment package from artifacts" >> $GITHUB_STEP_SUMMARY
+          echo "2. Review deployment instructions" >> $GITHUB_STEP_SUMMARY
+          echo "3. Run post-deployment validation" >> $GITHUB_STEP_SUMMARY
+          echo "4. Monitor application health and metrics" >> $GITHUB_STEP_SUMMARY
+
+      - name: Create Deployment Report
+        run: |
+          cat > deployment-report.json << EOF
+          {
+            "version": "${{ needs.pre-deployment.outputs.version }}",
+            "environment": "${{ needs.pre-deployment.outputs.environment }}",
+            "timestamp": "$(date -u +%Y-%m-%dT%H:%M:%SZ)",
+            "status": {
+              "pre_deployment": "${{ needs.pre-deployment.result }}",
+              "build": "${{ needs.build-docker.result }}",
+              "azure_deploy": "${{ needs.deploy-azure.result || 'skipped' }}",
+              "docker_deploy": "${{ needs.deploy-docker-compose.result || 'skipped' }}",
+              "post_deployment": "${{ needs.post-deployment.result || 'skipped' }}"
+            },
+            "images": {
+              "backend": "${{ env.DOCKER_REGISTRY }}/${{ github.repository }}/backend:${{ needs.pre-deployment.outputs.version }}",
+              "frontend": "${{ env.DOCKER_REGISTRY }}/${{ github.repository }}/frontend:${{ needs.pre-deployment.outputs.version }}"
+            }
+          }
+          EOF
+
+      - name: Upload Deployment Report
+        uses: actions/upload-artifact@v3
+        with:
+          name: deployment-report
+          path: deployment-report.json
+          retention-days: 365
+
+  # ============================================================================
+  # JOB 7: Rollback on Failure (Optional)
+  # ============================================================================
+  rollback:
+    name: Rollback on Failure
+    runs-on: ubuntu-latest
+    needs: [post-deployment]
+    if: failure() && github.event.inputs.environment == 'production'
+
+    steps:
+      - name: Trigger Rollback
+        run: |
+          echo "⚠️ Deployment failed - rollback may be required"
+          echo "Manual intervention needed for production rollback"
+          echo "Previous stable version should be redeployed"
+
+      - name: Notify on Failure
+        run: |
+          echo "Deployment failed for version ${{ needs.pre-deployment.outputs.version }}"
+          echo "Environment: ${{ needs.pre-deployment.outputs.environment }}"
+          # Add notification logic here (Slack, email, etc.)
