@@ -26,6 +26,8 @@ from reportlab.platypus import (
 )
 from reportlab.lib.enums import TA_CENTER, TA_JUSTIFY, TA_LEFT
 
+from backend.services.metrics_service import MetricsService
+
 # Initialize logger
 logger = logging.getLogger(__name__)
 
@@ -47,7 +49,8 @@ class Layer6Reporting:
         self,
         storage_service,
         hash_chain_service,
-        output_dir: Optional[Path] = None
+        output_dir: Optional[Path] = None,
+        metrics_service: Optional[MetricsService] = None
     ):
         """
         Initialize Layer 6 with services.
@@ -66,7 +69,7 @@ class Layer6Reporting:
             self.output_dir = Path("backend/data/reports")
         
         self.output_dir.mkdir(parents=True, exist_ok=True)
-        
+        self.metrics = metrics_service
         logger.info(f"Layer 6 (Reporting) initialized (output: {self.output_dir})")
     
     def generate_report(

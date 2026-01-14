@@ -18,6 +18,9 @@ from networkx.algorithms import community
 from sklearn.svm import OneClassSVM
 from sklearn.preprocessing import StandardScaler
 
+from backend.services.metrics_service import MetricsService
+
+
 # Initialize logger
 logger = logging.getLogger(__name__)
 
@@ -41,7 +44,8 @@ class Layer3Coordination:
         graph_utils,
         min_similarity: float = 0.7,
         time_window_hours: int = 24,
-        min_community_size: int = 3
+        min_community_size: int = 3,
+        metrics_service: Optional[MetricsService] = None
     ):
         """
         Initialize Layer 3 with configuration.
@@ -57,7 +61,7 @@ class Layer3Coordination:
         self.storage = storage_service
         self.text_utils = text_utils
         self.graph_utils = graph_utils
-        
+        self.metrics = metrics_service
         self.min_similarity = min_similarity
         self.time_window = timedelta(hours=time_window_hours)
         self.min_community_size = min_community_size
@@ -155,6 +159,8 @@ class Layer3Coordination:
                     f"(confidence={result['confidence']:.3f}, "
                     f"community_size={result['community_size']})"
                 )
+                if self.metrics:
+                    self.metrics.record_coordination_detection()
             else:
                 logger.info(f"No coordination detected for {submission_id}")
             

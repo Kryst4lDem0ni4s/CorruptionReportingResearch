@@ -19,6 +19,7 @@ from backend.core.layer4_consensus import Layer4Consensus
 from backend.core.layer5_counter_evidence import Layer5CounterEvidence
 from backend.core.layer6_reporting import Layer6Reporting
 from backend.core.orchestrator import Orchestrator
+from backend.services.metrics_service import MetricsService
 
 __all__ = [
     'Layer1Anonymity',

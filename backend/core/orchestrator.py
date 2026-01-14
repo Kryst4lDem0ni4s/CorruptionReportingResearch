@@ -21,6 +21,8 @@ from backend.core.layer4_consensus import Layer4Consensus
 from backend.core.layer5_counter_evidence import Layer5CounterEvidence
 from backend.core.layer6_reporting import Layer6Reporting
 
+from backend.services.metrics_service import MetricsService
+
 # Initialize logger
 logger = logging.getLogger(__name__)
 
@@ -61,7 +63,8 @@ class Orchestrator:
         text_utils,
         graph_utils,
         image_utils=None,
-        audio_utils=None
+        audio_utils=None,
+        metrics_service: Optional[MetricsService] = None
     ):
         """
         Initialize orchestrator with all required services.
@@ -94,33 +97,44 @@ class Orchestrator:
             storage_service=storage_service,
             hash_chain_service=hash_chain_service,
             crypto_service=crypto_service,
-            metadata_service=metadata_service
+            metadata_service=metadata_service,
+            metrics_service=metrics_service
+
         )
         
         self.layer2 = Layer2Credibility(
             storage_service=storage_service,
             validation_service=validation_service,
             image_utils=image_utils,
-            audio_utils=audio_utils
+            audio_utils=audio_utils,
+            metrics_service=metrics_service
+
         )
         
         self.layer3 = Layer3Coordination(
             storage_service=storage_service,
             text_utils=text_utils,
-            graph_utils=graph_utils
+            graph_utils=graph_utils,
+            metrics_service=metrics_service,
         )
         
         self.layer4 = Layer4Consensus(
-            storage_service=storage_service
+            storage_service=storage_service,
+            metrics_service=metrics_service
+
         )
         
         self.layer5 = Layer5CounterEvidence(
-            storage_service=storage_service
+            storage_service=storage_service,
+            metrics_service=metrics_service
+
         )
         
         self.layer6 = Layer6Reporting(
             storage_service=storage_service,
-            hash_chain_service=hash_chain_service
+            hash_chain_service=hash_chain_service,
+            metrics_service=metrics_service
+
         )
         
         logger.info("Orchestrator initialized successfully with all 6 layers")

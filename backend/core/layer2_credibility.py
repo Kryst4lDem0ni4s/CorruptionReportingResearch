@@ -15,6 +15,8 @@ import numpy as np
 import torch
 from scipy import stats
 
+from backend.services.metrics_service import MetricsService
+
 # Initialize logger
 logger = logging.getLogger(__name__)
 
@@ -38,7 +40,8 @@ class Layer2Credibility:
         wav2vec_model,
         blip_model,
         sentence_transformer,
-        device: Optional[str] = None
+        device: Optional[str] = None,
+        metrics_service: Optional[MetricsService] = None
     ):
         """
         Initialize Layer 2 with pre-trained models.
@@ -60,6 +63,8 @@ class Layer2Credibility:
             self.device = device
         else:
             self.device = "cuda" if torch.cuda.is_available() else "cpu"
+        
+        self.metrics = metrics_service
         
         logger.info(f"Layer 2 (Credibility) initialized on {self.device}")
     
@@ -123,6 +128,13 @@ class Layer2Credibility:
             # Aggregate final score
             final_score = self._aggregate_scores(scores)
             
+            if self.metrics:
+                self.metrics.update_credibility_score(final_score)
+
+                # Check if deepfake detected (score < 0.5 typically means fake)
+                if final_score < 0.5:
+                    self.metrics.record_deepfake_detection()
+                    
             # Build result
             result = {
                 "submission_id": submission_id,
@@ -224,8 +236,16 @@ class Layer2Credibility:
             except Exception as e:
                 logger.warning(f"Consistency check failed: {e}")
         
+        import time
+        inference_start = time.time()
+
         # Physical plausibility check
         plausibility_score = self._check_image_plausibility(image)
+
+        inference_time = time.time() - inference_start
+
+        if self.metrics:
+            self.metrics.record_model_inference("clip", inference_time)
         
         return {
             'deepfake_scores': deepfake_scores,
@@ -276,12 +296,21 @@ class Layer2Credibility:
         except Exception as e:
             logger.warning(f"Audio assessment failed: {e}")
             deepfake_scores = [0.5]
+            
+        import time
+        inference_start = time.time()
         
         # Consistency with narrative
         consistency_score = 0.8 if text_narrative else 1.0
         
         # Plausibility (simple check for audio length)
         plausibility_score = 1.0
+        
+        inference_time = time.time() - inference_start
+
+        if self.metrics:
+            self.metrics.record_model_inference("clip", inference_time)
+        
         
         return {
             'deepfake_scores': deepfake_scores,
@@ -317,12 +346,20 @@ class Layer2Credibility:
                 frame_number="middle"
             )
             
-            # Assess as image
-            return self._assess_image(
+            import time
+            inference_start = time.time()
+            score = self._assess_image(
                 middle_frame_path,
                 text_narrative,
                 use_augmentation
             )
+            inference_time = time.time() - inference_start
+
+            if self.metrics:
+                self.metrics.record_model_inference("clip", inference_time)
+            
+            # Assess as image
+            return score
             
         except Exception as e:
             logger.error(f"Video assessment failed: {e}")

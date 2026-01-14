@@ -9,9 +9,12 @@ from pathlib import Path
 from typing import Optional
 
 from fastapi import Depends, HTTPException, Request, status
+from flask import request
 
 # Import configuration
 from backend.config import get_config
+from backend.services import crypto_service, hash_chain_service, metadata_service, storage_service, validation_service
+from backend.utils import graph_utils, text_utils
 
 # Initialize logger
 logger = logging.getLogger(__name__)
@@ -192,12 +195,18 @@ def get_orchestrator():
         storage = get_storage_service()
         hash_chain = get_hash_chain_service()
         crypto = get_crypto_service()
+        metrics_service = getattr(request.app.state, 'metrics', None)
         
         # Initialize orchestrator with services
         orchestrator = Orchestrator(
-            storage_service=storage,
-            hash_chain_service=hash_chain,
-            crypto_service=crypto
+            storage_service=storage_service,
+            hash_chain_service=hash_chain_service,
+            crypto_service=crypto_service,
+            metadata_service=metadata_service,
+            validation_service=validation_service,
+            text_utils=text_utils,
+            graph_utils=graph_utils,
+            metrics_service=metrics_service  # ADD THIS
         )
         
         logger.info("Orchestrator initialized successfully")

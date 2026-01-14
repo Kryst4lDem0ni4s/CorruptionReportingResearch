@@ -13,6 +13,9 @@ from typing import Dict, Optional, Tuple
 import numpy as np
 from scipy import stats
 
+from backend.services.metrics_service import MetricsService
+
+
 # Initialize logger
 logger = logging.getLogger(__name__)
 
@@ -34,7 +37,8 @@ class Layer5CounterEvidence:
         storage_service,
         presumption_weight: float = 1.3,
         identity_bonus: float = 1.2,
-        decision_change_threshold: float = 0.15
+        decision_change_threshold: float = 0.15,
+        metrics_service: Optional[MetricsService] = None
     ):
         """
         Initialize Layer 5 with configuration.
@@ -49,7 +53,7 @@ class Layer5CounterEvidence:
         self.presumption_weight = presumption_weight
         self.identity_bonus = identity_bonus
         self.decision_change_threshold = decision_change_threshold
-        
+        self.metrics = metrics_service
         logger.info(
             f"Layer 5 (Counter-Evidence) initialized "
             f"(presumption={presumption_weight}×, identity={identity_bonus}×)"

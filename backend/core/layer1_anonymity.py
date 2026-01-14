@@ -14,6 +14,7 @@ from typing import Dict, Optional, Tuple
 from uuid import uuid4
 
 from PIL import Image
+from backend.services.metrics_service import MetricsService
 
 # Initialize logger
 logger = logging.getLogger(__name__)
@@ -36,7 +37,8 @@ class Layer1Anonymity:
         crypto_service,
         hash_chain_service,
         metadata_service,
-        storage_service
+        storage_service,
+        metrics_service: Optional[MetricsService] = None
     ):
         """
         Initialize Layer 1 with required services.
@@ -51,6 +53,7 @@ class Layer1Anonymity:
         self.hash_chain = hash_chain_service
         self.metadata = metadata_service
         self.storage = storage_service
+        self.metrics = metrics_service
         
         logger.info("Layer 1 (Anonymity) initialized")
     
@@ -91,6 +94,9 @@ class Layer1Anonymity:
                 evidence_type
             )
             logger.debug(f"Metadata stripped from evidence")
+            
+            if self.metrics:
+                self.metrics.record_anonymity_violation()
             
             # Step 3: Compute evidence hash (before encryption)
             evidence_hash = self._compute_evidence_hash(cleaned_file_path)
@@ -141,12 +147,13 @@ class Layer1Anonymity:
             return anonymized_data
             
         except Exception as e:
-            logger.error(
-                f"Layer 1 processing failed for {submission_id}: {e}",
-                exc_info=True
-            )
+            logger.error(f"Layer 1 processing failed for {submission_id}: {e}", exc_info=True)
+
+            if self.metrics:
+                self.metrics.record_anonymity_violation()
+
             raise ValueError(f"Anonymity processing failed: {str(e)}")
-    
+        
     def _generate_pseudonym(self, submission_id: str) -> str:
         """
         Generate anonymous pseudonym from submission ID.

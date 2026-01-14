@@ -14,6 +14,9 @@ from typing import Dict, List, Optional, Tuple
 
 import numpy as np
 
+from backend.services.metrics_service import MetricsService
+
+
 # Initialize logger
 logger = logging.getLogger(__name__)
 
@@ -51,7 +54,8 @@ class Layer4Consensus:
         devils_advocate_ratio: float = 0.1,
         consensus_threshold: float = 0.67,
         forward_threshold: float = 0.75,
-        reject_threshold: float = 0.30
+        reject_threshold: float = 0.30,
+        metrics_service: Optional[MetricsService] = None
     ):
         """
         Initialize Layer 4 with validator configuration.
@@ -70,7 +74,7 @@ class Layer4Consensus:
         self.consensus_threshold = consensus_threshold
         self.forward_threshold = forward_threshold
         self.reject_threshold = reject_threshold
-        
+        self.metrics = metrics_service
         # Initialize or load validators
         self.validators = self._initialize_validators()
         
