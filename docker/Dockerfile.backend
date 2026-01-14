@@ -1,0 +1,135 @@
+# =============================================================================
+# Corruption Reporting System - Backend Dockerfile
+# Version: 1.0.0
+# Description: Multi-stage Docker image for Python FastAPI backend
+#
+# Build: docker build -f docker/Dockerfile.backend -t corruption-backend:latest .
+# Run: docker run -p 8000:8000 -v $(pwd)/backend/data:/app/backend/data corruption-backend:latest
+# =============================================================================
+
+# =============================================================================
+# Stage 1: Base Image with System Dependencies
+# =============================================================================
+FROM python:3.11-slim as base
+
+# Set environment variables
+ENV PYTHONUNBUFFERED=1 \
+    PYTHONDONTWRITEBYTECODE=1 \
+    PIP_NO_CACHE_DIR=1 \
+    PIP_DISABLE_PIP_VERSION_CHECK=1 \
+    DEBIAN_FRONTEND=noninteractive
+
+# Install system dependencies
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    build-essential \
+    curl \
+    git \
+    libgomp1 \
+    && rm -rf /var/lib/apt/lists/*
+
+# Create non-root user for security
+RUN useradd -m -u 1000 appuser && \
+    mkdir -p /app && \
+    chown -R appuser:appuser /app
+
+WORKDIR /app
+
+# =============================================================================
+# Stage 2: Dependencies Installation
+# =============================================================================
+FROM base as dependencies
+
+# Copy requirements files
+COPY requirements.txt requirements-dev.txt ./
+
+# Install Python dependencies
+RUN pip install --upgrade pip && \
+    pip install --no-cache-dir -r requirements.txt && \
+    pip install --no-cache-dir gunicorn uvloop httptools
+
+# Download ML models (optional - can be done at runtime)
+# Uncomment to pre-download models in image (increases image size by ~800MB)
+# RUN python -c "from transformers import CLIPModel, CLIPProcessor; \
+#     CLIPModel.from_pretrained('openai/clip-vit-base-patch32'); \
+#     CLIPProcessor.from_pretrained('openai/clip-vit-base-patch32')"
+
+# =============================================================================
+# Stage 3: Application Code
+# =============================================================================
+FROM dependencies as application
+
+# Copy application code
+COPY --chown=appuser:appuser backend/ ./backend/
+COPY --chown=appuser:appuser config.yaml config.dev.yaml config.prod.yaml ./
+COPY --chown=appuser:appuser scripts/download_models.py ./scripts/
+COPY --chown=appuser:appuser scripts/initialize_storage.py ./scripts/
+COPY --chown=appuser:appuser scripts/health_check.py ./scripts/
+
+# Create data directories
+RUN mkdir -p backend/data/submissions \
+    backend/data/evidence/2026/01 \
+    backend/data/reports \
+    backend/data/cache \
+    && touch backend/data/.gitkeep \
+    backend/data/submissions/.gitkeep \
+    backend/data/evidence/.gitkeep \
+    backend/data/reports/.gitkeep \
+    backend/data/cache/.gitkeep
+
+# Initialize storage
+RUN python scripts/initialize_storage.py
+
+# Set ownership
+RUN chown -R appuser:appuser /app
+
+# =============================================================================
+# Stage 4: Production Runtime
+# =============================================================================
+FROM application as production
+
+# Switch to non-root user
+USER appuser
+
+# Expose port
+EXPOSE 8000
+
+# Health check
+HEALTHCHECK --interval=30s --timeout=10s --start-period=60s --retries=3 \
+    CMD python scripts/health_check.py --json || exit 1
+
+# Set working directory
+WORKDIR /app/backend
+
+# Default command (can be overridden)
+CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000", "--workers", "2"]
+
+# Alternative production command with Gunicorn + Uvicorn workers (better performance)
+# CMD ["gunicorn", "main:app", "--workers", "4", "--worker-class", "uvicorn.workers.UvicornWorker", "--bind", "0.0.0.0:8000", "--timeout", "120", "--access-logfile", "-", "--error-logfile", "-"]
+
+# =============================================================================
+# Stage 5: Development Runtime (Optional)
+# =============================================================================
+FROM application as development
+
+# Install development dependencies
+RUN pip install --no-cache-dir -r /app/requirements-dev.txt
+
+# Switch to non-root user
+USER appuser
+
+# Expose port
+EXPOSE 8000
+
+# Set working directory
+WORKDIR /app/backend
+
+# Development command with hot reload
+CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000", "--reload"]
+
+# =============================================================================
+# Metadata
+# =============================================================================
+LABEL maintainer="Corruption Reporting System" \
+      version="1.0.0" \
+      description="Backend API server for corruption reporting prototype" \
+      org.opencontainers.image.source="https://github.com/your-org/corruption-reporting-prototype"

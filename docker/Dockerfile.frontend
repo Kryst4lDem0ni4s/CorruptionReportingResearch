@@ -1,0 +1,117 @@
+# =============================================================================
+# Corruption Reporting System - Frontend Dockerfile
+# Version: 1.0.0
+# Description: Multi-stage Docker image for Node.js Express frontend
+#
+# Build: docker build -f docker/Dockerfile.frontend -t corruption-frontend:latest .
+# Run: docker run -p 3000:3000 corruption-frontend:latest
+# =============================================================================
+
+# =============================================================================
+# Stage 1: Base Image
+# =============================================================================
+FROM node:18-alpine as base
+
+# Set environment variables
+ENV NODE_ENV=production \
+    NPM_CONFIG_LOGLEVEL=warn
+
+# Install system dependencies
+RUN apk add --no-cache \
+    tini \
+    curl
+
+# Create non-root user for security
+RUN addgroup -g 1000 appuser && \
+    adduser -D -u 1000 -G appuser appuser && \
+    mkdir -p /app && \
+    chown -R appuser:appuser /app
+
+WORKDIR /app
+
+# =============================================================================
+# Stage 2: Dependencies Installation
+# =============================================================================
+FROM base as dependencies
+
+# Copy package files
+COPY package.json package-lock.json ./
+
+# Install dependencies
+RUN npm ci --only=production && \
+    npm cache clean --force
+
+# =============================================================================
+# Stage 3: Development Dependencies (Optional)
+# =============================================================================
+FROM dependencies as dev-dependencies
+
+# Install all dependencies including devDependencies
+RUN npm ci && \
+    npm cache clean --force
+
+# =============================================================================
+# Stage 4: Application Code
+# =============================================================================
+FROM dependencies as application
+
+# Copy application code
+COPY --chown=appuser:appuser frontend/ ./frontend/
+
+# Set ownership
+RUN chown -R appuser:appuser /app
+
+# =============================================================================
+# Stage 5: Production Runtime
+# =============================================================================
+FROM application as production
+
+# Switch to non-root user
+USER appuser
+
+# Expose port
+EXPOSE 3000
+
+# Health check
+HEALTHCHECK --interval=30s --timeout=5s --start-period=10s --retries=3 \
+    CMD curl -f http://localhost:3000/health || exit 1
+
+# Set working directory
+WORKDIR /app/frontend
+
+# Use tini for proper signal handling
+ENTRYPOINT ["/sbin/tini", "--"]
+
+# Default command
+CMD ["node", "server.js"]
+
+# =============================================================================
+# Stage 6: Development Runtime (Optional)
+# =============================================================================
+FROM dev-dependencies as development
+
+# Copy application code
+COPY --chown=appuser:appuser frontend/ ./frontend/
+
+# Switch to non-root user
+USER appuser
+
+# Expose port
+EXPOSE 3000
+
+# Set working directory
+WORKDIR /app/frontend
+
+# Use tini for proper signal handling
+ENTRYPOINT ["/sbin/tini", "--"]
+
+# Development command with auto-restart
+CMD ["node", "--watch", "server.js"]
+
+# =============================================================================
+# Metadata
+# =============================================================================
+LABEL maintainer="Corruption Reporting System" \
+      version="1.0.0" \
+      description="Frontend web server for corruption reporting prototype" \
+      org.opencontainers.image.source="https://github.com/your-org/corruption-reporting-prototype"
