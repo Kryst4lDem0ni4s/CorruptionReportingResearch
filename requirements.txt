@@ -1,0 +1,278 @@
+# ============================================================================
+# PYTHON DEPENDENCIES - PRODUCTION
+# corruption-reporting-prototype/requirements.txt
+# ============================================================================
+#
+# INSTALLATION:
+#   pip install -r requirements.txt
+#
+# UPGRADE:
+#   pip install --upgrade -r requirements.txt
+#
+# FREEZE CURRENT:
+#   pip freeze > requirements-frozen.txt
+#
+# ============================================================================
+
+# ============================================================================
+# CORE FRAMEWORK
+# ============================================================================
+
+# FastAPI - Modern web framework for building APIs
+fastapi==0.109.0
+
+# Uvicorn - ASGI server for FastAPI
+uvicorn[standard]==0.27.0
+
+# Pydantic - Data validation using Python type annotations
+pydantic==2.5.3
+pydantic-settings==2.1.0
+
+# Python-dotenv - Load environment variables from .env file
+python-dotenv==1.0.0
+
+# PyYAML - YAML parser for configuration files
+pyyaml==6.0.1
+
+# ============================================================================
+# MACHINE LEARNING & AI
+# ============================================================================
+
+# PyTorch - Deep learning framework (CPU version for zero cost)
+torch==2.1.2
+torchvision==0.16.2
+torchaudio==2.1.2
+
+# Transformers - Hugging Face transformers library for pre-trained models
+transformers==4.37.2
+
+# Sentence Transformers - Sentence embeddings
+sentence-transformers==2.3.1
+
+# Pillow - Image processing library
+Pillow==10.2.0
+
+# NumPy - Numerical computing
+numpy==1.26.3
+
+# SciPy - Scientific computing and statistics
+scipy==1.12.0
+
+# Scikit-learn - Machine learning utilities
+scikit-learn==1.4.0
+
+# ============================================================================
+# NATURAL LANGUAGE PROCESSING
+# ============================================================================
+
+# spaCy - Industrial-strength NLP
+spacy==3.7.2
+
+# NLTK - Natural Language Toolkit
+nltk==3.8.1
+
+# ============================================================================
+# GRAPH ANALYSIS
+# ============================================================================
+
+# NetworkX - Graph theory and network analysis
+networkx==3.2.1
+
+# Community - Louvain community detection
+python-louvain==0.16
+
+# ============================================================================
+# CRYPTOGRAPHY & SECURITY
+# ============================================================================
+
+# Cryptography - Encryption, hashing, and secure storage
+cryptography==42.0.0
+
+# PyJWT - JSON Web Token implementation
+pyjwt==2.8.0
+
+# Passlib - Password hashing library
+passlib[bcrypt]==1.7.4
+
+# ============================================================================
+# PDF GENERATION
+# ============================================================================
+
+# ReportLab - PDF generation library
+reportlab==4.0.9
+
+# PyPDF2 - PDF manipulation
+pypdf2==3.0.1
+
+# ============================================================================
+# DATA PROCESSING
+# ============================================================================
+
+# Pandas - Data manipulation and analysis
+pandas==2.2.0
+
+# ============================================================================
+# HTTP & NETWORKING
+# ============================================================================
+
+# Requests - HTTP library
+requests==2.31.0
+
+# HTTPX - Async HTTP client (used by FastAPI)
+httpx==0.26.0
+
+# aiofiles - Async file operations
+aiofiles==23.2.1
+
+# ============================================================================
+# UTILITIES
+# ============================================================================
+
+# Python-dateutil - Date/time utilities
+python-dateutil==2.8.2
+
+# Pytz - Timezone handling
+pytz==2024.1
+
+# ============================================================================
+# LOGGING & MONITORING
+# ============================================================================
+
+# Loguru - Simplified logging (optional alternative to logging)
+loguru==0.7.2
+
+# ============================================================================
+# VALIDATION & SANITIZATION
+# ============================================================================
+
+# Validators - Data validation library
+validators==0.22.0
+
+# ============================================================================
+# FILE HANDLING
+# ============================================================================
+
+# python-magic - File type detection
+python-magic==0.4.27
+
+# ============================================================================
+# PERFORMANCE OPTIMIZATION
+# ============================================================================
+
+# orjson - Fast JSON serialization
+orjson==3.9.12
+
+# ============================================================================
+# OPTIONAL: AZURE SUPPORT (commented out by default)
+# ============================================================================
+
+# Uncomment if deploying to Azure
+# azure-storage-blob==12.19.0
+# azure-identity==1.15.0
+# azure-keyvault-secrets==4.7.0
+
+# ============================================================================
+# HASH CHAIN & BLOCKCHAIN UTILITIES
+# ============================================================================
+
+# hashlib is built-in (SHA-256)
+# No external dependency required
+
+# ============================================================================
+# AUDIO PROCESSING
+# ============================================================================
+
+# soundfile - Audio file I/O
+soundfile==0.12.1
+
+# librosa - Audio analysis (optional, heavy dependency)
+# librosa==0.10.1
+
+# ============================================================================
+# IMAGE METADATA
+# ============================================================================
+
+# piexif - EXIF metadata manipulation
+piexif==1.1.3
+
+# ============================================================================
+# RATE LIMITING
+# ============================================================================
+
+# slowapi - Rate limiting for FastAPI
+slowapi==0.1.9
+
+# ============================================================================
+# CORS & MIDDLEWARE
+# ============================================================================
+
+# python-multipart - Form data parsing
+python-multipart==0.0.6
+
+# ============================================================================
+# CONFIGURATION VALIDATION
+# ============================================================================
+
+# pydantic already handles this
+
+# ============================================================================
+# TOTAL PACKAGE COUNT: ~35 core packages
+# ESTIMATED DOWNLOAD SIZE: ~3-4 GB (mostly PyTorch)
+# DISK SPACE REQUIRED: ~8-10 GB
+# INSTALLATION TIME: 5-15 minutes (depending on internet speed)
+# ============================================================================
+
+# ============================================================================
+# VERSION PINNING STRATEGY
+# ============================================================================
+#
+# - Major.Minor.Patch versions pinned for reproducibility
+# - Compatible with Python 3.9, 3.10, 3.11
+# - Last updated: January 2026
+# - Security updates: Check quarterly
+#
+# To update all packages:
+#   pip install --upgrade -r requirements.txt
+#
+# To check for outdated packages:
+#   pip list --outdated
+#
+# ============================================================================
+
+# ============================================================================
+# PLATFORM-SPECIFIC NOTES
+# ============================================================================
+#
+# Linux:
+#   - May need: sudo apt-get install libmagic1 python3-dev
+#
+# macOS:
+#   - May need: brew install libmagic
+#
+# Windows:
+#   - python-magic-bin==0.4.14 (instead of python-magic)
+#   - Visual C++ Build Tools for some packages
+#
+# ============================================================================
+
+# ============================================================================
+# MEMORY REQUIREMENTS
+# ============================================================================
+#
+# Minimum: 4 GB RAM
+# Recommended: 8 GB RAM
+# Optimal: 16 GB RAM (for multiple concurrent submissions)
+#
+# ============================================================================
+
+# ============================================================================
+# GPU SUPPORT (Optional)
+# ============================================================================
+#
+# For GPU acceleration, install PyTorch with CUDA:
+#   pip uninstall torch torchvision torchaudio
+#   pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu118
+#
+# This prototype works on CPU - GPU is optional for speed improvements
+#
+# ============================================================================

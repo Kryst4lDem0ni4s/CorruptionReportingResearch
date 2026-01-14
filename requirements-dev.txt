@@ -1,0 +1,541 @@
+# ============================================================================
+# PYTHON DEPENDENCIES - DEVELOPMENT
+# corruption-reporting-prototype/requirements-dev.txt
+# ============================================================================
+#
+# INSTALLATION:
+#   pip install -r requirements.txt
+#   pip install -r requirements-dev.txt
+#
+# OR:
+#   pip install -r requirements-dev.txt (includes production dependencies)
+#
+# ============================================================================
+
+# ============================================================================
+# INCLUDE PRODUCTION DEPENDENCIES
+# ============================================================================
+
+-r requirements.txt
+
+# ============================================================================
+# TESTING FRAMEWORKS
+# ============================================================================
+
+# Pytest - Testing framework
+pytest==8.0.0
+pytest-asyncio==0.23.3
+pytest-cov==4.1.0
+pytest-mock==3.12.0
+pytest-xdist==3.5.0  # Parallel test execution
+pytest-timeout==2.2.0
+pytest-benchmark==4.0.0
+
+# Coverage - Code coverage measurement
+coverage[toml]==7.4.0
+
+# ============================================================================
+# CODE QUALITY & LINTING
+# ============================================================================
+
+# Black - Code formatter
+black==24.1.1
+
+# Flake8 - Style guide enforcement
+flake8==7.0.0
+flake8-docstrings==1.7.0
+flake8-bugbear==24.1.17
+flake8-comprehensions==3.14.0
+flake8-simplify==0.21.0
+
+# Pylint - Code analysis
+pylint==3.0.3
+
+# isort - Import sorting
+isort==5.13.2
+
+# MyPy - Static type checking
+mypy==1.8.0
+
+# bandit - Security linting
+bandit==1.7.6
+
+# ============================================================================
+# CODE FORMATTING
+# ============================================================================
+
+# autopep8 - PEP 8 compliant formatter
+autopep8==2.0.4
+
+# ============================================================================
+# DOCUMENTATION
+# ============================================================================
+
+# Sphinx - Documentation generator
+sphinx==7.2.6
+sphinx-rtd-theme==2.0.0
+sphinx-autodoc-typehints==1.25.2
+
+# MkDocs - Markdown documentation
+mkdocs==1.5.3
+mkdocs-material==9.5.6
+
+# ============================================================================
+# JUPYTER NOTEBOOKS
+# ============================================================================
+
+# Jupyter - Interactive notebooks
+jupyter==1.0.0
+jupyterlab==4.0.11
+notebook==7.0.7
+
+# IPython - Enhanced Python shell
+ipython==8.20.0
+
+# ipykernel - Jupyter kernel
+ipykernel==6.29.0
+
+# ============================================================================
+# DATA VISUALIZATION (for notebooks)
+# ============================================================================
+
+# Matplotlib - Plotting library
+matplotlib==3.8.2
+
+# Seaborn - Statistical visualization
+seaborn==0.13.1
+
+# Plotly - Interactive visualizations
+plotly==5.18.0
+
+# ============================================================================
+# DEBUGGING
+# ============================================================================
+
+# IPdb - IPython debugger
+ipdb==0.13.13
+
+# pdbpp - Enhanced debugger
+pdbpp==0.10.3
+
+# ============================================================================
+# PROFILING & PERFORMANCE
+# ============================================================================
+
+# memory-profiler - Memory usage profiling
+memory-profiler==0.61.0
+
+# py-spy - Sampling profiler
+py-spy==0.3.14
+
+# line-profiler - Line-by-line profiling
+line-profiler==4.1.1
+
+# ============================================================================
+# API TESTING
+# ============================================================================
+
+# httpie - HTTP client for testing APIs
+httpie==3.2.2
+
+# ============================================================================
+# MOCK DATA GENERATION
+# ============================================================================
+
+# Faker - Generate fake data
+faker==22.2.0
+
+# factory-boy - Test fixtures
+factory-boy==3.3.0
+
+# ============================================================================
+# LOAD TESTING
+# ============================================================================
+
+# Locust - Load testing framework
+locust==2.20.0
+
+# ============================================================================
+# PRE-COMMIT HOOKS
+# ============================================================================
+
+# pre-commit - Git hook framework
+pre-commit==3.6.0
+
+# ============================================================================
+# DEPENDENCY MANAGEMENT
+# ============================================================================
+
+# pip-tools - Dependency management
+pip-tools==7.3.0
+
+# pipdeptree - Dependency tree visualization
+pipdeptree==2.13.2
+
+# ============================================================================
+# ENVIRONMENT MANAGEMENT
+# ============================================================================
+
+# python-dotenv already in requirements.txt
+
+# ============================================================================
+# API DOCUMENTATION
+# ============================================================================
+
+# FastAPI already includes interactive docs (Swagger/ReDoc)
+
+# ============================================================================
+# DATASET DOWNLOAD UTILITIES
+# ============================================================================
+
+# gdown - Google Drive downloader
+gdown==4.7.3
+
+# kaggle - Kaggle API client
+kaggle==1.6.6
+
+# ============================================================================
+# VERSION CONTROL UTILITIES
+# ============================================================================
+
+# gitpython - Git interface
+gitpython==3.1.41
+
+# ============================================================================
+# YAML/TOML PARSING (for config)
+# ============================================================================
+
+# PyYAML already in requirements.txt
+# toml - TOML parser
+toml==0.10.2
+
+# ============================================================================
+# TEMPORARY FILE UTILITIES
+# ============================================================================
+
+# tempfile is built-in
+
+# ============================================================================
+# VIRTUAL ENVIRONMENT UTILITIES
+# ============================================================================
+
+# virtualenv - Virtual environment creator
+virtualenv==20.25.0
+
+# ============================================================================
+# BUILD & PACKAGING
+# ============================================================================
+
+# build - Build backend
+build==1.0.3
+
+# twine - Package upload to PyPI
+twine==4.0.2
+
+# setuptools - Package installer
+setuptools==69.0.3
+
+# wheel - Binary package format
+wheel==0.42.0
+
+# ============================================================================
+# CONTINUOUS INTEGRATION
+# ============================================================================
+
+# tox - Test automation
+tox==4.12.1
+
+# ============================================================================
+# SECURITY SCANNING
+# ============================================================================
+
+# safety - Dependency vulnerability scanner
+safety==3.0.1
+
+# ============================================================================
+# CODE COMPLEXITY ANALYSIS
+# ============================================================================
+
+# radon - Code complexity metrics
+radon==6.0.1
+
+# xenon - Monitor code complexity
+xenon==0.9.1
+
+# ============================================================================
+# NOTEBOOK UTILITIES
+# ============================================================================
+
+# nbconvert - Convert notebooks
+nbconvert==7.14.2
+
+# nbformat - Notebook format tools
+nbformat==5.9.2
+
+# ============================================================================
+# BENCHMARKING DATASETS
+# ============================================================================
+
+# huggingface-hub - Download datasets from Hugging Face
+huggingface-hub==0.20.2
+
+# ============================================================================
+# TOTAL DEVELOPMENT PACKAGES: ~60 additional packages
+# ESTIMATED ADDITIONAL SIZE: ~1-2 GB
+# TOTAL DEV ENVIRONMENT SIZE: ~9-12 GB
+# ============================================================================
+
+# ============================================================================
+# USAGE GUIDELINES
+# ============================================================================
+#
+# 1. Install production dependencies first:
+#    pip install -r requirements.txt
+#
+# 2. Then install development dependencies:
+#    pip install -r requirements-dev.txt
+#
+# 3. Or install everything at once:
+#    pip install -r requirements-dev.txt
+#    (This includes production dependencies via -r requirements.txt)
+#
+# 4. Set up pre-commit hooks:
+#    pre-commit install
+#
+# 5. Run tests:
+#    pytest tests/
+#
+# 6. Check code quality:
+#    black --check backend/
+#    flake8 backend/
+#    mypy backend/
+#
+# 7. Generate coverage report:
+#    pytest --cov=backend --cov-report=html
+#
+# 8. Profile code:
+#    python -m memory_profiler backend/main.py
+#
+# ============================================================================
+
+# ============================================================================
+# RECOMMENDED DEVELOPMENT WORKFLOW
+# ============================================================================
+#
+# 1. Create virtual environment:
+#    python -m venv venv
+#    source venv/bin/activate  # Linux/Mac
+#    venv\Scripts\activate     # Windows
+#
+# 2. Install dependencies:
+#    pip install --upgrade pip
+#    pip install -r requirements-dev.txt
+#
+# 3. Download ML models:
+#    python scripts/download_models.py
+#
+# 4. Initialize storage:
+#    python scripts/initialize_storage.py
+#
+# 5. Run tests:
+#    pytest tests/ -v --cov=backend
+#
+# 6. Start development server:
+#    uvicorn backend.main:app --reload
+#
+# 7. Access API docs:
+#    http://localhost:8000/docs
+#
+# ============================================================================
+
+# ============================================================================
+# PRE-COMMIT CONFIGURATION
+# ============================================================================
+#
+# Create .pre-commit-config.yaml:
+#
+# repos:
+#   - repo: https://github.com/psf/black
+#     rev: 24.1.1
+#     hooks:
+#       - id: black
+#
+#   - repo: https://github.com/pycqa/flake8
+#     rev: 7.0.0
+#     hooks:
+#       - id: flake8
+#
+#   - repo: https://github.com/pycqa/isort
+#     rev: 5.13.2
+#     hooks:
+#       - id: isort
+#
+#   - repo: https://github.com/pre-commit/mirrors-mypy
+#     rev: v1.8.0
+#     hooks:
+#       - id: mypy
+#
+# Then run: pre-commit install
+#
+# ============================================================================
+
+# ============================================================================
+# TESTING CONFIGURATION
+# ============================================================================
+#
+# Create pytest.ini (already exists in tests/):
+#
+# [pytest]
+# testpaths = tests
+# python_files = test_*.py
+# python_classes = Test*
+# python_functions = test_*
+# addopts = 
+#     --verbose
+#     --strict-markers
+#     --cov=backend
+#     --cov-report=term-missing
+#     --cov-report=html
+#
+# ============================================================================
+
+# ============================================================================
+# CODE COVERAGE TARGETS
+# ============================================================================
+#
+# Target coverage: >80%
+# Critical modules (layers): >90%
+# Utilities: >70%
+# Total project: >80%
+#
+# Run coverage:
+#   pytest --cov=backend --cov-report=html
+#   open htmlcov/index.html
+#
+# ============================================================================
+
+# ============================================================================
+# STATIC TYPE CHECKING
+# ============================================================================
+#
+# Create mypy.ini:
+#
+# [mypy]
+# python_version = 3.10
+# warn_return_any = True
+# warn_unused_configs = True
+# disallow_untyped_defs = False
+# ignore_missing_imports = True
+#
+# Run type checking:
+#   mypy backend/
+#
+# ============================================================================
+
+# ============================================================================
+# CODE FORMATTING STANDARDS
+# ============================================================================
+#
+# Black configuration (pyproject.toml):
+#
+# [tool.black]
+# line-length = 100
+# target-version = ['py310']
+# include = '\.pyi?$'
+# exclude = '''
+# /(
+#     \.git
+#   | \.venv
+#   | build
+#   | dist
+# )/
+# '''
+#
+# Run formatter:
+#   black backend/
+#
+# ============================================================================
+
+# ============================================================================
+# DEPENDENCY UPDATES
+# ============================================================================
+#
+# Check outdated packages:
+#   pip list --outdated
+#
+# Update specific package:
+#   pip install --upgrade package-name
+#
+# Update all packages:
+#   pip install --upgrade -r requirements-dev.txt
+#
+# Security audit:
+#   safety check
+#   bandit -r backend/
+#
+# ============================================================================
+
+# ============================================================================
+# PLATFORM-SPECIFIC DEVELOPMENT TOOLS
+# ============================================================================
+#
+# Linux:
+#   - Build tools: sudo apt-get install build-essential python3-dev
+#   - Git: sudo apt-get install git
+#
+# macOS:
+#   - Xcode tools: xcode-select --install
+#   - Homebrew: /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+#
+# Windows:
+#   - Visual Studio Build Tools
+#   - Git for Windows
+#   - Windows Terminal (recommended)
+#
+# ============================================================================
+
+# ============================================================================
+# JUPYTER NOTEBOOK SETUP
+# ============================================================================
+#
+# 1. Install Jupyter kernel:
+#    python -m ipykernel install --user --name=corruption-reporting
+#
+# 2. Start JupyterLab:
+#    jupyter lab
+#
+# 3. Open notebooks in notebooks/ directory
+#
+# 4. Run all cells:
+#    jupyter nbconvert --execute --to notebook --inplace notebook.ipynb
+#
+# ============================================================================
+
+# ============================================================================
+# PERFORMANCE PROFILING
+# ============================================================================
+#
+# Memory profiling:
+#   python -m memory_profiler backend/main.py
+#
+# Line profiling:
+#   kernprof -l -v backend/core/layer2_credibility.py
+#
+# CPU profiling:
+#   py-spy record -o profile.svg -- python backend/main.py
+#
+# ============================================================================
+
+# ============================================================================
+# MINIMUM DEVELOPMENT ENVIRONMENT
+# ============================================================================
+#
+# If disk space is limited, install minimal dev tools:
+#   pip install pytest black flake8 mypy ipdb
+#
+# Skip heavy packages like:
+#   - Jupyter (use VS Code instead)
+#   - Sphinx (write markdown docs)
+#   - Locust (test manually)
+#
+# ============================================================================
