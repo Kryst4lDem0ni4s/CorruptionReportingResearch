@@ -285,7 +285,7 @@ def print_dependencies():
     print("="*50)
     
     for name, available in deps.items():
-        status = "✓ Available" if available else "✗ Not Implemented"
+        status = " Available" if available else " Not Implemented"
         print(f"{name:25s}: {status}")
     
     print("="*50 + "\n")

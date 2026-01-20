@@ -198,7 +198,7 @@ class EvaluationRunner:
         # Check Python version
         if sys.version_info < (3, 8):
             raise RuntimeError("Python 3.8+ required")
-        logger.info("✓ Python version OK")
+        logger.info(" Python version OK")
         
         # Check required packages
         required_packages = [
@@ -213,17 +213,17 @@ class EvaluationRunner:
         for package in required_packages:
             try:
                 __import__(package)
-                logger.debug(f"✓ Package {package} found")
+                logger.debug(f" Package {package} found")
             except ImportError:
                 missing_packages.append(package)
-                logger.warning(f"✗ Package {package} not found")
+                logger.warning(f" Package {package} not found")
         
         if missing_packages:
             logger.warning(f"Missing packages: {missing_packages}")
             logger.warning("Some experiments may fail. Install with:")
             logger.warning(f"pip install {' '.join(missing_packages)}")
         else:
-            logger.info("✓ All required packages found")
+            logger.info(" All required packages found")
         
         # Check backend API
         try:
@@ -231,7 +231,7 @@ class EvaluationRunner:
             backend_url = os.getenv('BACKEND_URL', 'http://localhost:8000')
             response = requests.get(f"{backend_url}/health", timeout=5)
             if response.status_code == 200:
-                logger.info(f"✓ Backend API accessible at {backend_url}")
+                logger.info(f" Backend API accessible at {backend_url}")
             else:
                 logger.warning(f"Backend API returned status {response.status_code}")
         except Exception as e:
@@ -241,7 +241,7 @@ class EvaluationRunner:
         # Check directories
         for directory in [self.output_dir, FIGURES_DIR]:
             directory.mkdir(parents=True, exist_ok=True)
-        logger.info("✓ Output directories created")
+        logger.info(" Output directories created")
     
     # ============================================
     # DATASET PREPARATION
@@ -284,7 +284,7 @@ class EvaluationRunner:
                 logger.info(f"  Attack scenarios: {num_attacks}")
                 logger.info("  Note: Use evaluation/datasets/generate_synthetic.py for generation")
         
-        logger.info("✓ Dataset preparation complete")
+        logger.info(" Dataset preparation complete")
     
     # ============================================
     # EXPERIMENTS
@@ -307,9 +307,9 @@ class EvaluationRunner:
                 experiment_func = self.experiments[exp_name]
                 results = experiment_func()
                 self.results['experiments'][exp_name] = results
-                logger.info(f"✓ {exp_name} complete")
+                logger.info(f" {exp_name} complete")
             except Exception as e:
-                logger.error(f"✗ {exp_name} failed: {e}")
+                logger.error(f" {exp_name} failed: {e}")
                 logger.error(traceback.format_exc())
                 self.results['experiments'][exp_name] = {
                     'status': 'failed',
@@ -427,7 +427,7 @@ class EvaluationRunner:
                 'note': f'Implement in evaluation/metrics/{metric_type}_metrics.py'
             }
         
-        logger.info("✓ Metrics computation complete")
+        logger.info(" Metrics computation complete")
     
     # ============================================
     # VISUALIZATION
@@ -457,7 +457,7 @@ class EvaluationRunner:
                 'note': f'Implement in evaluation/visualizations/plot_{plot_name.split("_")[1]}.py'
             })
         
-        logger.info(f"✓ {len(self.results['figures'])} visualization(s) complete")
+        logger.info(f" {len(self.results['figures'])} visualization(s) complete")
     
     # ============================================
     # REPORT GENERATION
@@ -474,7 +474,7 @@ class EvaluationRunner:
         with open(report_path, 'w') as f:
             f.write(report)
         
-        logger.info(f"✓ Report saved to: {report_path}")
+        logger.info(f" Report saved to: {report_path}")
         
         self.results['metadata']['report_path'] = str(report_path)
     
@@ -493,10 +493,10 @@ This report presents the evaluation results of the corruption reporting system p
 
 ### Key Findings
 
-- **Deepfake Detection:** AUROC target ≥0.75 (paper target: 0.90)
-- **Coordination Detection:** Precision/Recall target ≥0.70
-- **Consensus:** Convergence rate target ≥0.80
-- **Counter-Evidence:** False positive reduction target ≥20%
+- **Deepfake Detection:** AUROC target >=0.75 (paper target: 0.90)
+- **Coordination Detection:** Precision/Recall target >=0.70
+- **Consensus:** Convergence rate target >=0.80
+- **Counter-Evidence:** False positive reduction target >=20%
 
 ## Methodology
 

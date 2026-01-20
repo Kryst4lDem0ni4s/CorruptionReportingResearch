@@ -69,7 +69,7 @@ class CoordinationDetectionMetric(BaseMetric):
     
     Measures ability to detect coordinated attacks in submissions.
     
-    Target: Precision ≥0.70, Recall ≥0.70
+    Target: Precision >=0.70, Recall >=0.70
     """
     
     def __init__(self):

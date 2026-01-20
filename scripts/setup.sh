@@ -31,11 +31,11 @@ print_header() {
 }
 
 print_success() {
-    echo -e "${GREEN}✓ $1${NC}"
+    echo -e "${GREEN} $1${NC}"
 }
 
 print_error() {
-    echo -e "${RED}✗ $1${NC}"
+    echo -e "${RED} $1${NC}"
 }
 
 print_warning() {
@@ -393,9 +393,9 @@ try:
     import torch
     import transformers
     import networkx
-    print('✓ Core Python dependencies working')
+    print(' Core Python dependencies working')
 except ImportError as e:
-    print(f'✗ Import error: {e}')
+    print(f' Import error: {e}')
     sys.exit(1)
 " || {
         print_error "Python dependency verification failed"
@@ -412,7 +412,7 @@ sys.path.insert(0, 'backend')
 try:
     from api.health import get_health
     health = get_health()
-    print(f'✓ Backend health check passed: {health[\"status\"]}')
+    print(f' Backend health check passed: {health[\"status\"]}')
 except Exception as e:
     print(f'⚠ Backend health check warning: {e}')
 " || print_warning "Backend health check had warnings (this is OK for first setup)"
@@ -423,9 +423,9 @@ except Exception as e:
 try {
     require('express');
     require('axios');
-    console.log('✓ Node.js dependencies working');
+    console.log(' Node.js dependencies working');
 } catch (e) {
-    console.error('✗ Node.js dependency error:', e.message);
+    console.error(' Node.js dependency error:', e.message);
     process.exit(1);
 }
 " || {

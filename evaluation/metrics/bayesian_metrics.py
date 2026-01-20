@@ -61,7 +61,7 @@ class FalsePositiveReductionMetric(BaseMetric):
     
     Measures reduction in false positives after counter-evidence.
     
-    Target: ≥20% false positive reduction
+    Target: >=20% false positive reduction
     """
     
     def __init__(self):

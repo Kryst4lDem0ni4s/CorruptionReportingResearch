@@ -274,7 +274,7 @@ def print_dependencies():
     print("="*50)
     
     for name, available in deps.items():
-        status = "✓ Available" if available else "✗ Missing"
+        status = " Available" if available else " Missing"
         print(f"{name:25s}: {status}")
     
     print("="*50 + "\n")
@@ -369,12 +369,12 @@ print_dependencies()
 # ==================================================
 # VISUALIZATION MODULE DEPENDENCIES
 # ==================================================
-# matplotlib               : ✓ Available
-# roc_curves              : ✓ Available
-# confusion_matrices      : ✓ Available
-# network_graphs          : ✓ Available
-# distributions           : ✓ Available
-# scipy_kde               : ✓ Available
+# matplotlib               :  Available
+# roc_curves              :  Available
+# confusion_matrices      :  Available
+# network_graphs          :  Available
+# distributions           :  Available
+# scipy_kde               :  Available
 # ==================================================
 
 # Use visualization functions

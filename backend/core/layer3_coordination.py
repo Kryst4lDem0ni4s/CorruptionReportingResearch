@@ -72,7 +72,7 @@ class Layer3Coordination:
         
         logger.info(
             f"Layer 3 (Coordination) initialized "
-            f"(similarity≥{min_similarity}, window={time_window_hours}h)"
+            f"(similarity>={min_similarity}, window={time_window_hours}h)"
         )
     
     def process(

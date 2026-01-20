@@ -70,7 +70,7 @@ function getForwardHeaders(headers) {
  */
 function logProxyRequest(method, path, status, duration) {
     const timestamp = new Date().toISOString();
-    const statusEmoji = status < 400 ? '✓' : '✗';
+    const statusEmoji = status < 400 ? '' : '';
     console.log(`[${timestamp}] ${statusEmoji} PROXY ${method} ${path} → ${status} (${duration}ms)`);
 }
 

@@ -581,9 +581,9 @@ def main():
         logger.info(f"Submissions archived: {stats['archived']}")
     
     if args.dry_run:
-        logger.info("\n✓ Dry run complete (no files were deleted)")
+        logger.info("\n Dry run complete (no files were deleted)")
     else:
-        logger.info("\n✓ Cleanup complete")
+        logger.info("\n Cleanup complete")
     
     logger.info("")
     

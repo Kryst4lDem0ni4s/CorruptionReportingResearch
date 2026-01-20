@@ -174,7 +174,7 @@ class ConvergenceTimeMetric(BaseMetric):
             
             max_agreement = max(max_agreement, agreement)
             
-            # Check for convergence (≥80% agreement)
+            # Check for convergence (>=80% agreement)
             if agreement >= 0.80 and not converged:
                 convergence_round = round_num
                 converged = True
@@ -210,7 +210,7 @@ class AgreementRateMetric(BaseMetric):
     
     Measures the percentage of validators agreeing on the final decision.
     
-    Target: ≥0.80 (80% agreement)
+    Target: >=0.80 (80% agreement)
     """
     
     def __init__(self):

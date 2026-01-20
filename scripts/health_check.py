@@ -502,9 +502,9 @@ def print_health_report(results: Dict[str, Any], detailed: bool = False):
     
     # Individual checks
     status_symbols = {
-        'ok': '✓',
+        'ok': '',
         'warning': '⚠',
-        'error': '✗',
+        'error': '',
         'unknown': '?'
     }
     

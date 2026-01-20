@@ -408,9 +408,9 @@ def main():
         status = verify_installation()
         
         if status["installed"]:
-            print("✓ All required dependencies installed")
+            print(" All required dependencies installed")
         else:
-            print("✗ Missing dependencies:")
+            print(" Missing dependencies:")
             for dep in status["missing_dependencies"]:
                 print(f"  - {dep}")
             print("\nInstall with: pip install -r requirements.txt")

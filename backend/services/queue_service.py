@@ -215,6 +215,26 @@ class QueueService:
         except Exception as e:
             logger.error(f"Failed to submit job: {e}")
             raise
+        
+    def enqueue(self, queue_name: str, item: str) -> None:
+        """Add item to queue."""
+        self.queues[queue_name].append(item)
+    
+    def dequeue(self, queue_name: str) -> Optional[str]:
+        """Remove and return item from queue."""
+        if self.queues[queue_name]:
+            return self.queues[queue_name].pop(0)
+        return None
+    
+    def peek(self, queue_name: str) -> Optional[str]:
+        """View next item without removing."""
+        if self.queues[queue_name]:
+            return self.queues[queue_name][0]
+        return None
+    
+    def size(self, queue_name: str) -> int:
+        """Get queue size."""
+        return len(self.queues[queue_name])
     
     async def _worker(self, worker_id: int) -> None:
         """

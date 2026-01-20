@@ -223,3 +223,4 @@ __marimo__/
 # backend/data/chain.json
 # backend/data/validators.json
 # backend/data/index.json
+frontend/node_modules/

@@ -98,7 +98,7 @@ def extract_backup(backup_path: Path, extract_dir: Path) -> Optional[Path]:
                 return None
             
             backup_dir = extracted_dirs[0]
-            logger.info(f"  ✓ Extracted to: {backup_dir}")
+            logger.info(f"   Extracted to: {backup_dir}")
             return backup_dir
         
         elif backup_path.is_dir():
@@ -173,15 +173,15 @@ def validate_backup(backup_dir: Path, manifest: Dict[str, Any]) -> bool:
             component_path = backup_dir / component_name
             
             if not component_path.exists():
-                logger.error(f"  ✗ Missing component: {component_name}")
+                logger.error(f"   Missing component: {component_name}")
                 all_ok = False
             else:
-                logger.debug(f"  ✓ Found component: {component_name}")
+                logger.debug(f"   Found component: {component_name}")
     
     if all_ok:
-        logger.info("  ✓ Backup validation passed")
+        logger.info("   Backup validation passed")
     else:
-        logger.error("  ✗ Backup validation failed")
+        logger.error("   Backup validation failed")
     
     return all_ok
 
@@ -212,7 +212,7 @@ def backup_current_data(backup_name: str = "pre_restore") -> bool:
         
         shutil.copytree(DATA_DIR, backup_dir)
         
-        logger.info(f"  ✓ Pre-restore backup created: {backup_dir}")
+        logger.info(f"   Pre-restore backup created: {backup_dir}")
         return True
     
     except Exception as e:
@@ -251,16 +251,16 @@ def restore_component(
         if source_path.is_dir():
             shutil.copytree(source_path, dest_path, symlinks=False)
             file_count = sum(1 for _ in dest_path.rglob('*') if _.is_file())
-            logger.info(f"  ✓ {component_name}: {file_count} files restored")
+            logger.info(f"   {component_name}: {file_count} files restored")
         else:
             dest_path.parent.mkdir(parents=True, exist_ok=True)
             shutil.copy2(source_path, dest_path)
-            logger.info(f"  ✓ {component_name}: 1 file restored")
+            logger.info(f"   {component_name}: 1 file restored")
         
         return True
     
     except Exception as e:
-        logger.error(f"  ✗ Failed to restore {component_name}: {e}")
+        logger.error(f"   Failed to restore {component_name}: {e}")
         return False
 
 def execute_restore(
@@ -354,9 +354,9 @@ def verify_restoration() -> bool:
             try:
                 with open(filepath, 'r') as f:
                     data = json.load(f)
-                logger.debug(f"  ✓ {filepath.name} valid")
+                logger.debug(f"   {filepath.name} valid")
             except Exception as e:
-                logger.error(f"  ✗ {filepath.name} corrupted: {e}")
+                logger.error(f"   {filepath.name} corrupted: {e}")
                 all_ok = False
         else:
             logger.warning(f"  ⚠ {filepath.name} missing")
@@ -369,12 +369,12 @@ def verify_restoration() -> bool:
     
     for dirpath in critical_dirs:
         if dirpath.exists() and dirpath.is_dir():
-            logger.debug(f"  ✓ {dirpath.name}/ exists")
+            logger.debug(f"   {dirpath.name}/ exists")
         else:
             logger.warning(f"  ⚠ {dirpath.name}/ missing")
     
     if all_ok:
-        logger.info("  ✓ Restoration verification passed")
+        logger.info("   Restoration verification passed")
     
     return all_ok
 
@@ -529,14 +529,14 @@ def main():
     logger.info("=" * 70)
     
     if success:
-        logger.info("✓ Restoration completed successfully")
+        logger.info(" Restoration completed successfully")
         logger.info("")
         logger.info("Next steps:")
         logger.info("  1. Verify data integrity")
         logger.info("  2. Start backend: cd backend && python -m uvicorn main:app --reload")
         logger.info("  3. Check system health: python scripts/health_check.py")
     else:
-        logger.error("✗ Restoration completed with errors")
+        logger.error(" Restoration completed with errors")
         logger.error("Some components may not have been restored correctly")
     
     logger.info("")

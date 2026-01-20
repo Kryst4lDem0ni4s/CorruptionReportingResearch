@@ -896,7 +896,6 @@ class MetricsService:
         }
 
         return health
-    
 
     def record_gauge(self, metric_name: str, value: float) -> None:
         """

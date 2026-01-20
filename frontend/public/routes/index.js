@@ -172,7 +172,7 @@ function initializeRoutes(app) {
     // Register all routes
     registerRoutes(app);
 
-    console.log('✓ Routes registered successfully');
+    console.log(' Routes registered successfully');
 }
 
 /**
@@ -272,3 +272,4 @@ module.exports = {
     getRegisteredRoutes,
     printRoutes
 };
+

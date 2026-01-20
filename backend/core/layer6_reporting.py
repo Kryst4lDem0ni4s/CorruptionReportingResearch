@@ -455,7 +455,7 @@ class Layer6Reporting:
                 ))
         else:
             elements.append(Paragraph(
-                "<b>✓ NO COORDINATION DETECTED</b>",
+                "<b> NO COORDINATION DETECTED</b>",
                 styles['BodyJustify']
             ))
             elements.append(Paragraph(

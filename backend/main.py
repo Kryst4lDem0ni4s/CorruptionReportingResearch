@@ -31,8 +31,13 @@ from prometheus_client import (
 )
 
 from backend.core import orchestrator
-from backend.services import queue_service, storage_service
-from backend.services import metrics_service
+# from backend.services import queue_service, storage_service
+# from backend.services import metrics_service
+
+# Import classes, not modules
+from backend.services.storage_service import StorageService
+from backend.services.queue_service import QueueService
+from backend.services.metrics_service import MetricsService
 
 # Add backend to path
 sys.path.insert(0, str(Path(__file__).parent.parent))
@@ -458,14 +463,18 @@ async def lifespan(app: FastAPI):
         # Start background workers
         logger.info("Starting background workers...")
 
-        # Submission worker
+        # CORRECT:
+        from backend.services.queue_service import QueueService
+
+        queue = QueueService()
         submission_worker = SubmissionWorker(
-            storage_service=storage_service,
-            queue_service=queue_service,
-            metrics_service=metrics_service,
+            storage_service=storage,  # Already instantiated above
+            queue_service=queue,      # Now an instance, not module
+            metrics_service=metrics,  # Already instantiated above
             orchestrator=orchestrator
         )
-        submission_worker.start()
+
+        await submission_worker.start()
         app.state.submission_worker = submission_worker
 
         # Cleanup worker

@@ -425,7 +425,7 @@ print(f"Authenticity score: {score:.2f}")
 if score < 0.5:
     print("⚠️ Potential deepfake detected!")
 else:
-    print("✓ Image appears authentic")
+    print(" Image appears authentic")
 Example 2: Detailed Analysis
 python
 # Get detailed scores

@@ -35,7 +35,7 @@
       "precision": "float [0-1] - true positives / (true positives + false positives)",
       "recall": "float [0-1] - true positives / (true positives + false negatives)",
       "f1_score": "float [0-1] - harmonic mean of precision and recall",
-      "auroc": "float [0-1] - area under ROC curve (target: ≥0.75, ideal: ≥0.90)",
+      "auroc": "float [0-1] - area under ROC curve (target: >=0.75, ideal: >=0.90)",
       "auprc": "float [0-1] - area under precision-recall curve",
       "false_positive_rate": "float [0-1]",
       "false_negative_rate": "float [0-1]",
@@ -112,7 +112,7 @@
     "description": "Counter-evidence processing and Bayesian aggregation metrics",
     "num_accusation_defense_pairs": "int",
     "metrics": {
-      "false_positive_reduction": "float [0-1] - reduction after counter-evidence (target: ≥0.20)",
+      "false_positive_reduction": "float [0-1] - reduction after counter-evidence (target: >=0.20)",
       "credibility_score_change_avg": "float - average change in credibility after defense",
       "identity_verification_bonus_applied": "int - count of verified defenses",
       "bayesian_aggregation_accuracy": "float [0-1]"

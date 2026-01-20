@@ -54,7 +54,7 @@ const { compression, devCompression, prodCompression } = require('./middleware/c
 // IMPORT ROUTES
 // ============================================
 
-const routes = require('./routes');
+const routes = require('./public/routes');
 
 // ============================================
 // CREATE EXPRESS APP
@@ -128,7 +128,7 @@ app.use(express.static(publicPath, {
 console.log(`[Server] Static files served from: ${publicPath}`);
 
 // 6. Application routes
-app.use('/', routes);
+routes.initializeRoutes(app);
 console.log('[Server] Application routes registered');
 
 // 7. 404 handler (must be after all routes)

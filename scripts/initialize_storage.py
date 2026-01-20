@@ -167,7 +167,7 @@
 #             logger.error(f"Missing directory: {directory}")
 #             all_valid = False
 #         else:
-#             logger.debug(f"✓ Directory exists: {directory}")
+#             logger.debug(f" Directory exists: {directory}")
     
 #     # Check files
 #     for file_path in required_files:
@@ -175,12 +175,12 @@
 #             logger.error(f"Missing file: {file_path}")
 #             all_valid = False
 #         else:
-#             logger.debug(f"✓ File exists: {file_path}")
+#             logger.debug(f" File exists: {file_path}")
     
 #     if all_valid:
-#         logger.info("✓ Data directory structure is valid!")
+#         logger.info(" Data directory structure is valid!")
 #     else:
-#         logger.error("✗ Data directory structure has issues!")
+#         logger.error(" Data directory structure has issues!")
     
 #     return all_valid
 
@@ -317,7 +317,7 @@
 #         if not file_path.exists():
 #             with open(file_path, 'w', encoding='utf-8') as f:
 #                 json.dump(data, f, indent=2, ensure_ascii=False)
-#             logger.info(f"✓ Created: {file_path}")
+#             logger.info(f" Created: {file_path}")
 #         else:
 #             logger.debug(f"File already exists: {file_path}")
 
@@ -460,7 +460,7 @@ def initialize_chain_file(filepath: Path, reset: bool = False) -> bool:
         True if successful
     """
     if filepath.exists() and not reset:
-        logger.info(f"✓ {filepath} already exists (use --reset to recreate)")
+        logger.info(f" {filepath} already exists (use --reset to recreate)")
         return True
     
     try:
@@ -490,11 +490,11 @@ def initialize_chain_file(filepath: Path, reset: bool = False) -> bool:
         with open(filepath, 'w') as f:
             json.dump(genesis_block, f, indent=2)
         
-        logger.info(f"✓ Created {filepath} with genesis block")
+        logger.info(f" Created {filepath} with genesis block")
         return True
     
     except Exception as e:
-        logger.error(f"✗ Failed to create {filepath}: {e}")
+        logger.error(f" Failed to create {filepath}: {e}")
         return False
 
 def initialize_validators_file(filepath: Path, reset: bool = False) -> bool:
@@ -509,7 +509,7 @@ def initialize_validators_file(filepath: Path, reset: bool = False) -> bool:
         True if successful
     """
     if filepath.exists() and not reset:
-        logger.info(f"✓ {filepath} already exists (use --reset to recreate)")
+        logger.info(f" {filepath} already exists (use --reset to recreate)")
         return True
     
     try:
@@ -532,11 +532,11 @@ def initialize_validators_file(filepath: Path, reset: bool = False) -> bool:
         with open(filepath, 'w') as f:
             json.dump(validators_data, f, indent=2)
         
-        logger.info(f"✓ Created {filepath} (empty pool - run seed_validators.py to populate)")
+        logger.info(f" Created {filepath} (empty pool - run seed_validators.py to populate)")
         return True
     
     except Exception as e:
-        logger.error(f"✗ Failed to create {filepath}: {e}")
+        logger.error(f" Failed to create {filepath}: {e}")
         return False
 
 def initialize_index_file(filepath: Path, reset: bool = False) -> bool:
@@ -551,7 +551,7 @@ def initialize_index_file(filepath: Path, reset: bool = False) -> bool:
         True if successful
     """
     if filepath.exists() and not reset:
-        logger.info(f"✓ {filepath} already exists (use --reset to recreate)")
+        logger.info(f" {filepath} already exists (use --reset to recreate)")
         return True
     
     try:
@@ -572,11 +572,11 @@ def initialize_index_file(filepath: Path, reset: bool = False) -> bool:
         with open(filepath, 'w') as f:
             json.dump(index_data, f, indent=2)
         
-        logger.info(f"✓ Created {filepath}")
+        logger.info(f" Created {filepath}")
         return True
     
     except Exception as e:
-        logger.error(f"✗ Failed to create {filepath}: {e}")
+        logger.error(f" Failed to create {filepath}: {e}")
         return False
 
 def create_gitkeep_files():
@@ -635,16 +635,16 @@ def create_directories(verbose: bool = False) -> Dict[str, int]:
                 if full_path.exists():
                     stats['existed'] += 1
                     if verbose:
-                        logger.info(f"  ✓ {dir_path} (already exists)")
+                        logger.info(f"   {dir_path} (already exists)")
                 else:
                     full_path.mkdir(parents=True, exist_ok=True)
                     stats['created'] += 1
                     if verbose:
-                        logger.info(f"  ✓ {dir_path} (created)")
+                        logger.info(f"   {dir_path} (created)")
             
             except Exception as e:
                 stats['failed'] += 1
-                logger.error(f"  ✗ {dir_path} (failed: {e})")
+                logger.error(f"   {dir_path} (failed: {e})")
     
     return stats
 
@@ -673,9 +673,9 @@ def verify_storage() -> bool:
     for dir_path in critical_dirs:
         full_path = PROJECT_ROOT / dir_path
         if full_path.exists() and full_path.is_dir():
-            logger.info(f"  ✓ {dir_path}")
+            logger.info(f"   {dir_path}")
         else:
-            logger.error(f"  ✗ {dir_path} (missing)")
+            logger.error(f"   {dir_path} (missing)")
             all_ok = False
     
     # Check data files
@@ -688,9 +688,9 @@ def verify_storage() -> bool:
     for file_path in data_files:
         full_path = PROJECT_ROOT / file_path
         if full_path.exists() and full_path.is_file():
-            logger.info(f"  ✓ {file_path}")
+            logger.info(f"   {file_path}")
         else:
-            logger.error(f"  ✗ {file_path} (missing)")
+            logger.error(f"   {file_path} (missing)")
             all_ok = False
     
     return all_ok
@@ -736,10 +736,10 @@ def main():
     if args.verify_only:
         success = verify_storage()
         if success:
-            logger.info("\n✓ Storage verification passed")
+            logger.info("\n Storage verification passed")
             return 0
         else:
-            logger.error("\n✗ Storage verification failed")
+            logger.error("\n Storage verification failed")
             return 1
     
     # Warn about reset
@@ -766,7 +766,7 @@ def main():
     logger.info(f"  Failed: {stats['failed']}")
     
     if stats['failed'] > 0:
-        logger.error("\n✗ Some directories failed to create")
+        logger.error("\n Some directories failed to create")
         return 1
     
     # Initialize data files
@@ -785,7 +785,7 @@ def main():
     logger.info("\nStep 3: Creating .gitkeep files")
     logger.info("-" * 70)
     create_gitkeep_files()
-    logger.info("✓ .gitkeep files created")
+    logger.info(" .gitkeep files created")
     
     # Verify storage
     logger.info("\nStep 4: Verification")
@@ -798,14 +798,14 @@ def main():
     logger.info("=" * 70)
     
     if all(results) and verification_ok:
-        logger.info("✓ Storage initialized successfully!")
+        logger.info(" Storage initialized successfully!")
         logger.info("")
         logger.info("Next steps:")
         logger.info("  1. Run: python scripts/seed_validators.py")
         logger.info("  2. Start backend: cd backend && python -m uvicorn main:app --reload")
         return 0
     else:
-        logger.error("✗ Storage initialization failed")
+        logger.error(" Storage initialization failed")
         logger.error("Please check the errors above and try again")
         return 1
 

@@ -56,6 +56,20 @@ class CleanupWorker:
             max_storage_gb: Maximum storage in GB
         """
         self.storage = storage_service
+        # self.metrics = metrics_service
+        import types
+        # If caller passed the module (or the class), instantiate the service.
+        if isinstance(metrics_service, types.ModuleType):
+            if hasattr(metrics_service, 'MetricsService'):
+                metrics_service = metrics_service.MetricsService()
+            else:
+                raise TypeError("Provided metrics_service is a module without 'MetricsService' class")
+        elif isinstance(metrics_service, type):
+            # A class was passed (MetricsService), instantiate it
+            metrics_service = metrics_service()
+        # Final check: must provide an instance with record_gauge
+        if not hasattr(metrics_service, 'record_gauge'):
+            raise TypeError("metrics_service must be an instance exposing 'record_gauge'")
         self.metrics = metrics_service
         self.data_dir = Path(data_dir)
         self.retention_days = retention_days

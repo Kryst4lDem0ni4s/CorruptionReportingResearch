@@ -84,10 +84,10 @@ def check_dependencies():
         import torch
         import transformers
         from sentence_transformers import SentenceTransformer
-        logger.info("✓ All required libraries are installed")
+        logger.info(" All required libraries are installed")
         return True
     except ImportError as e:
-        logger.error(f"✗ Missing dependency: {e}")
+        logger.error(f" Missing dependency: {e}")
         logger.error("Please install requirements: pip install -r requirements.txt")
         return False
 
@@ -126,13 +126,13 @@ def download_clip_model(cache_dir: Optional[str] = None) -> bool:
             cache_dir=cache_dir
         )
         
-        logger.info("✓ CLIP model downloaded successfully")
+        logger.info(" CLIP model downloaded successfully")
         logger.info("")
         
         return True
     
     except Exception as e:
-        logger.error(f"✗ Failed to download CLIP model: {e}")
+        logger.error(f" Failed to download CLIP model: {e}")
         return False
 
 def download_sentence_transformer_model(cache_dir: Optional[str] = None) -> bool:
@@ -164,13 +164,13 @@ def download_sentence_transformer_model(cache_dir: Optional[str] = None) -> bool
             cache_folder=cache_dir
         )
         
-        logger.info("✓ Sentence Transformer model downloaded successfully")
+        logger.info(" Sentence Transformer model downloaded successfully")
         logger.info("")
         
         return True
     
     except Exception as e:
-        logger.error(f"✗ Failed to download Sentence Transformer model: {e}")
+        logger.error(f" Failed to download Sentence Transformer model: {e}")
         return False
 
 def download_wav2vec_model(cache_dir: Optional[str] = None) -> bool:
@@ -208,13 +208,13 @@ def download_wav2vec_model(cache_dir: Optional[str] = None) -> bool:
             cache_dir=cache_dir
         )
         
-        logger.info("✓ Wav2Vec2 model downloaded successfully")
+        logger.info(" Wav2Vec2 model downloaded successfully")
         logger.info("")
         
         return True
     
     except Exception as e:
-        logger.error(f"✗ Failed to download Wav2Vec2 model: {e}")
+        logger.error(f" Failed to download Wav2Vec2 model: {e}")
         return False
 
 def download_blip_model(cache_dir: Optional[str] = None) -> bool:
@@ -252,13 +252,13 @@ def download_blip_model(cache_dir: Optional[str] = None) -> bool:
             cache_dir=cache_dir
         )
         
-        logger.info("✓ BLIP model downloaded successfully")
+        logger.info(" BLIP model downloaded successfully")
         logger.info("")
         
         return True
     
     except Exception as e:
-        logger.error(f"✗ Failed to download BLIP model: {e}")
+        logger.error(f" Failed to download BLIP model: {e}")
         return False
 
 # =============================================================================
@@ -288,9 +288,9 @@ def verify_models(cache_dir: Optional[str] = None) -> bool:
             REQUIRED_MODELS['clip']['name'],
             cache_dir=cache_dir
         )
-        logger.info("✓ CLIP model loads successfully")
+        logger.info(" CLIP model loads successfully")
     except Exception as e:
-        logger.error(f"✗ CLIP model verification failed: {e}")
+        logger.error(f" CLIP model verification failed: {e}")
         all_ok = False
     
     # Verify Sentence Transformer
@@ -300,17 +300,17 @@ def verify_models(cache_dir: Optional[str] = None) -> bool:
             REQUIRED_MODELS['sentence_transformer']['name'],
             cache_folder=cache_dir
         )
-        logger.info("✓ Sentence Transformer model loads successfully")
+        logger.info(" Sentence Transformer model loads successfully")
     except Exception as e:
-        logger.error(f"✗ Sentence Transformer model verification failed: {e}")
+        logger.error(f" Sentence Transformer model verification failed: {e}")
         all_ok = False
     
     logger.info("")
     
     if all_ok:
-        logger.info("✓ All required models verified successfully")
+        logger.info(" All required models verified successfully")
     else:
-        logger.error("✗ Some models failed verification")
+        logger.error(" Some models failed verification")
     
     return all_ok
 
@@ -423,7 +423,7 @@ def main():
     logger.info("=" * 70)
     
     for model_name, success in results:
-        status = "✓ SUCCESS" if success else "✗ FAILED"
+        status = " SUCCESS" if success else " FAILED"
         logger.info(f"{model_name:30s}: {status}")
     
     logger.info("")
@@ -432,12 +432,12 @@ def main():
     all_required_ok = all(success for name, success in results if name in ["CLIP", "Sentence Transformer"])
     
     if all_required_ok:
-        logger.info("✓ All required models downloaded successfully!")
+        logger.info(" All required models downloaded successfully!")
         logger.info("")
         logger.info("Models are ready to use. The system will automatically load them when needed.")
         return 0
     else:
-        logger.error("✗ Some required models failed to download")
+        logger.error(" Some required models failed to download")
         logger.error("Please check your internet connection and try again")
         return 1
 

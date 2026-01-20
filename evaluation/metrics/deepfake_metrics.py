@@ -64,7 +64,7 @@ class AUROCMetric(BaseMetric):
     Measures the ability of the classifier to distinguish between
     real and fake samples across all classification thresholds.
     
-    Target: ≥0.75 (MVP), ≥0.90 (paper goal)
+    Target: >=0.75 (MVP), >=0.90 (paper goal)
     """
     
     def __init__(self):

@@ -145,7 +145,7 @@ def generate_validators(count: int) -> List[Dict[str, Any]]:
     # Shuffle to randomize order
     secrets.SystemRandom().shuffle(validators)
     
-    logger.info(f"✓ Generated {len(validators)} validators")
+    logger.info(f" Generated {len(validators)} validators")
     
     return validators
 
@@ -214,11 +214,11 @@ def save_validators_file(filepath: Path, validators: List[Dict[str, Any]]) -> bo
         # Atomic replace
         temp_file.replace(filepath)
         
-        logger.info(f"✓ Saved validators to {filepath}")
+        logger.info(f" Saved validators to {filepath}")
         return True
     
     except Exception as e:
-        logger.error(f"✗ Failed to save validators: {e}")
+        logger.error(f" Failed to save validators: {e}")
         return False
 
 # =============================================================================
@@ -241,34 +241,34 @@ def validate_validators(validators: List[Dict[str, Any]]) -> bool:
     
     # Check count
     if len(validators) < MIN_VALIDATORS:
-        logger.error(f"✗ Too few validators: {len(validators)} < {MIN_VALIDATORS}")
+        logger.error(f" Too few validators: {len(validators)} < {MIN_VALIDATORS}")
         all_ok = False
     
     if len(validators) > MAX_VALIDATORS:
-        logger.error(f"✗ Too many validators: {len(validators)} > {MAX_VALIDATORS}")
+        logger.error(f" Too many validators: {len(validators)} > {MAX_VALIDATORS}")
         all_ok = False
     
     # Check unique IDs
     validator_ids = [v['validator_id'] for v in validators]
     if len(validator_ids) != len(set(validator_ids)):
-        logger.error("✗ Duplicate validator IDs found")
+        logger.error(" Duplicate validator IDs found")
         all_ok = False
     
     # Check types
     valid_types = set(VALIDATOR_TYPES.keys())
     for i, validator in enumerate(validators):
         if validator['type'] not in valid_types:
-            logger.error(f"✗ Invalid validator type at index {i}: {validator['type']}")
+            logger.error(f" Invalid validator type at index {i}: {validator['type']}")
             all_ok = False
         
         # Check reliability score
         if not (0.0 <= validator['reliability_score'] <= 1.0):
-            logger.error(f"✗ Invalid reliability score at index {i}: {validator['reliability_score']}")
+            logger.error(f" Invalid reliability score at index {i}: {validator['reliability_score']}")
             all_ok = False
         
         # Check voting weight
         if validator['voting_weight'] <= 0:
-            logger.error(f"✗ Invalid voting weight at index {i}: {validator['voting_weight']}")
+            logger.error(f" Invalid voting weight at index {i}: {validator['voting_weight']}")
             all_ok = False
     
     # Check devil's advocate percentage
@@ -280,9 +280,9 @@ def validate_validators(validators: List[Dict[str, Any]]) -> bool:
         logger.warning(f"⚠ Devil's advocate percentage: {actual_percentage:.2%} (expected: {expected_percentage:.2%})")
     
     if all_ok:
-        logger.info("✓ Validation passed")
+        logger.info(" Validation passed")
     else:
-        logger.error("✗ Validation failed")
+        logger.error(" Validation failed")
     
     return all_ok
 
@@ -404,10 +404,10 @@ def main():
         success = validate_validators(validators)
         if success:
             print_statistics(validators)
-            logger.info("✓ Validation successful")
+            logger.info(" Validation successful")
             return 0
         else:
-            logger.error("✗ Validation failed")
+            logger.error(" Validation failed")
             return 1
     
     # Check if file exists
@@ -470,8 +470,8 @@ def main():
     logger.info("\n" + "=" * 70)
     logger.info("Seeding Complete!")
     logger.info("=" * 70)
-    logger.info(f"✓ {len(validators)} validators generated and saved")
-    logger.info(f"✓ File: {output_path}")
+    logger.info(f" {len(validators)} validators generated and saved")
+    logger.info(f" File: {output_path}")
     logger.info("")
     logger.info("Next steps:")
     logger.info("  1. Start backend: cd backend && python -m uvicorn main:app --reload")

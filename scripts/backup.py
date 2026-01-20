@@ -197,17 +197,17 @@ def backup_component(
             # Copy directory
             shutil.copytree(component_path, dest_path, symlinks=False)
             file_count = sum(1 for _ in dest_path.rglob('*') if _.is_file())
-            logger.info(f"  ✓ {component_name}: {file_count} files")
+            logger.info(f"   {component_name}: {file_count} files")
         else:
             # Copy file
             dest_path.parent.mkdir(parents=True, exist_ok=True)
             shutil.copy2(component_path, dest_path)
-            logger.info(f"  ✓ {component_name}: 1 file")
+            logger.info(f"   {component_name}: 1 file")
         
         return True
     
     except Exception as e:
-        logger.error(f"  ✗ Failed to backup {component_name}: {e}")
+        logger.error(f"   Failed to backup {component_name}: {e}")
         return False
 
 def create_compressed_archive(
@@ -254,14 +254,14 @@ def verify_backup(backup_dir: Path) -> bool:
     # Check manifest
     manifest_path = backup_dir / 'manifest.json'
     if not manifest_path.exists():
-        logger.error("  ✗ Manifest file missing")
+        logger.error("   Manifest file missing")
         return False
     
     try:
         with open(manifest_path, 'r') as f:
             manifest = json.load(f)
         
-        logger.info(f"  ✓ Manifest valid")
+        logger.info(f"   Manifest valid")
         
         # Verify components
         all_ok = True
@@ -269,18 +269,18 @@ def verify_backup(backup_dir: Path) -> bool:
             if component_info['backed_up']:
                 component_path = backup_dir / component_name
                 if not component_path.exists():
-                    logger.error(f"  ✗ Component missing: {component_name}")
+                    logger.error(f"   Component missing: {component_name}")
                     all_ok = False
                 else:
-                    logger.debug(f"  ✓ Component present: {component_name}")
+                    logger.debug(f"   Component present: {component_name}")
         
         if all_ok:
-            logger.info("  ✓ All components verified")
+            logger.info("   All components verified")
         
         return all_ok
     
     except Exception as e:
-        logger.error(f"  ✗ Verification failed: {e}")
+        logger.error(f"   Verification failed: {e}")
         return False
 
 # =============================================================================
@@ -342,7 +342,7 @@ def execute_backup(
     with open(manifest_path, 'w') as f:
         json.dump(manifest, f, indent=2)
     
-    logger.info(f"  ✓ Manifest created")
+    logger.info(f"   Manifest created")
     logger.info("")
     
     # Verify backup
@@ -462,7 +462,7 @@ def main():
             logger.info(f"  Total files: {manifest['statistics']['total_files']}")
             logger.info(f"  Total size: {format_size(manifest['statistics']['total_size'])}")
     
-    logger.info("\n✓ Backup completed successfully")
+    logger.info("\n Backup completed successfully")
     logger.info("")
     logger.info(f"To restore this backup, run:")
     logger.info(f"  python scripts/restore.py --backup {backup_path}")

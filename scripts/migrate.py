@@ -130,11 +130,11 @@ def create_migration_backup() -> Optional[Path]:
         with open(backup_path / 'manifest.json', 'w') as f:
             json.dump(manifest, f, indent=2)
         
-        logger.info(f"  ✓ Backup created: {backup_path}")
+        logger.info(f"   Backup created: {backup_path}")
         return backup_path
     
     except Exception as e:
-        logger.error(f"  ✗ Backup failed: {e}")
+        logger.error(f"   Backup failed: {e}")
         return None
 
 # =============================================================================
@@ -272,14 +272,14 @@ def apply_migration(
         if not dry_run:
             with open(file_path, 'w') as f:
                 json.dump(migrated_data, f, indent=2)
-            logger.info(f"    ✓ {file_path.name} migrated")
+            logger.info(f"     {file_path.name} migrated")
         else:
-            logger.info(f"    ✓ {file_path.name} would be migrated (dry run)")
+            logger.info(f"     {file_path.name} would be migrated (dry run)")
         
         return True
     
     except Exception as e:
-        logger.error(f"    ✗ {file_path.name} migration failed: {e}")
+        logger.error(f"     {file_path.name} migration failed: {e}")
         return False
 
 def execute_migration(
@@ -348,20 +348,20 @@ def validate_migrated_data() -> bool:
     
     for file_path in critical_files:
         if not file_path.exists():
-            logger.error(f"  ✗ {file_path.name} missing")
+            logger.error(f"   {file_path.name} missing")
             all_ok = False
             continue
         
         try:
             with open(file_path, 'r') as f:
                 data = json.load(f)
-            logger.info(f"  ✓ {file_path.name} valid")
+            logger.info(f"   {file_path.name} valid")
         except Exception as e:
-            logger.error(f"  ✗ {file_path.name} corrupted: {e}")
+            logger.error(f"   {file_path.name} corrupted: {e}")
             all_ok = False
     
     if all_ok:
-        logger.info("  ✓ All validations passed")
+        logger.info("   All validations passed")
     
     return all_ok
 
@@ -416,7 +416,7 @@ def main():
     version_cmp = compare_versions(current_version, target_version)
     
     if version_cmp == 0:
-        logger.info("✓ Data is already at target version")
+        logger.info(" Data is already at target version")
         return 0
     elif version_cmp > 0:
         logger.warning("⚠ Current version is newer than target version")
@@ -453,7 +453,7 @@ def main():
     )
     
     if not success:
-        logger.error("\n✗ Migration failed")
+        logger.error("\n Migration failed")
         logger.error("Please check errors above")
         
         if not args.no_backup and not args.dry_run:
@@ -465,7 +465,7 @@ def main():
     # Validate if not dry run
     if not args.dry_run:
         if not validate_migrated_data():
-            logger.error("\n✗ Validation failed")
+            logger.error("\n Validation failed")
             return 1
     
     # Print summary
@@ -474,11 +474,11 @@ def main():
     logger.info("=" * 70)
     
     if args.dry_run:
-        logger.info("✓ Dry run completed successfully")
+        logger.info(" Dry run completed successfully")
         logger.info("\nNo changes were made")
         logger.info("Run without --dry-run to apply migration")
     else:
-        logger.info("✓ Migration completed successfully")
+        logger.info(" Migration completed successfully")
         logger.info(f"\nData migrated: {current_version} → {target_version}")
         
         if not args.no_backup:
