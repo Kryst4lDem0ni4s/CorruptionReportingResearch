@@ -140,6 +140,7 @@ class MetricsService:
 
         # System metrics
         self.process = psutil.Process(os.getpid())
+        self.generic_gauges: Dict[str, float] = {}
         self.start_time = time.time()
         self.last_persist_time = time.time()
 
@@ -767,6 +768,7 @@ class MetricsService:
             'queue': self.get_queue_stats(),
             'evaluation': self.get_evaluation_stats(),
             'system': self.get_system_metrics(),
+            'generic': self.get_generic_metrics(),
             'prometheus_enabled': self.prometheus_enabled
         }
 
@@ -894,3 +896,43 @@ class MetricsService:
         }
 
         return health
+    
+
+    def record_gauge(self, metric_name: str, value: float) -> None:
+        """
+        Record a generic gauge metric.
+        
+        Args:
+            metric_name: Name of the metric
+            value: Metric value
+        """
+        try:
+            # Store in a generic metrics dict (add to __init__ if needed)
+            if not hasattr(self, 'generic_gauges'):
+                self.generic_gauges = {}
+            
+            self.generic_gauges[metric_name] = value
+            
+            logger.debug(f"Gauge metric recorded: {metric_name} = {value}")
+            
+        except Exception as e:
+            logger.error(f"Failed to record gauge metric {metric_name}: {e}")
+
+    def record(self, metric_name: str, value: float) -> None:
+        """
+        Record a generic metric (alias for record_gauge).
+        
+        Args:
+            metric_name: Name of the metric
+            value: Metric value
+        """
+        self.record_gauge(metric_name, value)
+
+    def get_generic_metrics(self) -> Dict[str, float]:
+        """
+        Get all generic metrics.
+        
+        Returns:
+            dict: Generic metrics
+        """
+        return getattr(self, 'generic_gauges', {})

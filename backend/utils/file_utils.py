@@ -9,7 +9,7 @@ Provides:
 - Path sanitization
 """
 
-import fcntl
+import portalocker
 import json
 import logging
 import os
@@ -165,7 +165,7 @@ class FileUtils:
         """
         Context manager for file locking.
         
-        Uses fcntl (POSIX) or msvcrt (Windows) for cross-process locking.
+        Uses portalocker (POSIX) or msvcrt (Windows) for cross-process locking.
         
         Args:
             file_path: File to lock
@@ -196,9 +196,9 @@ class FileUtils:
         try:
             # Determine lock type
             if shared:
-                lock_type = fcntl.LOCK_SH  # Shared lock (read)
+                lock_type = portalocker.LOCK_SH  # Shared lock (read)
             else:
-                lock_type = fcntl.LOCK_EX  # Exclusive lock (write)
+                lock_type = portalocker.LOCK_EX  # Exclusive lock (write)
             
             # Try to acquire lock
             start_time = time.time()
@@ -206,7 +206,7 @@ class FileUtils:
             while True:
                 try:
                     # Non-blocking lock attempt
-                    fcntl.flock(lock_file.fileno(), lock_type | fcntl.LOCK_NB)
+                    portalocker.flock(lock_file.fileno(), lock_type | portalocker.LOCK_NB)
                     logger.debug(f"Lock acquired: {file_path}")
                     break
                     
@@ -229,7 +229,7 @@ class FileUtils:
         finally:
             # Release lock
             try:
-                fcntl.flock(lock_file.fileno(), fcntl.LOCK_UN)
+                portalocker.flock(lock_file.fileno(), portalocker.LOCK_UN)
                 logger.debug(f"Lock released: {file_path}")
             except Exception as e:
                 logger.warning(f"Failed to release lock: {e}")

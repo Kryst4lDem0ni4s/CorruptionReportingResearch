@@ -30,6 +30,10 @@ from prometheus_client import (
     CollectorRegistry, REGISTRY
 )
 
+from backend.core import orchestrator
+from backend.services import queue_service, storage_service
+from backend.services import metrics_service
+
 # Add backend to path
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
@@ -42,9 +46,9 @@ from backend.constants import APP_NAME, APP_VERSION, APP_DESCRIPTION, API_VERSIO
 from backend.api.routes import router as api_router
 from backend.api.health import router as health_router
 from backend.api.middleware import (
-    rate_limit_middleware,
-    metrics_middleware,
-    error_handler_middleware
+    RateLimitMiddleware,
+    # metrics_middleware,
+    ErrorHandlingMiddleware
 )
 
 # Import services
@@ -55,7 +59,6 @@ from backend.services.metrics_service import MetricsService
 # Import workers
 from backend.workers.submission_worker import SubmissionWorker
 from backend.workers.cleanup_worker import CleanupWorker
-
 
 # ==================== PROMETHEUS METRICS DECLARATIONS ====================
 
@@ -417,7 +420,7 @@ async def lifespan(app: FastAPI):
         # Initialize storage
         logger.info("Initializing storage...")
         storage = StorageService()
-        storage.initialize()
+        storage._initialize_directories()
 
         # Verify hash chain integrity
         if config.security.hash_chain_enabled:
@@ -456,13 +459,22 @@ async def lifespan(app: FastAPI):
         logger.info("Starting background workers...")
 
         # Submission worker
-        submission_worker = SubmissionWorker()
+        submission_worker = SubmissionWorker(
+            storage_service=storage_service,
+            queue_service=queue_service,
+            metrics_service=metrics_service,
+            orchestrator=orchestrator
+        )
         submission_worker.start()
         app.state.submission_worker = submission_worker
 
         # Cleanup worker
         if not config.testing:
-            cleanup_worker = CleanupWorker()
+            cleanup_worker = CleanupWorker(
+                storage_service=storage_service,
+                metrics_service=metrics_service,
+                data_dir=config.storage.data_dir,
+            )
             cleanup_worker.start()
             app.state.cleanup_worker = cleanup_worker
 
@@ -590,19 +602,19 @@ def create_app(
     app.add_middleware(GZipMiddleware, minimum_size=1024)
 
     # Custom middleware (order matters - error handler first)
-    app.middleware("http")(error_handler_middleware)
+    app.middleware("http")(ErrorHandlingMiddleware)
 
     # Prometheus metrics middleware
     if config.metrics.enabled:
         app.middleware("http")(prometheus_metrics_middleware)
 
     # Application metrics middleware
-    if config.metrics.enabled:
-        app.middleware("http")(metrics_middleware)
+    # if config.metrics.enabled:
+    #     app.middleware("http")(metrics_middleware)
 
     # Rate limiting
     if config.rate_limit.enabled:
-        app.middleware("http")(rate_limit_middleware)
+        app.middleware("http")(RateLimitMiddleware)
 
     # ========== EXCEPTION HANDLERS ==========
 
@@ -781,4 +793,4 @@ if __name__ == "__main__":
         reload=reload,
         log_level=config.server.log_level.lower(),
         access_log=True
-    )
+    )  

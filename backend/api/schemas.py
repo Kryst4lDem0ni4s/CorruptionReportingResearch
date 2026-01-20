@@ -6,7 +6,7 @@ All models include validation rules and documentation.
 from datetime import datetime
 from enum import Enum
 from typing import Dict, List, Optional, Tuple
-from pydantic import BaseModel, Field, validator, root_validator
+from pydantic import BaseModel, Field, model_validator, validator, root_validator
 from uuid import UUID
 
 
@@ -79,7 +79,7 @@ class SubmissionRequest(BaseModel):
         return v
 
     class Config:
-        schema_extra = {
+        json_schema_extra = {
             "example": {
                 "evidence_type": "image",
                 "text_narrative": "Witnessed corruption incident on Jan 10, 2026",
@@ -112,7 +112,7 @@ class CounterEvidenceRequest(BaseModel):
             raise ValueError("submission_id must be valid UUID")
 
     class Config:
-        schema_extra = {
+        json_schema_extra = {
             "example": {
                 "submission_id": "550e8400-e29b-41d4-a716-446655440000",
                 "verified_identity": True
@@ -137,7 +137,7 @@ class CoordinationGraphQuery(BaseModel):
         description="Minimum edge similarity threshold"
     )
 
-    @root_validator
+    @model_validator(mode='after')
     def validate_date_range(cls, values):
         """Ensure end_date is after start_date."""
         start = values.get('start_date')
@@ -160,7 +160,7 @@ class SubmissionResponse(BaseModel):
     status: SubmissionStatus = Field(..., description="Current processing status")
     
     class Config:
-        schema_extra = {
+        json_schema_extra = {
             "example": {
                 "submission_id": "550e8400-e29b-41d4-a716-446655440000",
                 "pseudonym": "a3f2b8c9d1e4f5g6",
@@ -302,7 +302,7 @@ class CredibilityResponse(BaseModel):
     )
 
     class Config:
-        schema_extra = {
+        json_schema_extra = {
             "example": {
                 "submission_id": "550e8400-e29b-41d4-a716-446655440000",
                 "status": "completed",
@@ -343,7 +343,7 @@ class CounterEvidenceResponse(BaseModel):
     identity_bonus_applied: bool
 
     class Config:
-        schema_extra = {
+        json_schema_extra = {
             "example": {
                 "counter_evidence_id": "660e8400-e29b-41d4-a716-446655440111",
                 "original_submission_id": "550e8400-e29b-41d4-a716-446655440000",
@@ -403,7 +403,7 @@ class HealthCheckResponse(BaseModel):
     version: str = Field(default="1.0.0-mvp")
 
     class Config:
-        schema_extra = {
+        json_schema_extra = {
             "example": {
                 "status": "healthy",
                 "timestamp": "2026-01-13T06:30:00Z",
@@ -442,7 +442,7 @@ class ErrorResponse(BaseModel):
     timestamp: datetime
 
     class Config:
-        schema_extra = {
+        json_schema_extra = {
             "example": {
                 "error": "ValidationError",
                 "message": "Invalid file type. Only images, audio, and video allowed.",

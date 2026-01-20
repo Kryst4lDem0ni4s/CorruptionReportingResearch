@@ -395,7 +395,7 @@ class Layer2Credibility:
             'plausibility_score': 1.0
         }
     
-    def _augment_image(self, image: Image.Image) -> List[Image.Image]:
+    def _augment_image(self, image: Image) -> List[Image]:
         """
         Apply test-time augmentation to image.
         
@@ -484,7 +484,7 @@ class Layer2Credibility:
             logger.warning(f"Text similarity computation failed: {e}")
             return 0.5  # Neutral default
     
-    def _check_image_plausibility(self, image: Image.Image) -> float:
+    def _check_image_plausibility(self, image: Image) -> float:
         """
         Check physical plausibility of image.
         

@@ -1,24 +1,15 @@
 {
+  "blocks": [
+    {
+      "index": 0,
+      "timestamp": "2026-01-20T13:17:22.757083",
+      "submission_id": "GENESIS",
+      "evidence_hash": "0000000000000000000000000000000000000000000000000000000000000000",
+      "previous_hash": "0000000000000000000000000000000000000000000000000000000000000000",
+      "nonce": 0,
+      "hash": "a6453c562a359d36c2d4d52f9da18c364758ba31e35c958159ee41510e4bae4e"
+    }
+  ],
   "version": "1.0.0",
-  "created_at": "2026-01-13T21:33:00+05:30",
-  "last_updated": "2026-01-13T21:33:00+05:30",
-  "genesis_block": {
-    "block_number": 0,
-    "timestamp": "2026-01-13T21:33:00+05:30",
-    "previous_hash": "0000000000000000000000000000000000000000000000000000000000000000",
-    "data": "Genesis Block - Corruption Reporting System v1.0",
-    "hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-    "nonce": 0
-  },
-  "blocks": [],
-  "total_blocks": 0,
-  "chain_verified": true,
-  "verification_timestamp": "2026-01-13T21:33:00+05:30",
-  "metadata": {
-    "algorithm": "SHA-256",
-    "encoding": "UTF-8",
-    "block_time_target_seconds": 60,
-    "max_block_size_bytes": 1048576,
-    "description": "Blockchain-inspired hash chain for tamper detection"
-  }
+  "created": "2026-01-20T13:17:22.771821"
 }

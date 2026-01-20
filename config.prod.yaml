@@ -1,462 +1,554 @@
-# Production Configuration
-# corruption-reporting-prototype/config.prod.yaml
-# Production environment settings - optimized for performance, security, and reliability
+# # Production Configuration
+# # corruption-reporting-prototype/config.prod.yaml
+# # Production environment settings - optimized for performance, security, and reliability
 
-# =============================================================================
-# ENVIRONMENT SETTINGS
-# =============================================================================
-environment: production
-debug: false
+# # =============================================================================
+# # ENVIRONMENT SETTINGS
+# # =============================================================================
+# environment: production
+# debug: false
+# testing_mode: false
+
+# # =============================================================================
+# # SERVER CONFIGURATION
+# # =============================================================================
+# server:
+#   host: "0.0.0.0"
+#   port: 8000
+#   reload: false  # No auto-reload in production
+#   workers: 4  # Multi-worker for production (adjust based on CPU cores)
+#   log_level: "info"
+#   # access_log: true
+#   # use_colors: false  # Disable colors for log aggregation
+
+#   # CORS settings (restrictive for production)
+#   # cors:
+#   #   enabled: true
+#   #   allow_origins:
+#   #     - "https://yourdomain.com"  # Replace with actual domain
+#   #     - "https://www.yourdomain.com"
+#   #   allow_credentials: true
+#   #   allow_methods:
+#   #     - "GET"
+#   #     - "POST"
+#   #     - "PUT"
+#   #     - "DELETE"
+#   #   allow_headers:
+#   #     - "Content-Type"
+#   #     - "Authorization"
+#   #   max_age: 3600
+
+# # =============================================================================
+# # API CONFIGURATION
+# # =============================================================================
+# api:
+#   prefix: "/api/v1"
+#   title: "Corruption Reporting System API"
+#   description: "Anonymous Evidence Validation Framework"
+#   version: "1.0.0"
+#   docs_url: null  # Disable Swagger UI in production
+#   redoc_url: null  # Disable ReDoc in production
+#   openapi_url: null  # Disable OpenAPI schema endpoint
+
+#   # Request limits
+#   max_upload_size: 20971520  # 20 MB (strict limit)
+#   timeout: 120  # 2 minutes
+
+#   # Pagination
+#   default_page_size: 20
+#   max_page_size: 100
+
+# # =============================================================================
+# # STORAGE CONFIGURATION
+# # =============================================================================
+# storage:
+#   # base_dir: "/var/lib/corruption-reporting/data"  # Production path
+
+#   # Submission storage
+#   submissions_dir: "/var/lib/corruption-reporting/data/submissions"
+#   evidence_dir: "/var/lib/corruption-reporting/data/evidence"
+#   reports_dir: "/var/lib/corruption-reporting/data/reports"
+#   cache_dir: "/tmp/corruption-reporting/cache"
+
+#   # Database files (JSON-based)
+#   # chain_file: "/var/lib/corruption-reporting/data/chain.json"
+#   # validators_file: "/var/lib/corruption-reporting/data/validators.json"
+#   # index_file: "/var/lib/corruption-reporting/data/index.json"
+
+#   # Retention policies
+#   # submission_retention_days: 90
+#   # cache_retention_hours: 24
+
+#   # Sharding (enabled for scalability)
+#   # use_sharding: true
+#   # shard_by_date: true
+
+# # =============================================================================
+# # MACHINE LEARNING MODELS
+# # =============================================================================
+# models:
+#   # Model cache directory
+#   # cache_dir: "/var/cache/huggingface"
+
+#   # Device configuration
+#   # device: "cpu"  # Use "cuda" if GPU available in production
+#   use_fp16: true  # Enable FP16 for 2x speedup
+
+#   # CLIP model (deepfake detection)
+#   clip:
+#     model_name: "openai/clip-vit-base-patch32"
+#     enabled: true
+#     batch_size: 8  # Larger batch for production
+#     num_workers: 2
+
+#   # Wav2Vec2 model (audio analysis)
+#   wav2vec:
+#     model_name: "facebook/wav2vec2-base"
+#     enabled: true
+#     batch_size: 4
+
+#   # BLIP model (image captioning)
+#   blip:
+#     model_name: "Salesforce/blip-image-captioning-base"
+#     enabled: true
+#     max_length: 50
+
+#   # Sentence transformer (text embeddings)
+#   sentence_transformer:
+#     model_name: "sentence-transformers/all-MiniLM-L6-v2"
+#     enabled: true
+#     batch_size: 16
+
+#   # Test-time augmentation
+#   augmentation:
+#     enabled: true
+#     num_variations: 10  # Full augmentation for production
+
+# # =============================================================================
+# # LAYER CONFIGURATIONS
+# # =============================================================================
+
+# # Layer 1: Anonymity
+# layer1:
+#   enabled: true
+#   pseudonym_algorithm: "sha256"
+#   encryption_algorithm: "fernet"  # AES-256
+#   strip_metadata: true
+#   hash_chain_enabled: true
+
+# # Layer 2: Credibility Assessment
+# layer2:
+#   enabled: true
+#   deepfake_threshold: 0.5
+#   confidence_threshold: 0.4  # Entropy threshold for human review
+#   ensemble_voting: true
+#   cross_modal_consistency: true
+
+#   # Detection thresholds
+#   high_confidence: 0.80
+#   medium_confidence: 0.60
+#   low_confidence: 0.40
+
+# # Layer 3: Coordination Detection
+# layer3:
+#   enabled: true
+#   similarity_threshold: 0.7
+#   min_cluster_size: 3  # Production threshold
+#   detection_window_hours: 48  # Longer window for production
+
+#   # Graph analysis
+#   use_louvain_clustering: true
+#   use_one_class_svm: true
+
+#   # Stylometric features
+#   analyze_ttr: true  # Type-Token Ratio
+#   analyze_pos: true  # Part-of-speech n-grams
+#   analyze_lexical_density: true
+
+# # Layer 4: Byzantine Consensus
+# layer4:
+#   enabled: true
+#   num_validators: 20  # More validators for production
+#   devil_advocate_ratio: 0.1  # 10% contrarian validators
+#   consensus_threshold: 0.7  # 70% agreement required (stricter)
+#   max_rounds: 10
+#   convergence_timeout: 60  # seconds
+
+# # Layer 5: Counter-Evidence
+# layer5:
+#   enabled: true
+#   presumption_of_innocence_weight: 1.3
+#   identity_verification_bonus: 1.2
+#   bayesian_update_enabled: true
+#   min_impact_threshold: 0.05  # 5% minimum impact
+
+# # Layer 6: Reporting
+# layer6:
+#   enabled: true
+#   format: "pdf"
+#   include_visualizations: true
+#   include_chain_of_custody: true
+#   include_confidence_intervals: true
+#   section_45_compliant: true
+
+#   # Report styling
+#   font_family: "Helvetica"
+#   page_size: "A4"
+#   include_header: true
+#   include_footer: true
+
+# # =============================================================================
+# # SECURITY SETTINGS
+# # =============================================================================
+# security:
+#   # Cryptography
+#   encryption_key_rotation_days: 30  # More frequent rotation
+#   hash_algorithm: "sha256"
+
+#   # Rate limiting (strict for production)
+#   rate_limit:
+#     enabled: true
+#     requests_per_minute: 10  # Strict limit
+#     requests_per_hour: 100
+#     burst_size: 20
+
+#   # IP restrictions
+#   ip_whitelist: []  # Configure if needed
+#   ip_blacklist: []  # Configure if needed
+
+#   # Authentication
+#   require_auth: false  # Set to true if auth implemented
+#   token_expiry_hours: 1  # Short-lived tokens
+
+# # =============================================================================
+# # LOGGING CONFIGURATION
+# # =============================================================================
+# logging:
+#   level: "INFO"  # Production logging level
+#   format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+
+#   # File logging
+#   file:
+#     enabled: true
+#     path: "/var/log/corruption-reporting/app.log"
+#     max_bytes: 104857600  # 100 MB
+#     backup_count: 10
+#     rotation: "size"
+
+#   # Console logging
+#   console:
+#     enabled: true
+#     colorize: false
+
+#   # Structured logging (for log aggregation)
+#   json_logs: true  # Enable JSON for production log aggregation
+
+#   # Log levels by module
+#   modules:
+#     uvicorn: "INFO"
+#     fastapi: "INFO"
+#     backend.core: "INFO"
+#     backend.services: "INFO"
+#     backend.models: "WARNING"
+#     transformers: "ERROR"  # Only errors from HuggingFace
+#     torch: "ERROR"
+
+# # =============================================================================
+# # PERFORMANCE SETTINGS
+# # =============================================================================
+# performance:
+#   # Memory limits
+#   max_memory_mb: 8192  # 8 GB for production
+#   gc_enabled: true
+#   gc_threshold: 0.9  # Higher threshold for production
+
+#   # Caching
+#   cache_enabled: true
+#   cache_ttl_seconds: 7200  # 2 hours
+#   cache_max_size_mb: 2048  # 2 GB
+
+#   # Concurrency
+#   max_concurrent_submissions: 20  # Higher limit for production
+#   background_workers: 4
+
+#   # Optimization flags
+#   lazy_loading: true
+#   batch_processing: true  # Enable batch processing
+#   early_termination: true
+
+# # =============================================================================
+# # EVALUATION SETTINGS
+# # =============================================================================
+# evaluation:
+#   enabled: false  # Disable in production (run separately)
+#   output_dir: "/var/lib/corruption-reporting/evaluation/results"
+
+#   # Dataset paths
+#   datasets:
+#     faceforensics_dir: "/data/datasets/faceforensics"
+#     celebdf_dir: "/data/datasets/celebdf"
+#     synthetic_dir: "/data/datasets/synthetic_attacks"
+
+#   # Metrics
+#   compute_auroc: true
+#   compute_precision_recall: true
+#   compute_confusion_matrix: true
+#   save_visualizations: true
+
+#   # Benchmarking
+#   benchmark_enabled: false  # Disable in production
+#   benchmark_iterations: 100
+
+# # =============================================================================
+# # MONITORING & METRICS
+# # =============================================================================
+# monitoring:
+#   enabled: true
+
+#   # Prometheus metrics
+#   prometheus:
+#     enabled: true
+#     port: 9090
+#     endpoint: "/metrics"
+
+#   # Health checks
+#   health_check:
+#     enabled: true
+#     endpoint: "/health"
+#     detailed: false  # Hide details in production
+
+#   # Performance tracking
+#   track_request_duration: true
+#   track_model_inference_time: true
+#   track_memory_usage: true
+#   track_error_rates: true
+
+# # =============================================================================
+# # TESTING SETTINGS
+# # =============================================================================
+# testing:
+#   # Test data generation (disabled in production)
+#   generate_synthetic_data: false
+#   num_synthetic_submissions: 0
+
+#   # Mock services (disabled in production)
+#   mock_ml_models: false
+#   mock_external_apis: false
+
+#   # Test fixtures (disabled in production)
+#   fixtures_dir: ""
+#   use_fixtures: false
+
+# # =============================================================================
+# # DEVELOPMENT TOOLS
+# # =============================================================================
+# dev_tools:
+#   # Hot reload (disabled in production)
+#   auto_reload: false
+#   watch_files: []
+
+#   # Debugging (disabled in production)
+#   enable_profiler: false
+#   enable_debugger: false
+
+#   # API documentation (disabled in production)
+#   show_docs: false
+#   show_schemas: false
+
+#   # Development helpers (disabled in production)
+#   seed_data_on_startup: false
+#   reset_db_on_startup: false
+#   validate_config_on_startup: true
+
+# # =============================================================================
+# # EXTERNAL SERVICES (Optional)
+# # =============================================================================
+# external:
+#   # Azure (configure if deploying to Azure)
+#   azure:
+#     enabled: false  # Set to true if using Azure
+#     storage_account: "${AZURE_STORAGE_ACCOUNT}"  # Use env variables
+#     storage_key: "${AZURE_STORAGE_KEY}"
+#     container_name: "corruption-reporting"
+
+#   # Email notifications (configure if needed)
+#   email:
+#     enabled: false
+#     smtp_host: "${SMTP_HOST}"
+#     smtp_port: 587
+#     from_address: "${SMTP_FROM_ADDRESS}"
+#     username: "${SMTP_USERNAME}"
+#     password: "${SMTP_PASSWORD}"
+
+#   # Webhooks (configure if needed)
+#   webhooks:
+#     enabled: false
+#     endpoints: []
+
+# # =============================================================================
+# # FEATURE FLAGS
+# # =============================================================================
+# features:
+#   enable_counter_evidence: true
+#   enable_pdf_reports: true
+#   enable_network_graphs: true
+#   enable_batch_processing: true
+#   enable_real_time_updates: false  # Disable WebSockets in production initially
+#   enable_file_encryption: true
+#   enable_hash_chain: true
+#   enable_coordination_detection: true
+
+# # =============================================================================
+# # EXPERIMENTAL FEATURES
+# # =============================================================================
+# experimental:
+#   # Advanced ML features (disabled in production)
+#   use_grad_cam: false
+#   use_attention_maps: false
+
+#   # Blockchain anchoring (not implemented in MVP)
+#   blockchain_anchoring: false
+
+#   # Distributed consensus (not implemented in MVP)
+#   distributed_validators: false
+
+# # =============================================================================
+# # DISASTER RECOVERY
+# # =============================================================================
+# disaster_recovery:
+#   # Backup settings
+#   auto_backup: true
+#   backup_interval_hours: 24
+#   backup_retention_days: 30
+#   backup_dir: "/var/backups/corruption-reporting"
+
+#   # Recovery settings
+#   enable_recovery_mode: false
+#   recovery_point_objective_hours: 24  # RPO: 24 hours
+#   recovery_time_objective_hours: 4  # RTO: 4 hours
+
+# # =============================================================================
+# # COMPLIANCE
+# # =============================================================================
+# compliance:
+#   # Data privacy
+#   gdpr_compliant: true
+#   anonymize_logs: true
+#   data_retention_policy_days: 90
+
+#   # Audit trail
+#   enable_audit_log: true
+#   audit_log_path: "/var/log/corruption-reporting/audit.log"
+
+#   # Encryption
+#   encrypt_at_rest: true
+#   encrypt_in_transit: true
+
+# # =============================================================================
+# # ALERTS & NOTIFICATIONS
+# # =============================================================================
+# alerts:
+#   enabled: true
+
+#   # Alert thresholds
+#   error_rate_threshold: 0.05  # 5%
+#   response_time_threshold_ms: 5000  # 5 seconds
+#   memory_usage_threshold: 0.9  # 90%
+
+#   # Notification channels (configure as needed)
+#   channels:
+#     email: false
+#     slack: false
+#     webhook: false
+
+# ============================================================================
+# MINIMAL WORKING CONFIG - LOCAL DEVELOPMENT & EXPERIMENTS
+# ============================================================================
+
+environment: development
+debug: true
 testing_mode: false
 
-# =============================================================================
-# SERVER CONFIGURATION
-# =============================================================================
 server:
   host: "0.0.0.0"
   port: 8000
-  reload: false  # No auto-reload in production
-  workers: 4  # Multi-worker for production (adjust based on CPU cores)
+  reload: true
+  workers: 1
   log_level: "info"
-  access_log: true
-  use_colors: false  # Disable colors for log aggregation
 
-  # CORS settings (restrictive for production)
-  cors:
-    enabled: true
-    allow_origins:
-      - "https://yourdomain.com"  # Replace with actual domain
-      - "https://www.yourdomain.com"
-    allow_credentials: true
-    allow_methods:
-      - "GET"
-      - "POST"
-      - "PUT"
-      - "DELETE"
-    allow_headers:
-      - "Content-Type"
-      - "Authorization"
-    max_age: 3600
+cors:
+  allowed_origins:
+    - "http://localhost:3000"
+    - "http://localhost:8000"
+  allow_credentials: true
+  allow_methods: ["*"]
+  allow_headers: ["*"]
 
-# =============================================================================
-# API CONFIGURATION
-# =============================================================================
-api:
-  prefix: "/api/v1"
-  title: "Corruption Reporting System API"
-  description: "Anonymous Evidence Validation Framework"
-  version: "1.0.0"
-  docs_url: null  # Disable Swagger UI in production
-  redoc_url: null  # Disable ReDoc in production
-  openapi_url: null  # Disable OpenAPI schema endpoint
+storage: {}  # Uses defaults
 
-  # Request limits
-  max_upload_size: 20971520  # 20 MB (strict limit)
-  timeout: 120  # 2 minutes
-
-  # Pagination
-  default_page_size: 20
-  max_page_size: 100
-
-# =============================================================================
-# STORAGE CONFIGURATION
-# =============================================================================
-storage:
-  base_dir: "/var/lib/corruption-reporting/data"  # Production path
-
-  # Submission storage
-  submissions_dir: "/var/lib/corruption-reporting/data/submissions"
-  evidence_dir: "/var/lib/corruption-reporting/data/evidence"
-  reports_dir: "/var/lib/corruption-reporting/data/reports"
-  cache_dir: "/tmp/corruption-reporting/cache"
-
-  # Database files (JSON-based)
-  chain_file: "/var/lib/corruption-reporting/data/chain.json"
-  validators_file: "/var/lib/corruption-reporting/data/validators.json"
-  index_file: "/var/lib/corruption-reporting/data/index.json"
-
-  # Retention policies
-  submission_retention_days: 90
-  cache_retention_hours: 24
-
-  # Sharding (enabled for scalability)
-  use_sharding: true
-  shard_by_date: true
-
-# =============================================================================
-# MACHINE LEARNING MODELS
-# =============================================================================
 models:
-  # Model cache directory
-  cache_dir: "/var/cache/huggingface"
+  use_gpu: false
+  use_fp16: false
+  batch_size: 4
+  cache_size: 100
+  lazy_loading: true
+  model_timeout: 300
 
-  # Device configuration
-  device: "cpu"  # Use "cuda" if GPU available in production
-  use_fp16: true  # Enable FP16 for 2x speedup
+consensus:
+  min_validators: 10
+  max_validators: 20
+  devils_advocate_ratio: 0.1
+  consensus_threshold: 0.7
+  voting_rounds: 5
+  timeout: 60
 
-  # CLIP model (deepfake detection)
-  clip:
-    model_name: "openai/clip-vit-base-patch32"
-    enabled: true
-    batch_size: 8  # Larger batch for production
-    num_workers: 2
-
-  # Wav2Vec2 model (audio analysis)
-  wav2vec:
-    model_name: "facebook/wav2vec2-base"
-    enabled: true
-    batch_size: 4
-
-  # BLIP model (image captioning)
-  blip:
-    model_name: "Salesforce/blip-image-captioning-base"
-    enabled: true
-    max_length: 50
-
-  # Sentence transformer (text embeddings)
-  sentence_transformer:
-    model_name: "sentence-transformers/all-MiniLM-L6-v2"
-    enabled: true
-    batch_size: 16
-
-  # Test-time augmentation
-  augmentation:
-    enabled: true
-    num_variations: 10  # Full augmentation for production
-
-# =============================================================================
-# LAYER CONFIGURATIONS
-# =============================================================================
-
-# Layer 1: Anonymity
-layer1:
-  enabled: true
-  pseudonym_algorithm: "sha256"
-  encryption_algorithm: "fernet"  # AES-256
-  strip_metadata: true
-  hash_chain_enabled: true
-
-# Layer 2: Credibility Assessment
-layer2:
-  enabled: true
+credibility:
   deepfake_threshold: 0.5
-  confidence_threshold: 0.4  # Entropy threshold for human review
-  ensemble_voting: true
-  cross_modal_consistency: true
+  high_confidence_threshold: 0.8
+  low_confidence_threshold: 0.4
+  num_augmentations: 5
+  min_consistency_score: 0.6
 
-  # Detection thresholds
-  high_confidence: 0.80
-  medium_confidence: 0.60
-  low_confidence: 0.40
-
-# Layer 3: Coordination Detection
-layer3:
-  enabled: true
-  similarity_threshold: 0.7
-  min_cluster_size: 3  # Production threshold
-  detection_window_hours: 48  # Longer window for production
-
-  # Graph analysis
-  use_louvain_clustering: true
-  use_one_class_svm: true
-
-  # Stylometric features
-  analyze_ttr: true  # Type-Token Ratio
-  analyze_pos: true  # Part-of-speech n-grams
-  analyze_lexical_density: true
-
-# Layer 4: Byzantine Consensus
-layer4:
-  enabled: true
-  num_validators: 20  # More validators for production
-  devil_advocate_ratio: 0.1  # 10% contrarian validators
-  consensus_threshold: 0.7  # 70% agreement required (stricter)
-  max_rounds: 10
-  convergence_timeout: 60  # seconds
-
-# Layer 5: Counter-Evidence
-layer5:
-  enabled: true
+counter_evidence:
   presumption_of_innocence_weight: 1.3
   identity_verification_bonus: 1.2
-  bayesian_update_enabled: true
-  min_impact_threshold: 0.05  # 5% minimum impact
+  prior_credibility: 0.5
+  require_identity_verification: false
 
-# Layer 6: Reporting
-layer6:
+coordination:
+  content_similarity_threshold: 0.7
+  style_similarity_threshold: 0.65
+  temporal_similarity_threshold: 0.8
+  min_cluster_size: 3
+  anomaly_contamination: 0.1
+
+rate_limit:
   enabled: true
-  format: "pdf"
-  include_visualizations: true
-  include_chain_of_custody: true
-  include_confidence_intervals: true
-  section_45_compliant: true
+  max_submissions_per_hour: 20
+  max_submissions_per_day: 100
+  max_requests_per_minute: 60
+  cleanup_interval: 300
 
-  # Report styling
-  font_family: "Helvetica"
-  page_size: "A4"
-  include_header: true
-  include_footer: true
-
-# =============================================================================
-# SECURITY SETTINGS
-# =============================================================================
 security:
-  # Cryptography
-  encryption_key_rotation_days: 30  # More frequent rotation
-  hash_algorithm: "sha256"
+  encryption_enabled: true
+  hash_chain_enabled: true
+  exif_stripping_enabled: true
+  rate_limiting_enabled: true
+  csrf_enabled: false
 
-  # Rate limiting (strict for production)
-  rate_limit:
-    enabled: true
-    requests_per_minute: 10  # Strict limit
-    requests_per_hour: 100
-    burst_size: 20
-
-  # IP restrictions
-  ip_whitelist: []  # Configure if needed
-  ip_blacklist: []  # Configure if needed
-
-  # Authentication
-  require_auth: false  # Set to true if auth implemented
-  token_expiry_hours: 1  # Short-lived tokens
-
-# =============================================================================
-# LOGGING CONFIGURATION
-# =============================================================================
 logging:
-  level: "INFO"  # Production logging level
-  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+  level: "INFO"
+  console_logging: true
+  file_logging: true
+  json_logging: false
+  max_file_size_mb: 10
+  backup_count: 5
 
-  # File logging
-  file:
-    enabled: true
-    path: "/var/log/corruption-reporting/app.log"
-    max_bytes: 104857600  # 100 MB
-    backup_count: 10
-    rotation: "size"
+metrics:
+  enabled: true
+  collection_interval: 30
+  export_prometheus: false
 
-  # Console logging
-  console:
-    enabled: true
-    colorize: false
-
-  # Structured logging (for log aggregation)
-  json_logs: true  # Enable JSON for production log aggregation
-
-  # Log levels by module
-  modules:
-    uvicorn: "INFO"
-    fastapi: "INFO"
-    backend.core: "INFO"
-    backend.services: "INFO"
-    backend.models: "WARNING"
-    transformers: "ERROR"  # Only errors from HuggingFace
-    torch: "ERROR"
-
-# =============================================================================
-# PERFORMANCE SETTINGS
-# =============================================================================
-performance:
-  # Memory limits
-  max_memory_mb: 8192  # 8 GB for production
-  gc_enabled: true
-  gc_threshold: 0.9  # Higher threshold for production
-
-  # Caching
-  cache_enabled: true
-  cache_ttl_seconds: 7200  # 2 hours
-  cache_max_size_mb: 2048  # 2 GB
-
-  # Concurrency
-  max_concurrent_submissions: 20  # Higher limit for production
-  background_workers: 4
-
-  # Optimization flags
-  lazy_loading: true
-  batch_processing: true  # Enable batch processing
-  early_termination: true
-
-# =============================================================================
-# EVALUATION SETTINGS
-# =============================================================================
 evaluation:
-  enabled: false  # Disable in production (run separately)
-  output_dir: "/var/lib/corruption-reporting/evaluation/results"
-
-  # Dataset paths
-  datasets:
-    faceforensics_dir: "/data/datasets/faceforensics"
-    celebdf_dir: "/data/datasets/celebdf"
-    synthetic_dir: "/data/datasets/synthetic_attacks"
-
-  # Metrics
-  compute_auroc: true
-  compute_precision_recall: true
-  compute_confusion_matrix: true
-  save_visualizations: true
-
-  # Benchmarking
-  benchmark_enabled: false  # Disable in production
-  benchmark_iterations: 100
-
-# =============================================================================
-# MONITORING & METRICS
-# =============================================================================
-monitoring:
   enabled: true
-
-  # Prometheus metrics
-  prometheus:
-    enabled: true
-    port: 9090
-    endpoint: "/metrics"
-
-  # Health checks
-  health_check:
-    enabled: true
-    endpoint: "/health"
-    detailed: false  # Hide details in production
-
-  # Performance tracking
-  track_request_duration: true
-  track_model_inference_time: true
-  track_memory_usage: true
-  track_error_rates: true
-
-# =============================================================================
-# TESTING SETTINGS
-# =============================================================================
-testing:
-  # Test data generation (disabled in production)
-  generate_synthetic_data: false
-  num_synthetic_submissions: 0
-
-  # Mock services (disabled in production)
-  mock_ml_models: false
-  mock_external_apis: false
-
-  # Test fixtures (disabled in production)
-  fixtures_dir: ""
-  use_fixtures: false
-
-# =============================================================================
-# DEVELOPMENT TOOLS
-# =============================================================================
-dev_tools:
-  # Hot reload (disabled in production)
-  auto_reload: false
-  watch_files: []
-
-  # Debugging (disabled in production)
-  enable_profiler: false
-  enable_debugger: false
-
-  # API documentation (disabled in production)
-  show_docs: false
-  show_schemas: false
-
-  # Development helpers (disabled in production)
-  seed_data_on_startup: false
-  reset_db_on_startup: false
-  validate_config_on_startup: true
-
-# =============================================================================
-# EXTERNAL SERVICES (Optional)
-# =============================================================================
-external:
-  # Azure (configure if deploying to Azure)
-  azure:
-    enabled: false  # Set to true if using Azure
-    storage_account: "${AZURE_STORAGE_ACCOUNT}"  # Use env variables
-    storage_key: "${AZURE_STORAGE_KEY}"
-    container_name: "corruption-reporting"
-
-  # Email notifications (configure if needed)
-  email:
-    enabled: false
-    smtp_host: "${SMTP_HOST}"
-    smtp_port: 587
-    from_address: "${SMTP_FROM_ADDRESS}"
-    username: "${SMTP_USERNAME}"
-    password: "${SMTP_PASSWORD}"
-
-  # Webhooks (configure if needed)
-  webhooks:
-    enabled: false
-    endpoints: []
-
-# =============================================================================
-# FEATURE FLAGS
-# =============================================================================
-features:
-  enable_counter_evidence: true
-  enable_pdf_reports: true
-  enable_network_graphs: true
-  enable_batch_processing: true
-  enable_real_time_updates: false  # Disable WebSockets in production initially
-  enable_file_encryption: true
-  enable_hash_chain: true
-  enable_coordination_detection: true
-
-# =============================================================================
-# EXPERIMENTAL FEATURES
-# =============================================================================
-experimental:
-  # Advanced ML features (disabled in production)
-  use_grad_cam: false
-  use_attention_maps: false
-
-  # Blockchain anchoring (not implemented in MVP)
-  blockchain_anchoring: false
-
-  # Distributed consensus (not implemented in MVP)
-  distributed_validators: false
-
-# =============================================================================
-# DISASTER RECOVERY
-# =============================================================================
-disaster_recovery:
-  # Backup settings
-  auto_backup: true
-  backup_interval_hours: 24
-  backup_retention_days: 30
-  backup_dir: "/var/backups/corruption-reporting"
-
-  # Recovery settings
-  enable_recovery_mode: false
-  recovery_point_objective_hours: 24  # RPO: 24 hours
-  recovery_time_objective_hours: 4  # RTO: 4 hours
-
-# =============================================================================
-# COMPLIANCE
-# =============================================================================
-compliance:
-  # Data privacy
-  gdpr_compliant: true
-  anonymize_logs: true
-  data_retention_policy_days: 90
-
-  # Audit trail
-  enable_audit_log: true
-  audit_log_path: "/var/log/corruption-reporting/audit.log"
-
-  # Encryption
-  encrypt_at_rest: true
-  encrypt_in_transit: true
-
-# =============================================================================
-# ALERTS & NOTIFICATIONS
-# =============================================================================
-alerts:
-  enabled: true
-
-  # Alert thresholds
-  error_rate_threshold: 0.05  # 5%
-  response_time_threshold_ms: 5000  # 5 seconds
-  memory_usage_threshold: 0.9  # 90%
-
-  # Notification channels (configure as needed)
-  channels:
-    email: false
-    slack: false
-    webhook: false
+  output_dir: "evaluation/results"

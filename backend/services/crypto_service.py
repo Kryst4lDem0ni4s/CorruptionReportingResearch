@@ -18,7 +18,7 @@ from typing import Optional, Tuple
 
 from cryptography.fernet import Fernet
 from cryptography.hazmat.primitives import hashes
-from cryptography.hazmat.primitives.kdf.pbkdf2 import PBKDF2
+from cryptography.hazmat.primitives.kdf.pbkdf2 import PBKDF2HMAC
 
 # Initialize logger
 logger = logging.getLogger(__name__)
@@ -319,7 +319,7 @@ class CryptoService:
             bytes: Derived key (32 bytes)
         """
         try:
-            kdf = PBKDF2(
+            kdf = PBKDF2HMAC(
                 algorithm=hashes.SHA256(),
                 length=32,
                 salt=salt,

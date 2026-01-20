@@ -5,7 +5,7 @@ Provides centralized imports for all utility functions and classes.
 """
 
 # File utilities
-from .file_utils import FileUtils, atomic_write, read_json, write_json
+from .file_utils import FileUtils, atomic_write_json, safe_read_json, safe_write_json
 
 # Image utilities
 from .image_utils import (

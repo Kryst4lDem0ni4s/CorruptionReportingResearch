@@ -128,3 +128,34 @@ Network Architecture:
 │  │  └──────────┘  └────────────┘ ││
 │  └─────────────────────────────────┘│
 └─────────────────────────────────────┘
+
+# 1. Navigate to project
+cd corruption-reporting-prototype
+
+# 2. Create virtual environment
+python3 -m venv venv
+venv\Scripts\activate  # Windows
+
+# 3. Install dependencies (~10-15 min)
+pip install --upgrade pip
+pip install -r requirements.txt
+
+# 4. Download spaCy model (REQUIRED)
+python -m spacy download en_core_web_sm
+
+# 5. Download ML models (~5-10 min, 1.2 GB)
+python scripts/download_models.py
+
+# 6. Initialize system
+python scripts/initialize_storage.py
+python scripts/seed_validators.py
+
+# 7. Create .env configuration
+cp .env.example .env
+python -c "import secrets; print('SECRET_KEY=' + secrets.token_hex(32))" >> .env
+python -c "from cryptography.fernet import Fernet; print('ENCRYPTION_KEY=' + Fernet.generate_key().decode())" >> .env
+echo "ENV=dev" >> .env
+echo "DEBUG=true" >> .env
+
+# 8. Verify setup
+python scripts/health_check.py

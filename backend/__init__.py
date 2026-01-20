@@ -110,20 +110,20 @@ from backend.exceptions import (
 )
 
 # Core layers
-from backend.core.layer1_anonymity import AnonymityLayer
-from backend.core.layer2_credibility import CredibilityAssessmentLayer
-from backend.core.layer3_coordination import CoordinationDetectionLayer
-from backend.core.layer4_consensus import ConsensusLayer
-from backend.core.layer5_counter_evidence import CounterEvidenceLayer
-from backend.core.layer6_reporting import ReportingLayer
-from backend.core.orchestrator import ProcessingOrchestrator
+from backend.core.layer1_anonymity import Layer1Anonymity
+from backend.core.layer2_credibility import Layer2Credibility
+from backend.core.layer3_coordination import Layer3Coordination
+from backend.core.layer4_consensus import Layer4Consensus
+from backend.core.layer5_counter_evidence import Layer5CounterEvidence
+from backend.core.layer6_reporting import Layer6Reporting
+from backend.core.orchestrator import Orchestrator
 
 # Services
 from backend.services.storage_service import StorageService
 from backend.services.hash_chain_service import HashChainService
 from backend.services.crypto_service import CryptoService
 from backend.services.validation_service import ValidationService
-from backend.services.rate_limiter import RateLimiterService
+from backend.services.rate_limiter import RateLimiter
 from backend.services.metrics_service import MetricsService
 
 # Models

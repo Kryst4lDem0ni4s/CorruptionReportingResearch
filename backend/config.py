@@ -232,7 +232,7 @@ class ConfigLoader:
         self._config: Optional[AppConfig] = None
     
     def load(
-        self,
+        self, 
         config_file: Optional[str] = None,
         environment: Optional[str] = None
     ) -> AppConfig:
