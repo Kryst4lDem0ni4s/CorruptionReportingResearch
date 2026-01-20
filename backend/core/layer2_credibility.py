@@ -9,6 +9,7 @@ Output: Credibility scores and confidence intervals
 import logging
 import time
 from pathlib import Path
+from tkinter import Image
 from typing import Dict, List, Optional, Tuple
 
 import numpy as np

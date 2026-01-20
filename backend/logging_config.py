@@ -326,7 +326,7 @@ def setup_json_logging(enabled: bool = False):
     
     except ImportError:
         logger = logging.getLogger(__name__)
-        logger.warning("json-log-formatter not installed, skipping JSON logging")
+        logger.warning("json-log-formatter package not installed. Install with: pip install json-log-formatter")
 
 
 # ==================== INITIALIZATION ====================

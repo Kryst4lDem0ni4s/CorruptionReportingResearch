@@ -639,4 +639,4 @@ Generated synthetic attack scenarios for testing coordination detection.
 }}
 
 # Command-line usage
-# python evaluation/datasets/generate_synthetic.py --num-groups 20 --with-defense
+# python evaluation/datasets/generate_synthetic.py --num-groups 20 --with-defense"""

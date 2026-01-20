@@ -22,10 +22,12 @@ Usage:
     registry.register('custom_metric', CustomMetric())
 """
 
+from __future__ import annotations
+
 import os
 import sys
 from pathlib import Path
-from typing import Dict, Any, List, Optional, Callable, Union
+from typing import Dict, Any, List, Optional, Callable, Union, TYPE_CHECKING
 import logging
 import numpy as np
 
@@ -43,17 +45,8 @@ logger = logging.getLogger('evaluation.metrics')
 # ============================================
 
 # Import base metric
-try:
-    from evaluation.metrics.base_metric import (
-        BaseMetric,
-        MetricResult,
-        MetricRegistry
-    )
-except ImportError as e:
-    logger.warning(f"Could not import base_metric: {e}")
-    BaseMetric = None
-    MetricResult = None
-    MetricRegistry = None
+if TYPE_CHECKING:
+    from evaluation.metrics.base_metric import BaseMetric, MetricResult, MetricRegistry
 
 # ============================================
 # METRIC CATEGORIES
@@ -294,22 +287,22 @@ def compare_metrics(
 # ============================================
 
 # Global registry instance
-_global_registry = None
+_global_registry: Optional[MetricRegistry] = None
 
-def get_registry() -> 'MetricRegistry':
+def get_registry() -> Optional[MetricRegistry]:
     """Get global metric registry"""
     global _global_registry
     if _global_registry is None and MetricRegistry is not None:
         _global_registry = MetricRegistry()
     return _global_registry
 
-def register_metric(name: str, metric: 'BaseMetric'):
+def register_metric(name: str, metric: BaseMetric) -> None:
     """Register a metric in global registry"""
     registry = get_registry()
     if registry:
         registry.register(name, metric)
 
-def get_metric(name: str) -> Optional['BaseMetric']:
+def get_metric(name: str) -> Optional[BaseMetric]:
     """Get metric from global registry"""
     registry = get_registry()
     if registry:
