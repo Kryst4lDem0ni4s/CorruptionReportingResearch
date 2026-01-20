@@ -106,6 +106,7 @@ class QueueService:
         # Worker management
         self.workers: List[asyncio.Task] = []
         self.running = False
+        self.queues = defaultdict(list)
         
         # Statistics
         self.stats = {

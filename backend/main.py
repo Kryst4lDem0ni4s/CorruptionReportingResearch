@@ -35,6 +35,8 @@ from backend.core import orchestrator
 # from backend.services import metrics_service
 
 # Import classes, not modules
+from backend.services import storage_service
+from backend.services import metrics_service
 from backend.services.storage_service import StorageService
 from backend.services.queue_service import QueueService
 from backend.services.metrics_service import MetricsService
