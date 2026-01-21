@@ -223,7 +223,7 @@ class EvaluationRunner:
             output_dir: Output directory for results
             verbose: Enable verbose logging
         """
-        self.config_path = config_path or (project_root / "evaluation" / "config.yaml")
+        self.config_path = config_path or (project_root / "evaluation" / "config_evaluation.yaml")
         self.output_dir = output_dir or (project_root / "evaluation" / "results")
         self.verbose = verbose
         

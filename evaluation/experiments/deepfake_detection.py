@@ -94,10 +94,14 @@ class DeepfakeDetectionExperiment:
                 )
                 
             except Exception as e:
-                logger.warning(f"Failed to process sample {i}: {e}")
+                logger.warning(f"Failed to process sample {i} ({sample.get('path')}): {e}")
                 # Use neutral predictions for failed samples
                 y_score.append(0.5)
                 y_pred.append(0)
+                processing_times.append(0)  # Use 0 or some default time
+
+        # Filter out None values in y_score just in case
+        y_score = [s if s is not None else 0.5 for s in y_score]
         
         # 3. Compute metrics
         logger.info("Computing metrics...")
@@ -254,7 +258,7 @@ class DeepfakeDetectionExperiment:
                 time.sleep(2)
         
         # Timeout
-        logger.warning(f"Timeout waiting for {submission_id}")
+        logger.warning(f"Timeout waiting for {submission_id} after {max_wait} seconds")
         return {
             'submission_id': submission_id,
             'credibility_score': 0.5,

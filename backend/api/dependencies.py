@@ -42,9 +42,9 @@ def get_storage_service():
         
         # Initialize storage service with data directory
         storage = StorageService(
-            data_dir=Path(config.get("data_dir", "backend/data")),
-            enable_caching=config.get("enable_caching", True),
-            cache_ttl_seconds=config.get("cache_ttl", 300)
+            data_dir=config.storage.data_dir,
+            enable_caching=True, # Default to True as not in config
+            cache_ttl_seconds=300 # Default to 300 as not in config
         )
         
         logger.info("StorageService initialized successfully")
@@ -70,7 +70,7 @@ def get_hash_chain_service():
         from backend.services.hash_chain_service import HashChainService
         
         config = get_config()
-        chain_file = Path(config.get("data_dir", "backend/data")) / "chain.json"
+        chain_file = config.storage.data_dir / "chain.json"
         
         # Initialize and verify chain integrity
         chain_service = HashChainService(chain_file=chain_file)
@@ -126,10 +126,11 @@ def get_rate_limiter():
         config = get_config()
         
         # Initialize rate limiter with configuration
+        # Use RateLimitConfig attributes
         rate_limiter = RateLimiter(
-            max_requests=config.get("rate_limit_requests", 10),
-            window_seconds=config.get("rate_limit_window", 3600),
-            enable_rate_limiting=config.get("enable_rate_limiting", True)
+            max_requests=config.rate_limit.max_submissions_per_hour,
+            window_seconds=3600, # Per hour
+            enable_rate_limiting=config.rate_limit.enabled
         )
         
         logger.info("RateLimiter initialized successfully")
@@ -158,13 +159,10 @@ def get_validation_service():
         
         # Initialize with size limits
         validation = ValidationService(
-            max_image_size_mb=config.get("max_image_size_mb", 5),
-            max_audio_size_mb=config.get("max_audio_size_mb", 5),
-            max_video_size_mb=config.get("max_video_size_mb", 50),
-            allowed_extensions=config.get(
-                "allowed_extensions",
-                [".jpg", ".jpeg", ".png", ".wav", ".mp3", ".mp4", ".avi"]
-            )
+            max_image_size_mb=5, # Default
+            max_audio_size_mb=5, # Default
+            max_video_size_mb=50, # Default
+            allowed_extensions=[".jpg", ".jpeg", ".png", ".wav", ".mp3", ".mp4", ".avi"]
         )
         
         logger.info("ValidationService initialized successfully")
@@ -551,7 +549,7 @@ def initialize_data_directories() -> None:
     from backend.config import get_config
     
     config = get_config()
-    data_dir = Path(config.get("data_dir", "backend/data"))
+    data_dir = config.storage.data_dir
     
     required_dirs = [
         data_dir / "submissions",

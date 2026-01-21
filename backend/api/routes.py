@@ -35,7 +35,7 @@ from backend.services.validation_service import ValidationService
 logger = logging.getLogger(__name__)
 
 # Create API router
-router = APIRouter(prefix="/api", tags=["api"])
+router = APIRouter()
 
 
 # ============================================================================
@@ -43,13 +43,13 @@ router = APIRouter(prefix="/api", tags=["api"])
 # ============================================================================
 
 @router.post(
-    "/submit",
+    "/submissions",
     response_model=schemas.SubmissionResponse,
     status_code=status.HTTP_202_ACCEPTED,
     summary="Submit evidence for credibility assessment",
     description="""
     Submit evidence (image/audio/video) for anonymous credibility assessment.
-    Processing happens asynchronously - poll /credibility/{id} for results.
+    Processing happens asynchronously - poll /submissions/{id} for results.
     
     **Rate Limit:** 10 submissions per hour per IP address.
     **File Limits:** Images/Audio ≤5MB, Video ≤50MB.
@@ -186,9 +186,9 @@ async def submit_evidence(
 # ============================================================================
 
 @router.get(
-    "/credibility/{submission_id}",
+    "/submissions/{submission_id}",
     response_model=schemas.CredibilityResponse,
-    summary="Get credibility assessment results",
+    summary="Get submission status and results",
     description="""
     Retrieve current status and results for a submission.
     Poll this endpoint every 5 seconds until status is 'completed'.
@@ -199,7 +199,7 @@ async def submit_evidence(
         500: {"description": "Retrieval error"}
     }
 )
-async def get_credibility(
+async def get_submission(
     submission_id: str,
     storage_service=Depends(get_storage_service),
     _=Depends(verify_submission_exists)

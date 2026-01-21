@@ -9,6 +9,7 @@ Handles:
 """
 
 import logging
+import asyncio
 import shutil
 import time
 from datetime import datetime, timedelta
@@ -83,11 +84,11 @@ class CleanupWorker:
             f"retention={retention_days}d, cache_max={cache_max_age_hours}h"
         )
     
-    def start(self, interval_hours: float = 24.0):
+    async def start(self, interval_hours: float = 24.0):
         """
         Start the cleanup worker.
         
-        Runs cleanup tasks periodically.
+        Runs cleanup tasks periodically in a background task.
         
         Args:
             interval_hours: Hours between cleanup runs
@@ -97,28 +98,46 @@ class CleanupWorker:
             return
         
         self.is_running = True
-        logger.info(f"CleanupWorker started (interval={interval_hours}h)")
+        logger.info(f"CleanupWorker starting background task (interval={interval_hours}h)")
         
+        self.worker_task = asyncio.create_task(self._cleanup_loop(interval_hours))
+        logger.info("CleanupWorker background task created")
+
+    async def _cleanup_loop(self, interval_hours: float):
+        """Internal loop for periodic cleanup."""
         try:
             while self.is_running:
                 # Run cleanup
-                self.run_cleanup()
+                # Run sync cleanup in thread pool to avoid blocking event loop
+                await asyncio.to_thread(self.run_cleanup)
                 
-                # Sleep until next run
-                if self.is_running:
-                    time.sleep(interval_hours * 3600)
+                # Sleep until next run (check frequently for shutdown)
+                sleep_time = interval_hours * 3600
+                check_interval = 5.0 # check every 5 seconds
+                elapsed = 0
+                while elapsed < sleep_time and self.is_running:
+                    await asyncio.sleep(check_interval)
+                    elapsed += check_interval
         
-        except KeyboardInterrupt:
-            logger.info("Cleanup worker interrupted")
+        except asyncio.CancelledError:
+             logger.info("Cleanup worker task cancelled")
         except Exception as e:
             logger.error(f"Cleanup worker error: {e}", exc_info=True)
         finally:
             self.is_running = False
     
-    def stop(self):
+    async def stop(self):
         """Stop the cleanup worker."""
         logger.info("Stopping CleanupWorker...")
         self.is_running = False
+        
+        if hasattr(self, 'worker_task') and self.worker_task:
+            self.worker_task.cancel()
+            try:
+                await self.worker_task
+            except asyncio.CancelledError:
+                pass
+        logger.info("CleanupWorker stopped")
     
     def run_cleanup(self) -> Dict:
         """

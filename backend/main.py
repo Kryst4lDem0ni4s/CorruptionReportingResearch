@@ -22,6 +22,9 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.middleware.gzip import GZipMiddleware
 from fastapi.responses import JSONResponse
 from fastapi.exceptions import RequestValidationError
+import logging
+
+logger = logging.getLogger(__name__)
 
 # Prometheus client imports
 from prometheus_client import (
@@ -44,99 +47,120 @@ from backend.api.health import router as health_router
 from backend.api.middleware import RateLimitMiddleware, ErrorHandlingMiddleware
 
 
+# Helper to prevent duplicate metrics registry errors on reload
+def create_metric(metric_class, name, *args, **kwargs):
+    """Create or retrieve existing Prometheus metric to avoid duplication errors."""
+    try:
+        # Try to get existing metric from registry
+        for collector in list(REGISTRY._collector_to_names.keys()):
+            if hasattr(collector, '_name') and collector._name == name:
+                return collector
+        # Create new metric if not found
+        return metric_class(name, *args, **kwargs)
+    except Exception as e:
+        logger.warning(f"Could not create/find metric {name}: {e}")
+        # Return a dummy metric that does nothing to prevent crashes
+        class DummyMetric:
+            def inc(self, *args, **kwargs): pass
+            def dec(self, *args, **kwargs): pass
+            def set(self, *args, **kwargs): pass
+            def observe(self, *args, **kwargs): pass
+            def labels(self, *args, **kwargs): return self
+        return DummyMetric()
+
 # ==================== PROMETHEUS METRICS DECLARATIONS ====================
 
 # HTTP Metrics
-http_requests_total = Counter(
+http_requests_total = create_metric(Counter,
     'http_requests_total',
     'Total HTTP requests',
     ['method', 'endpoint', 'status']
 )
 
-http_request_duration_seconds = Histogram(
+http_request_duration_seconds = create_metric(Histogram,
     'http_request_duration_seconds',
     'HTTP request duration in seconds',
     ['method', 'endpoint'],
     buckets=(0.005, 0.01, 0.025, 0.05, 0.1, 0.25, 0.5, 1.0, 2.5, 5.0, 10.0)
 )
 
-http_requests_in_progress = Gauge(
+http_requests_in_progress = create_metric(Gauge,
     'http_requests_in_progress',
     'Number of HTTP requests in progress',
     ['method', 'endpoint']
 )
 
-http_request_size_bytes = Summary(
+http_request_size_bytes = create_metric(Summary,
     'http_request_size_bytes',
     'HTTP request size in bytes',
     ['method', 'endpoint']
 )
 
-http_response_size_bytes = Summary(
+http_response_size_bytes = create_metric(Summary,
     'http_response_size_bytes',
     'HTTP response size in bytes',
     ['method', 'endpoint']
 )
 
 # Application Metrics
-submission_total = Counter(
+submission_total = create_metric(Counter,
     'submission_total',
     'Total evidence submissions',
     ['status']
 )
 
-submission_processing_duration_seconds = Histogram(
+submission_processing_duration_seconds = create_metric(Histogram,
     'submission_processing_duration_seconds',
     'Submission processing duration in seconds',
     buckets=(1.0, 5.0, 10.0, 30.0, 60.0, 120.0, 300.0, 600.0)
 )
 
 # System Resource Metrics
-process_memory_percent = Gauge('process_memory_percent', 'Memory usage percentage')
-process_cpu_percent = Gauge('process_cpu_percent', 'CPU usage percentage')
-process_memory_bytes = Gauge('process_memory_bytes', 'Memory usage in bytes', ['type'])
+process_memory_percent = create_metric(Gauge, 'process_memory_percent', 'Memory usage percentage')
+process_cpu_percent = create_metric(Gauge, 'process_cpu_percent', 'CPU usage percentage')
+process_memory_bytes = create_metric(Gauge, 'process_memory_bytes', 'Memory usage in bytes', ['type'])
 
 # Layer-Specific Metrics
-layer1_anonymity_violations_total = Counter('layer1_anonymity_violations_total', 'Total anonymity violations detected')
-layer2_credibility_score_avg = Gauge('layer2_credibility_score_avg', 'Average credibility score')
-layer2_deepfake_detected_total = Counter('layer2_deepfake_detected_total', 'Total deepfakes detected')
-layer3_coordination_detected_total = Counter('layer3_coordination_detected_total', 'Total coordinated attacks detected')
-layer4_consensus_iterations_avg = Gauge('layer4_consensus_iterations_avg', 'Average consensus iterations')
-layer4_consensus_convergence_time_seconds = Gauge('layer4_consensus_convergence_time_seconds', 'Consensus convergence time')
-layer5_counter_evidence_total = Counter('layer5_counter_evidence_total', 'Total counter-evidence submissions')
-layer5_counter_evidence_impact_percent = Gauge('layer5_counter_evidence_impact_percent', 'Counter-evidence impact percentage')
-layer6_reports_generated_total = Counter('layer6_reports_generated_total', 'Total reports generated')
+layer1_anonymity_violations_total = create_metric(Counter, 'layer1_anonymity_violations_total', 'Total anonymity violations detected')
+layer2_credibility_score_avg = create_metric(Gauge, 'layer2_credibility_score_avg', 'Average credibility score')
+layer2_deepfake_detected_total = create_metric(Counter, 'layer2_deepfake_detected_total', 'Total deepfakes detected')
+layer3_coordination_detected_total = create_metric(Counter, 'layer3_coordination_detected_total', 'Total coordinated attacks detected')
+layer4_consensus_iterations_avg = create_metric(Gauge, 'layer4_consensus_iterations_avg', 'Average consensus iterations')
+layer4_consensus_convergence_time_seconds = create_metric(Gauge, 'layer4_consensus_convergence_time_seconds', 'Consensus convergence time')
+layer5_counter_evidence_total = create_metric(Counter, 'layer5_counter_evidence_total', 'Total counter-evidence submissions')
+layer5_counter_evidence_impact_percent = create_metric(Gauge, 'layer5_counter_evidence_impact_percent', 'Counter-evidence impact percentage')
+layer6_reports_generated_total = create_metric(Counter, 'layer6_reports_generated_total', 'Total reports generated')
 
 # Model Metrics
-model_inference_duration_seconds = Histogram(
+model_inference_duration_seconds = create_metric(Histogram,
     'model_inference_duration_seconds',
     'Model inference duration in seconds',
     ['model'],
     buckets=(0.1, 0.5, 1.0, 2.0, 5.0, 10.0, 30.0, 60.0)
 )
-model_loading_failures_total = Counter('model_loading_failures_total', 'Total model loading failures', ['model'])
-model_cache_hit_total = Counter('model_cache_hit_total', 'Total model cache hits', ['model'])
-model_cache_miss_total = Counter('model_cache_miss_total', 'Total model cache misses', ['model'])
+model_loading_failures_total = create_metric(Counter, 'model_loading_failures_total', 'Total model loading failures', ['model'])
+model_cache_hit_total = create_metric(Counter, 'model_cache_hit_total', 'Total model cache hits', ['model'])
+model_cache_miss_total = create_metric(Counter, 'model_cache_miss_total', 'Total model cache misses', ['model'])
 
 # Security Metrics
-hash_chain_validation_failures_total = Counter('hash_chain_validation_failures_total', 'Total hash chain validation failures')
-validation_failures_total = Counter('validation_failures_total', 'Total input validation failures', ['validation_type'])
-rate_limiter_blocked_total = Counter('rate_limiter_blocked_total', 'Total requests blocked by rate limiter', ['reason'])
+hash_chain_validation_failures_total = create_metric(Counter, 'hash_chain_validation_failures_total', 'Total hash chain validation failures')
+validation_failures_total = create_metric(Counter, 'validation_failures_total', 'Total input validation failures', ['validation_type'])
+rate_limiter_blocked_total = create_metric(Counter, 'rate_limiter_blocked_total', 'Total requests blocked by rate limiter', ['reason'])
 
 # Storage Metrics
-storage_used_percent = Gauge('storage_used_percent', 'Storage usage percentage')
-storage_corruption_detected_total = Counter('storage_corruption_detected_total', 'Total storage corruption events')
+storage_used_percent = create_metric(Gauge, 'storage_used_percent', 'Storage usage percentage')
+storage_corruption_detected_total = create_metric(Counter, 'storage_corruption_detected_total', 'Total storage corruption events')
 
 # Queue Metrics
-queue_pending_jobs = Gauge('queue_pending_jobs', 'Number of pending jobs in queue')
-queue_processing_jobs = Gauge('queue_processing_jobs', 'Number of jobs currently processing')
-queue_processing_duration_seconds = Histogram('queue_processing_duration_seconds', 'Job processing duration', buckets=(1.0, 5.0, 10.0, 30.0, 60.0, 300.0))
-queue_failures_total = Counter('queue_failures_total', 'Total queue job failures', ['job_type'])
+queue_pending_jobs = create_metric(Gauge, 'queue_pending_jobs', 'Number of pending jobs in queue')
+queue_processing_jobs = create_metric(Gauge, 'queue_processing_jobs', 'Number of jobs currently processing')
+queue_processing_duration_seconds = create_metric(Histogram, 'queue_processing_duration_seconds', 'Job processing duration', buckets=(1.0, 5.0, 10.0, 30.0, 60.0, 300.0))
+queue_failures_total = create_metric(Counter, 'queue_failures_total', 'Total queue job failures', ['job_type'])
 
 # Research/Evaluation Metrics
-evaluation_auroc_score = Gauge('evaluation_auroc_score', 'Current AUROC score from evaluation')
-evaluation_precision_score = Gauge('evaluation_precision_score', 'Current precision score')
-evaluation_recall_score = Gauge('evaluation_recall_score', 'Current recall score')
+evaluation_auroc_score = create_metric(Gauge, 'evaluation_auroc_score', 'Current AUROC score from evaluation')
+evaluation_precision_score = create_metric(Gauge, 'evaluation_precision_score', 'Current precision score')
+evaluation_recall_score = create_metric(Gauge, 'evaluation_recall_score', 'Current recall score')
 
 
 # ==================== PROMETHEUS MIDDLEWARE ====================
@@ -264,6 +288,7 @@ async def lifespan(app: FastAPI):
         storage = StorageService()
         storage._initialize_directories()
         app.state.storage = storage
+        logger.info(f"Storage initialized at {config.storage.data_dir}")
 
         # Verify hash chain integrity
         if config.security.hash_chain_enabled:
@@ -313,15 +338,10 @@ async def lifespan(app: FastAPI):
         )
         
         # Start worker in background (non-blocking)
-        try:
-            await asyncio.wait_for(submission_worker.start(), timeout=5.0)
-            app.state.submission_worker = submission_worker
-            logger.info("Submission worker started successfully")
-        except asyncio.TimeoutError:
-            logger.warning("Submission worker startup timed out, continuing...")
-        except Exception as e:
-            logger.error(f"Failed to start submission worker: {e}")
-            logger.info("Continuing without submission worker")
+        # Refactored: start() now creates a background task and returns immediately
+        await submission_worker.start()
+        app.state.submission_worker = submission_worker
+        logger.info("Submission worker started successfully")
 
         # Start cleanup worker (if not in testing mode)
         if not config.testing:
@@ -331,7 +351,7 @@ async def lifespan(app: FastAPI):
                     metrics_service=metrics if config.metrics.enabled else None,
                     data_dir=config.storage.data_dir,
                 )
-                cleanup_worker.start()
+                await cleanup_worker.start()
                 app.state.cleanup_worker = cleanup_worker
                 logger.info("Cleanup worker started successfully")
             except Exception as e:
@@ -381,14 +401,14 @@ async def lifespan(app: FastAPI):
         if hasattr(app.state, 'submission_worker'):
             logger.info("Stopping submission worker...")
             try:
-                app.state.submission_worker.stop()
+                await app.state.submission_worker.stop()
             except Exception as e:
                 logger.warning(f"Error stopping submission worker: {e}")
 
         if hasattr(app.state, 'cleanup_worker'):
             logger.info("Stopping cleanup worker...")
             try:
-                app.state.cleanup_worker.stop()
+                await app.state.cleanup_worker.stop()
             except Exception as e:
                 logger.warning(f"Error stopping cleanup worker: {e}")
 
@@ -483,7 +503,10 @@ def create_app(
 
     # Rate limiting
     if config.rate_limit.enabled:
-        app.middleware("http")(RateLimitMiddleware)
+        app.add_middleware(
+            RateLimitMiddleware,
+            excluded_paths=["/health", "/metrics", "/docs", "/openapi.json"]
+        )
 
     # ========== EXCEPTION HANDLERS ==========
 
@@ -635,11 +658,22 @@ if __name__ == "__main__":
     logger.info(f"API docs: http://{host}:{port}/api/{API_VERSION}/docs")
     logger.info(f"Metrics: http://{host}:{port}/metrics")
 
-    uvicorn.run(
-        "backend.main:app",
-        host=host,
-        port=port,
-        reload=reload,
-        log_level=config.server.log_level.lower(),
-        access_log=True
-    )
+    # Avoid double import issue by passing app instance directly when reload is False
+    if reload:
+        uvicorn.run(
+            "backend.main:app",
+            host=host,
+            port=port,
+            reload=True,
+            log_level=config.server.log_level.lower(),
+            access_log=True
+        )
+    else:
+        uvicorn.run(
+            app,
+            host=host,
+            port=port,
+            reload=False,
+            log_level=config.server.log_level.lower(),
+            access_log=True
+        )

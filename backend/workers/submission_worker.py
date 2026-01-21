@@ -67,35 +67,48 @@ class SubmissionWorker:
     
     async def start(self):
         """
-        Start the worker.
+        Start the worker in the background.
         
-        Begins processing submissions from the queue.
+        Begins processing submissions from the queue in a non-blocking background task.
         """
         if self.is_running:
             logger.warning("Worker already running")
             return
         
         self.is_running = True
-        logger.info("SubmissionWorker started")
+        logger.info("SubmissionWorker starting background task...")
         
-        try:
-            await self._process_loop()
-        except Exception as e:
-            logger.error(f"Worker error: {e}", exc_info=True)
-            self.is_running = False
+        # Create background task for processing loop
+        self.worker_task = asyncio.create_task(self._process_loop())
+        logger.info("SubmissionWorker background task created")
     
     async def stop(self):
         """
         Stop the worker gracefully.
         
-        Waits for current task to complete.
+        Cancels the background task and waits for current processing to complete.
         """
         logger.info("Stopping SubmissionWorker...")
         self.is_running = False
         
-        # Wait for current task
+        # Wait for current task if exists
         if self.current_task:
-            await self.current_task
+            try:
+                await asyncio.wait_for(self.current_task, timeout=10.0)
+            except asyncio.TimeoutError:
+                logger.warning("Timed out waiting for current submission to complete")
+            except Exception as e:
+                logger.error(f"Error waiting for current task: {e}")
+
+        # Cancel main worker loop if it's still running
+        if hasattr(self, 'worker_task') and self.worker_task:
+            self.worker_task.cancel()
+            try:
+                await self.worker_task
+            except asyncio.CancelledError:
+                logger.info("Worker task cancelled successfully")
+            except Exception as e:
+                logger.error(f"Error cancelling worker task: {e}")
         
         logger.info("SubmissionWorker stopped")
     
