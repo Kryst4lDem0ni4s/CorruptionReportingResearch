@@ -46,6 +46,7 @@ except ImportError:
 # ============================================
 # LOGGING
 # ============================================
+import logging
 
 logger = logging.getLogger('evaluation.visualizations.confusion_matrix')
 

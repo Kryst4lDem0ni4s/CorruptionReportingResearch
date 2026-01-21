@@ -43,6 +43,10 @@ from typing import Dict, Any, List, Optional, Tuple
 from datetime import datetime
 import logging
 
+from flask import config
+
+from evaluation.datasets import is_dataset_downloaded
+
 # Add parent directory to path for imports
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
@@ -292,30 +296,59 @@ class EvaluationRunner:
     
     def _run_experiments(self, experiments_to_run: List[str]):
         """Run specified experiments"""
-        logger.info(f"Running {len(experiments_to_run)} experiment(s)...")
-        
-        for exp_name in experiments_to_run:
-            if exp_name not in self.experiments:
-                logger.warning(f"Unknown experiment: {exp_name}")
-                continue
-            
-            logger.info(f"\n{'='*50}")
-            logger.info(f"Experiment: {exp_name}")
-            logger.info(f"{'='*50}")
+        # [3/6] Running experiments
+        logger.info("Running experiments...")
+
+        experiment_results = {}
+
+        for exp_name in config['experiments']:
+            logger.info(f"\nExperiment: {exp_name}")
             
             try:
-                experiment_func = self.experiments[exp_name]
-                results = experiment_func()
-                self.results['experiments'][exp_name] = results
-                logger.info(f" {exp_name} complete")
+                if exp_name == 'deepfake_detection':
+                    from evaluation.experiments.deepfake_detection import run_experiment
+                    
+                    # Run on multiple datasets
+                    for dataset in ['faceforensics', 'celebdf']:
+                        if is_dataset_downloaded(dataset):
+                            logger.info(f"  Running on {dataset}...")
+                            result = run_experiment(
+                                dataset_name=dataset,
+                                max_samples=arg.max_samples or 100,
+                                split='test'
+                            )
+                            experiment_results[f'{exp_name}_{dataset}'] = result
+                        else:
+                            logger.warning(f"  Dataset {dataset} not downloaded, skipping")
+                
+                elif exp_name == 'coordination_detection':
+                    from evaluation.experiments.coordination_detection import run_experiment
+                    result = run_experiment()
+                    experiment_results[exp_name] = result
+                
+                elif exp_name == 'consensus_simulation':
+                    from evaluation.experiments.consensus_simulation import run_experiment
+                    result = run_experiment()
+                    experiment_results[exp_name] = result
+                
+                elif exp_name == 'counter_evidence':
+                    from evaluation.experiments.counter_evidence import run_experiment
+                    result = run_experiment()
+                    experiment_results[exp_name] = result
+                
+                elif exp_name == 'benchmarks':
+                    from evaluation.experiments.benchmarks import run_experiment
+                    result = run_experiment()
+                    experiment_results[exp_name] = result
+                
+                logger.info(f"✓ {exp_name} complete")
+                
             except Exception as e:
-                logger.error(f" {exp_name} failed: {e}")
-                logger.error(traceback.format_exc())
-                self.results['experiments'][exp_name] = {
-                    'status': 'failed',
-                    'error': str(e)
-                }
-    
+                logger.error(f"✗ {exp_name} failed: {e}", exc_info=True)
+                experiment_results[exp_name] = {'error': str(e), 'status': 'failed'}
+
+        logger.info(f"\n{len(experiment_results)} experiment(s) completed")
+
     def _run_deepfake_detection(self) -> Dict[str, Any]:
         """Run deepfake detection experiment"""
         logger.info("Running deepfake detection evaluation...")

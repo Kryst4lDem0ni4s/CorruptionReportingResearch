@@ -1,24 +1,34 @@
 """
 Corruption Reporting System - ROC Curve Visualization
 Version: 1.0.0
-Description: Generate publication-quality ROC curves
+Description: Generate publication-quality ROC curves and evaluation visualizations
+
 
 This module provides:
-- ROC curve plotting
-- Multiple model comparison
-- AUC score visualization
-- Optimal threshold marking
+- ROC curve plotting with multiple model comparison
+- Precision-Recall curves
+- Confusion matrices
+- Score distributions
+- Network graphs for coordination detection
+- Consensus convergence plots
 - Publication-ready formatting
 
+
 Usage:
-    from evaluation.visualizations.plot_roc import plot_roc_curve, plot_multi_roc
+    from evaluation.visualizations.plot_roc import (
+        plot_roc_curve, plot_multi_roc, generate_all_visualizations
+    )
     
     # Single ROC curve
     plot_roc_curve(y_true, y_score, save_path='roc_curve.png')
     
     # Multiple models comparison
     plot_multi_roc(models_dict, save_path='roc_comparison.png')
+    
+    # Generate all visualizations from experiments
+    generate_all_visualizations(experiment_results, output_dir)
 """
+
 
 import sys
 from pathlib import Path
@@ -26,30 +36,58 @@ from typing import Dict, Any, List, Optional, Tuple
 import logging
 import numpy as np
 
+
 # Add parent directory to path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-# Import matplotlib
+
+# Import matplotlib and seaborn
 try:
     import matplotlib
     matplotlib.use('Agg')  # Non-interactive backend
     import matplotlib.pyplot as plt
     from matplotlib.figure import Figure
     from matplotlib.axes import Axes
+    import seaborn as sns
     HAS_MATPLOTLIB = True
 except ImportError:
     HAS_MATPLOTLIB = False
-    print("Warning: matplotlib not available")
+    print("Warning: matplotlib/seaborn not available")
+
+
+try:
+    import networkx as nx
+    HAS_NETWORKX = True
+except ImportError:
+    HAS_NETWORKX = False
+
+
+# Try to import sklearn for convenience
+try:
+    from sklearn.metrics import (
+        roc_curve as sklearn_roc_curve,
+        auc as sklearn_auc,
+        precision_recall_curve,
+        average_precision_score,
+        confusion_matrix
+    )
+    HAS_SKLEARN = True
+except ImportError:
+    HAS_SKLEARN = False
+
 
 # ============================================
 # LOGGING
 # ============================================
 
+
 logger = logging.getLogger('evaluation.visualizations.roc')
+
 
 # ============================================
 # STYLE CONFIGURATION
 # ============================================
+
 
 # Publication-ready style
 PLOT_STYLE = {
@@ -68,12 +106,30 @@ PLOT_STYLE = {
     'grid.linestyle': '--'
 }
 
+
 # Color scheme for multiple curves
 COLORS = ['#2E86AB', '#A23B72', '#F18F01', '#C73E1D', '#6A994E', '#BC4B51']
+
+
+# Apply global style
+if HAS_MATPLOTLIB:
+    sns.set_style("whitegrid")
+    plt.rcParams.update({
+        'font.size': 11,
+        'axes.labelsize': 12,
+        'axes.titlesize': 14,
+        'xtick.labelsize': 10,
+        'ytick.labelsize': 10,
+        'legend.fontsize': 10,
+        'figure.titlesize': 14,
+        'figure.dpi': 300
+    })
+
 
 # ============================================
 # ROC CURVE COMPUTATION
 # ============================================
+
 
 def compute_roc_curve(
     y_true: np.ndarray,
@@ -89,7 +145,12 @@ def compute_roc_curve(
     Returns:
         Tuple of (fpr, tpr, thresholds)
     """
-    # Convert to numpy arrays
+    # Use sklearn if available for speed and accuracy
+    if HAS_SKLEARN:
+        fpr, tpr, thresholds = sklearn_roc_curve(y_true, y_score)
+        return fpr, tpr, thresholds
+    
+    # Fallback: manual computation
     y_true = np.array(y_true)
     y_score = np.array(y_score)
     
@@ -121,6 +182,7 @@ def compute_roc_curve(
     
     return np.array(fpr_list), np.array(tpr_list), thresholds
 
+
 def compute_auc(fpr: np.ndarray, tpr: np.ndarray) -> float:
     """
     Compute area under curve using trapezoidal rule
@@ -132,6 +194,11 @@ def compute_auc(fpr: np.ndarray, tpr: np.ndarray) -> float:
     Returns:
         AUC score
     """
+    # Use sklearn if available
+    if HAS_SKLEARN:
+        return float(sklearn_auc(fpr, tpr))
+    
+    # Fallback: manual computation
     # Sort by fpr
     order = np.argsort(fpr)
     fpr = fpr[order]
@@ -141,6 +208,7 @@ def compute_auc(fpr: np.ndarray, tpr: np.ndarray) -> float:
     auc = np.trapz(tpr, fpr)
     
     return float(auc)
+
 
 def find_optimal_threshold(
     fpr: np.ndarray,
@@ -168,13 +236,16 @@ def find_optimal_threshold(
         float(tpr[optimal_idx])
     )
 
+
 # ============================================
 # SINGLE ROC CURVE PLOTTING
 # ============================================
 
+
 def plot_roc_curve(
-    y_true: np.ndarray,
-    y_score: np.ndarray,
+    y_true: Optional[np.ndarray] = None,
+    y_score: Optional[np.ndarray] = None,
+    experiment_results: Optional[Dict[str, Any]] = None,
     title: str = "ROC Curve",
     save_path: Optional[str] = None,
     show_optimal: bool = True,
@@ -187,8 +258,9 @@ def plot_roc_curve(
     Plot ROC curve
     
     Args:
-        y_true: Ground truth labels
-        y_score: Prediction scores
+        y_true: Ground truth labels (optional if experiment_results provided)
+        y_score: Prediction scores (optional if experiment_results provided)
+        experiment_results: Experiment results dict with 'predictions' key
         title: Plot title
         save_path: Path to save figure (None = don't save)
         show_optimal: Show optimal threshold point
@@ -202,6 +274,21 @@ def plot_roc_curve(
     """
     if not HAS_MATPLOTLIB:
         raise ImportError("matplotlib required for plotting")
+    
+    # Extract data from experiment_results if provided
+    if experiment_results is not None:
+        predictions = experiment_results.get('predictions', {})
+        y_true = np.array(predictions.get('y_true', []))
+        y_score = np.array(predictions.get('y_score', []))
+    
+    # Validate inputs
+    if y_true is None or y_score is None:
+        logger.error("Either provide y_true/y_score or experiment_results")
+        return None
+    
+    if len(y_true) == 0 or len(y_score) == 0:
+        logger.warning("No predictions found for ROC curve")
+        return None
     
     # Apply style
     plt.style.use('seaborn-v0_8-darkgrid' if 'seaborn-v0_8-darkgrid' in plt.style.available else 'default')
@@ -218,7 +305,7 @@ def plot_roc_curve(
         fpr, tpr,
         color=COLORS[0],
         linewidth=2.5,
-        label=f'ROC Curve (AUC = {auc:.3f})',
+        label=f'ROC Curve (AUC = {auc:.4f})',
         **kwargs
     )
     
@@ -226,7 +313,7 @@ def plot_roc_curve(
     if show_diagonal:
         ax.plot(
             [0, 1], [0, 1],
-            color='gray',
+            color='navy',
             linestyle='--',
             linewidth=1.5,
             label='Random Classifier',
@@ -241,7 +328,7 @@ def plot_roc_curve(
             marker='o',
             markersize=8,
             color='red',
-            label=f'Optimal (threshold={opt_threshold:.3f})',
+            label=f'Optimal (θ={opt_threshold:.3f})',
             zorder=10
         )
         
@@ -276,9 +363,11 @@ def plot_roc_curve(
     else:
         return fig
 
+
 # ============================================
 # MULTIPLE ROC CURVES PLOTTING
 # ============================================
+
 
 def plot_multi_roc(
     models: Dict[str, Dict[str, np.ndarray]],
@@ -335,7 +424,7 @@ def plot_multi_roc(
             fpr, tpr,
             color=color,
             linewidth=2.5,
-            label=f'{model_name} (AUC = {auc:.3f})',
+            label=f'{model_name} (AUC = {auc:.4f})',
             **kwargs
         )
     
@@ -372,9 +461,11 @@ def plot_multi_roc(
     else:
         return fig
 
+
 # ============================================
 # ROC CURVE WITH CONFIDENCE BANDS
 # ============================================
+
 
 def plot_roc_with_ci(
     y_true: np.ndarray,
@@ -491,9 +582,344 @@ def plot_roc_with_ci(
     else:
         return fig
 
+
+# ============================================
+# PRECISION-RECALL CURVE
+# ============================================
+
+
+def plot_precision_recall_curve(
+    experiment_results: Dict[str, Any],
+    output_path: Path,
+    title: str = "Precision-Recall Curve"
+) -> None:
+    """Generate precision-recall curve from experiment results"""
+    if not HAS_MATPLOTLIB:
+        logger.error("matplotlib required for plotting")
+        return
+    
+    try:
+        predictions = experiment_results.get('predictions', {})
+        y_true = np.array(predictions.get('y_true', []))
+        y_score = np.array(predictions.get('y_score', []))
+        
+        if len(y_true) == 0 or len(y_score) == 0:
+            logger.warning("No predictions found for PR curve")
+            return
+        
+        # Compute PR curve
+        if HAS_SKLEARN:
+            precision, recall, _ = precision_recall_curve(y_true, y_score)
+            avg_precision = average_precision_score(y_true, y_score)
+        else:
+            logger.error("sklearn required for PR curve computation")
+            return
+        
+        # Plot
+        plt.figure(figsize=(8, 6))
+        plt.plot(recall, precision, color='blue', lw=2,
+                 label=f'PR curve (AP = {avg_precision:.4f})')
+        plt.xlabel('Recall')
+        plt.ylabel('Precision')
+        plt.title(title)
+        plt.legend(loc="lower left")
+        plt.grid(alpha=0.3)
+        plt.xlim([0.0, 1.0])
+        plt.ylim([0.0, 1.05])
+        plt.tight_layout()
+        plt.savefig(output_path, dpi=300, bbox_inches='tight')
+        plt.close()
+        
+        logger.info(f"PR curve saved to {output_path}")
+        
+    except Exception as e:
+        logger.error(f"Failed to generate PR curve: {e}")
+
+
+# ============================================
+# CONFUSION MATRIX
+# ============================================
+
+
+def plot_confusion_matrix(
+    experiment_results: Dict[str, Any],
+    output_path: Path,
+    title: str = "Confusion Matrix"
+) -> None:
+    """Generate confusion matrix heatmap from experiment results"""
+    if not HAS_MATPLOTLIB:
+        logger.error("matplotlib required for plotting")
+        return
+    
+    try:
+        predictions = experiment_results.get('predictions', {})
+        y_true = np.array(predictions.get('y_true', []))
+        y_pred = np.array(predictions.get('y_pred', []))
+        
+        if len(y_true) == 0 or len(y_pred) == 0:
+            logger.warning("No predictions found for confusion matrix")
+            return
+        
+        # Compute confusion matrix
+        if HAS_SKLEARN:
+            cm = confusion_matrix(y_true, y_pred)
+        else:
+            logger.error("sklearn required for confusion matrix")
+            return
+        
+        # Plot
+        plt.figure(figsize=(6, 5))
+        sns.heatmap(cm, annot=True, fmt='d', cmap='Blues',
+                    xticklabels=['Real', 'Fake'],
+                    yticklabels=['Real', 'Fake'],
+                    cbar_kws={'label': 'Count'})
+        plt.ylabel('True Label')
+        plt.xlabel('Predicted Label')
+        plt.title(title)
+        plt.tight_layout()
+        plt.savefig(output_path, dpi=300, bbox_inches='tight')
+        plt.close()
+        
+        logger.info(f"Confusion matrix saved to {output_path}")
+        
+    except Exception as e:
+        logger.error(f"Failed to generate confusion matrix: {e}")
+
+
+# ============================================
+# SCORE DISTRIBUTION
+# ============================================
+
+
+def plot_score_distribution(
+    experiment_results: Dict[str, Any],
+    output_path: Path,
+    title: str = "Score Distribution"
+) -> None:
+    """Generate score distribution histogram from experiment results"""
+    if not HAS_MATPLOTLIB:
+        logger.error("matplotlib required for plotting")
+        return
+    
+    try:
+        predictions = experiment_results.get('predictions', {})
+        y_score = np.array(predictions.get('y_score', []))
+        y_true = np.array(predictions.get('y_true', []))
+        
+        if len(y_score) == 0:
+            logger.warning("No scores found for distribution plot")
+            return
+        
+        # Separate by class
+        real_scores = y_score[y_true == 0]
+        fake_scores = y_score[y_true == 1]
+        
+        # Plot
+        plt.figure(figsize=(10, 6))
+        plt.hist(real_scores, bins=20, alpha=0.6, label='Real', color='green', edgecolor='black')
+        plt.hist(fake_scores, bins=20, alpha=0.6, label='Fake', color='red', edgecolor='black')
+        plt.xlabel('Credibility Score')
+        plt.ylabel('Frequency')
+        plt.title(title)
+        plt.legend()
+        plt.grid(alpha=0.3, axis='y')
+        plt.tight_layout()
+        plt.savefig(output_path, dpi=300, bbox_inches='tight')
+        plt.close()
+        
+        logger.info(f"Score distribution saved to {output_path}")
+        
+    except Exception as e:
+        logger.error(f"Failed to generate score distribution: {e}")
+
+
+# ============================================
+# NETWORK GRAPH
+# ============================================
+
+
+def plot_network_graph(
+    experiment_results: Dict[str, Any],
+    output_path: Path,
+    title: str = "Coordination Network Graph"
+) -> None:
+    """Generate coordination detection network graph from experiment results"""
+    if not HAS_MATPLOTLIB or not HAS_NETWORKX:
+        logger.error("matplotlib and networkx required for network graph")
+        return
+    
+    try:
+        scenarios = experiment_results.get('scenarios', [])
+        
+        if not scenarios:
+            logger.warning("No scenarios found for network graph")
+            return
+        
+        # Create graph from first coordinated scenario
+        coordinated_scenario = next(
+            (s for s in scenarios if s.get('is_coordinated')),
+            None
+        )
+        
+        if not coordinated_scenario:
+            logger.warning("No coordinated scenario found")
+            return
+        
+        # Build graph
+        G = nx.Graph()
+        submissions = coordinated_scenario['submissions']
+        
+        for i, sub1 in enumerate(submissions):
+            for j, sub2 in enumerate(submissions[i+1:], i+1):
+                # Add edge with similarity weight
+                similarity = 0.8  # Simplified for visualization
+                G.add_edge(sub1['pseudonym'], sub2['pseudonym'], weight=similarity)
+        
+        # Plot
+        plt.figure(figsize=(10, 8))
+        pos = nx.spring_layout(G, k=2, iterations=50, seed=42)
+        nx.draw_networkx_nodes(G, pos, node_color='lightblue',
+                              node_size=500, alpha=0.9)
+        nx.draw_networkx_labels(G, pos, font_size=8)
+        nx.draw_networkx_edges(G, pos, alpha=0.5, width=2)
+        plt.title(title)
+        plt.axis('off')
+        plt.tight_layout()
+        plt.savefig(output_path, dpi=300, bbox_inches='tight')
+        plt.close()
+        
+        logger.info(f"Network graph saved to {output_path}")
+        
+    except Exception as e:
+        logger.error(f"Failed to generate network graph: {e}")
+
+
+# ============================================
+# CONVERGENCE PLOT
+# ============================================
+
+
+def plot_convergence(
+    experiment_results: Dict[str, Any],
+    output_path: Path,
+    title: str = "Consensus Convergence Analysis"
+) -> None:
+    """Generate consensus convergence plot from experiment results"""
+    if not HAS_MATPLOTLIB:
+        logger.error("matplotlib required for plotting")
+        return
+    
+    try:
+        convergence_times = experiment_results.get('convergence_times', [])
+        agreement_rates = experiment_results.get('agreement_rates', [])
+        
+        if not convergence_times or not agreement_rates:
+            logger.warning("No convergence data found")
+            return
+        
+        # Plot
+        fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 5))
+        
+        # Convergence times
+        ax1.hist(convergence_times, bins=15, color='blue', alpha=0.7, edgecolor='black')
+        ax1.axvline(np.mean(convergence_times), color='red', linestyle='--',
+                   label=f'Mean: {np.mean(convergence_times):.2f}s')
+        ax1.set_xlabel('Convergence Time (seconds)')
+        ax1.set_ylabel('Frequency')
+        ax1.set_title('Convergence Time Distribution')
+        ax1.legend()
+        ax1.grid(alpha=0.3, axis='y')
+        
+        # Agreement rates
+        ax2.hist(agreement_rates, bins=15, color='green', alpha=0.7, edgecolor='black')
+        ax2.axvline(np.mean(agreement_rates), color='red', linestyle='--',
+                   label=f'Mean: {np.mean(agreement_rates):.2%}')
+        ax2.set_xlabel('Agreement Rate')
+        ax2.set_ylabel('Frequency')
+        ax2.set_title('Validator Agreement Distribution')
+        ax2.legend()
+        ax2.grid(alpha=0.3, axis='y')
+        
+        plt.suptitle(title, fontsize=14, fontweight='bold')
+        plt.tight_layout()
+        plt.savefig(output_path, dpi=300, bbox_inches='tight')
+        plt.close()
+        
+        logger.info(f"Convergence plot saved to {output_path}")
+        
+    except Exception as e:
+        logger.error(f"Failed to generate convergence plot: {e}")
+
+
+# ============================================
+# GENERATE ALL VISUALIZATIONS
+# ============================================
+
+
+def generate_all_visualizations(
+    results_dict: Dict[str, Dict[str, Any]],
+    output_dir: Path
+) -> List[Path]:
+    """
+    Generate all visualizations from experiment results
+    
+    Args:
+        results_dict: Dictionary mapping experiment_name -> results
+        output_dir: Output directory for figures
+        
+    Returns:
+        List of generated file paths
+    """
+    output_dir = Path(output_dir)
+    output_dir.mkdir(parents=True, exist_ok=True)
+    generated_figures = []
+    
+    # ROC curves (for deepfake detection experiments)
+    for exp_name, results in results_dict.items():
+        if 'deepfake' in exp_name.lower():
+            # ROC curve
+            output_path = output_dir / f'roc_curve_{exp_name}.png'
+            plot_roc_curve(experiment_results=results, save_path=str(output_path))
+            generated_figures.append(output_path)
+            
+            # PR curve
+            output_path = output_dir / f'pr_curve_{exp_name}.png'
+            plot_precision_recall_curve(results, output_path)
+            generated_figures.append(output_path)
+            
+            # Confusion matrix
+            output_path = output_dir / f'confusion_matrix_{exp_name}.png'
+            plot_confusion_matrix(results, output_path)
+            generated_figures.append(output_path)
+            
+            # Score distribution
+            output_path = output_dir / f'score_dist_{exp_name}.png'
+            plot_score_distribution(results, output_path)
+            generated_figures.append(output_path)
+    
+    # Network graph (for coordination detection)
+    for exp_name, results in results_dict.items():
+        if 'coordination' in exp_name.lower():
+            output_path = output_dir / f'network_graph_{exp_name}.png'
+            plot_network_graph(results, output_path)
+            generated_figures.append(output_path)
+    
+    # Convergence plots (for consensus simulation)
+    for exp_name, results in results_dict.items():
+        if 'consensus' in exp_name.lower():
+            output_path = output_dir / f'convergence_{exp_name}.png'
+            plot_convergence(results, output_path)
+            generated_figures.append(output_path)
+    
+    logger.info(f"Generated {len(generated_figures)} visualizations in {output_dir}")
+    
+    return generated_figures
+
+
 # ============================================
 # CONVENIENCE FUNCTIONS
 # ============================================
+
 
 def save_roc_curves(
     results: Dict[str, Any],
@@ -531,7 +957,7 @@ def save_roc_curves(
             
             saved_files.append(str(filepath))
     
-    # Save comparison plot
+    # Save comparison plot if multiple models
     if len(results) > 1:
         filename = f"{prefix}roc_comparison.png"
         filepath = output_path / filename
@@ -548,17 +974,27 @@ def save_roc_curves(
     
     return saved_files
 
+
 # ============================================
 # PACKAGE EXPORTS
 # ============================================
+
 
 __all__ = [
     'plot_roc_curve',
     'plot_multi_roc',
     'plot_roc_with_ci',
+    'plot_precision_recall_curve',
+    'plot_confusion_matrix',
+    'plot_score_distribution',
+    'plot_network_graph',
+    'plot_convergence',
+    'generate_all_visualizations',
     'compute_roc_curve',
     'compute_auc',
     'find_optimal_threshold',
     'save_roc_curves',
-    'HAS_MATPLOTLIB'
+    'HAS_MATPLOTLIB',
+    'HAS_SKLEARN',
+    'HAS_NETWORKX'
 ]
