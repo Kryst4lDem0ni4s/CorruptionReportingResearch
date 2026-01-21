@@ -495,7 +495,7 @@ def create_app(
     app.add_middleware(GZipMiddleware, minimum_size=1024)
 
     # Custom middleware (order matters - error handler should wrap others)
-    app.middleware("http")(ErrorHandlingMiddleware)
+    app.add_middleware(ErrorHandlingMiddleware)
 
     # Prometheus metrics middleware
     if config.metrics.enabled:

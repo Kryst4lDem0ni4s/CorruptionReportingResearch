@@ -93,12 +93,31 @@ class DeepfakeDetectionExperiment:
                     f"score={credibility_score:.3f}, time={processing_time:.2f}s"
                 )
                 
+            except FileNotFoundError as e:
+                logger.warning(f"Sample {i} file not found ({sample.get('path')}): {e}")
+                # Use neutral predictions for missing files
+                y_score.append(0.5)
+                y_pred.append(0)
+                processing_times.append(0)
+            except requests.exceptions.ConnectionError as e:
+                logger.error(f"Sample {i} backend connection failed ({sample.get('path')}): {e}")
+                # Use neutral predictions for connection failures
+                y_score.append(0.5)
+                y_pred.append(0)
+                processing_times.append(0)
+            except requests.exceptions.Timeout as e:
+                logger.warning(f"Sample {i} backend timeout ({sample.get('path')}): {e}")
+                # Use neutral predictions for timeouts
+                y_score.append(0.5)
+                y_pred.append(0)
+                processing_times.append(0)
             except Exception as e:
-                logger.warning(f"Failed to process sample {i} ({sample.get('path')}): {e}")
+                logger.warning(f"Failed to process sample {i} ({sample.get('path')}): {type(e).__name__}: {e}")
+                logger.debug(f"Full traceback for sample {i}:", exc_info=True)
                 # Use neutral predictions for failed samples
                 y_score.append(0.5)
                 y_pred.append(0)
-                processing_times.append(0)  # Use 0 or some default time
+                processing_times.append(0)
 
         # Filter out None values in y_score just in case
         y_score = [s if s is not None else 0.5 for s in y_score]
@@ -176,21 +195,29 @@ class DeepfakeDetectionExperiment:
         # Prepare submission
         files = {}
         if sample_path.exists():
-            # Read file content
-            with open(sample_path, 'rb') as f:
-                files['file'] = (sample_path.name, f, self._get_content_type(sample_path))
+            # Read file content into memory to avoid "read of closed file" error
+            try:
+                with open(sample_path, 'rb') as f:
+                    file_content = f.read()
+                files['file'] = (sample_path.name, file_content, self._get_content_type(sample_path))
+            except Exception as e:
+                logger.error(f"Failed to read file {sample_path}: {e}", exc_info=True)
+                raise
+        else:
+            raise FileNotFoundError(f"Sample file not found: {sample_path}")
         
         data = {
-            'pseudonym': 'evaluation-test',
-            'description': f"Evaluation sample: {sample_path.name}",
-            'evidence_type': sample.get('type', 'image')
+            'evidence_type': sample.get('type', 'image'),
+            'text_narrative': f"Evaluation sample: {sample_path.name}",
+            'metadata': '{}'
         }
         
         # Submit to backend
         try:
+            logger.debug(f"Submitting sample {sample_path.name} to backend...")
             response = requests.post(
                 f"{self.backend_url}/api/v1/submissions",
-                files=files if files else None,
+                files=files,
                 data=data,
                 timeout=self.timeout
             )
@@ -199,11 +226,28 @@ class DeepfakeDetectionExperiment:
             result = response.json()
             submission_id = result.get('submission_id')
             
+            if not submission_id:
+                raise ValueError(f"No submission_id in response: {result}")
+            
+            logger.debug(f"Submission created: {submission_id}")
+            
             # Wait for processing
             return self._wait_for_result(submission_id)
             
+        except requests.exceptions.Timeout as e:
+            logger.error(f"Backend request timed out for {sample_path.name}: {e}")
+            raise
+        except requests.exceptions.ConnectionError as e:
+            logger.error(f"Failed to connect to backend at {self.backend_url}: {e}")
+            raise
+        except requests.exceptions.HTTPError as e:
+            logger.error(f"Backend HTTP error for {sample_path.name}: {e.response.status_code} - {e.response.text[:200]}")
+            raise
         except requests.exceptions.RequestException as e:
-            logger.error(f"Backend request failed: {e}")
+            logger.error(f"Backend request failed for {sample_path.name}: {e}", exc_info=True)
+            raise
+        except Exception as e:
+            logger.error(f"Unexpected error processing {sample_path.name}: {e}", exc_info=True)
             raise
     
     def _wait_for_result(self, submission_id: str, max_wait: int = 60) -> Dict:

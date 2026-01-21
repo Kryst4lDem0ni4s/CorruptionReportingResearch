@@ -128,9 +128,9 @@ def get_rate_limiter():
         # Initialize rate limiter with configuration
         # Use RateLimitConfig attributes
         rate_limiter = RateLimiter(
-            max_requests=config.rate_limit.max_submissions_per_hour,
-            window_seconds=3600, # Per hour
-            enable_rate_limiting=config.rate_limit.enabled
+            default_limit=config.rate_limit.max_submissions_per_hour,
+            window_seconds=3600,  # Per hour
+            cleanup_interval=config.rate_limit.cleanup_interval
         )
         
         logger.info("RateLimiter initialized successfully")

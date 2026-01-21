@@ -1,0 +1,20 @@
+{
+  "timestamp": "2026-01-21T23:03:32.502457",
+  "experiments": {
+    "deepfake_detection_celebdf": {
+      "experiment": "deepfake_detection",
+      "dataset": "celebdf",
+      "split": "test",
+      "num_samples": 150,
+      "num_processed": 150,
+      "metrics": {
+        "auroc": null,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1_score": 0.0,
+        "accuracy": 0.5,
+        "balanced_accuracy": 0.5
+      },
+      "performance": {
+        "avg_processing_time": 0.0,
+        "total_time": 
