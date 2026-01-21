@@ -1,0 +1,10 @@
+{
+  "name": "Synthetic Coordinated Attacks",
+  "description": "Generated coordinated attack scenarios for testing",
+  "num_scenarios": 1000,
+  "categories": [
+    "coordinated",
+    "independent"
+  ],
+  "generated_at": "2026-01-21T15:43:43.084187"
+}

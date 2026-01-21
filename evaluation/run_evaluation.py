@@ -45,7 +45,7 @@ import logging
 
 from flask import config
 
-from evaluation.datasets import is_dataset_downloaded
+from datasets import is_dataset_downloaded
 
 # Add parent directory to path for imports
 sys.path.insert(0, str(Path(__file__).parent.parent))
@@ -78,7 +78,8 @@ class EvaluationRunner:
         self,
         config: Dict[str, Any],
         output_dir: Optional[Path] = None,
-        verbose: bool = False
+        verbose: bool = False,
+        args: Optional[Any] = None
     ):
         """
         Initialize evaluation runner
@@ -87,10 +88,12 @@ class EvaluationRunner:
             config: Evaluation configuration
             output_dir: Output directory for results
             verbose: Enable verbose logging
+            args: Command line arguments
         """
         self.config = config
         self.output_dir = output_dir or RESULTS_DIR
         self.output_dir.mkdir(parents=True, exist_ok=True)
+        self.args = args
         
         # Setup logging
         if verbose:
@@ -301,12 +304,12 @@ class EvaluationRunner:
 
         experiment_results = {}
 
-        for exp_name in config['experiments']:
+        for exp_name in experiments_to_run:
             logger.info(f"\nExperiment: {exp_name}")
             
             try:
                 if exp_name == 'deepfake_detection':
-                    from evaluation.experiments.deepfake_detection import run_experiment
+                    from experiments.deepfake_detection import run_experiment
                     
                     # Run on multiple datasets
                     for dataset in ['faceforensics', 'celebdf']:
@@ -314,7 +317,7 @@ class EvaluationRunner:
                             logger.info(f"  Running on {dataset}...")
                             result = run_experiment(
                                 dataset_name=dataset,
-                                max_samples=arg.max_samples or 100,
+                                max_samples=self.args.max_samples or 100,
                                 split='test'
                             )
                             experiment_results[f'{exp_name}_{dataset}'] = result
@@ -322,29 +325,29 @@ class EvaluationRunner:
                             logger.warning(f"  Dataset {dataset} not downloaded, skipping")
                 
                 elif exp_name == 'coordination_detection':
-                    from evaluation.experiments.coordination_detection import run_experiment
+                    from experiments.coordination_detection import run_experiment
                     result = run_experiment()
                     experiment_results[exp_name] = result
                 
                 elif exp_name == 'consensus_simulation':
-                    from evaluation.experiments.consensus_simulation import run_experiment
+                    from experiments.consensus_simulation import run_experiment
                     result = run_experiment()
                     experiment_results[exp_name] = result
                 
                 elif exp_name == 'counter_evidence':
-                    from evaluation.experiments.counter_evidence import run_experiment
+                    from experiments.counter_evidence import run_experiment
                     result = run_experiment()
                     experiment_results[exp_name] = result
                 
                 elif exp_name == 'benchmarks':
-                    from evaluation.experiments.benchmarks import run_experiment
+                    from experiments.benchmarks import run_experiment
                     result = run_experiment()
                     experiment_results[exp_name] = result
                 
-                logger.info(f"✓ {exp_name} complete")
+                logger.info(f" {exp_name} complete")
                 
             except Exception as e:
-                logger.error(f"✗ {exp_name} failed: {e}", exc_info=True)
+                logger.error(f" {exp_name} failed: {e}", exc_info=True)
                 experiment_results[exp_name] = {'error': str(e), 'status': 'failed'}
 
         logger.info(f"\n{len(experiment_results)} experiment(s) completed")
@@ -678,6 +681,13 @@ Examples:
     )
     
     parser.add_argument(
+        '--max-samples',
+        type=int,
+        default=None,
+        help='Maximum number of samples to process (default: use config value)'
+    )
+    
+    parser.add_argument(
         '--version',
         action='version',
         version=f'Evaluation Suite v{__version__}'
@@ -714,7 +724,8 @@ def main():
         runner = EvaluationRunner(
             config=config,
             output_dir=output_dir,
-            verbose=args.verbose
+            verbose=args.verbose,
+            args=args
         )
         
         # Run evaluation

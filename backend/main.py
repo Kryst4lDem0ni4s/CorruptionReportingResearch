@@ -11,10 +11,10 @@ Provides:
 """
 
 from contextlib import asynccontextmanager
-from typing import Dict, Any
+from typing import Dict, Any, Optional
 import sys
 import time
-import psutil
+import asyncio
 from pathlib import Path
 
 from fastapi import FastAPI, Request, Response, status
@@ -26,20 +26,9 @@ from fastapi.exceptions import RequestValidationError
 # Prometheus client imports
 from prometheus_client import (
     Counter, Gauge, Histogram, Summary,
-    generate_latest, CONTENT_TYPE_LATEST,
-    CollectorRegistry, REGISTRY
+    generate_latest, CONTENT_TYPE_LATEST, REGISTRY
 )
-
 from backend.core import orchestrator
-# from backend.services import queue_service, storage_service
-# from backend.services import metrics_service
-
-# Import classes, not modules
-from backend.services import storage_service
-from backend.services import metrics_service
-from backend.services.storage_service import StorageService
-from backend.services.queue_service import QueueService
-from backend.services.metrics_service import MetricsService
 
 # Add backend to path
 sys.path.insert(0, str(Path(__file__).parent.parent))
@@ -52,20 +41,8 @@ from backend.constants import APP_NAME, APP_VERSION, APP_DESCRIPTION, API_VERSIO
 # Import routers
 from backend.api.routes import router as api_router
 from backend.api.health import router as health_router
-from backend.api.middleware import (
-    RateLimitMiddleware,
-    # metrics_middleware,
-    ErrorHandlingMiddleware
-)
+from backend.api.middleware import RateLimitMiddleware, ErrorHandlingMiddleware
 
-# Import services
-from backend.services.storage_service import StorageService
-from backend.services.hash_chain_service import HashChainService
-from backend.services.metrics_service import MetricsService
-
-# Import workers
-from backend.workers.submission_worker import SubmissionWorker
-from backend.workers.cleanup_worker import CleanupWorker
 
 # ==================== PROMETHEUS METRICS DECLARATIONS ====================
 
@@ -115,67 +92,20 @@ submission_processing_duration_seconds = Histogram(
 )
 
 # System Resource Metrics
-process_memory_percent = Gauge(
-    'process_memory_percent',
-    'Memory usage percentage'
-)
-
-process_cpu_percent = Gauge(
-    'process_cpu_percent',
-    'CPU usage percentage'
-)
-
-process_memory_bytes = Gauge(
-    'process_memory_bytes',
-    'Memory usage in bytes',
-    ['type']
-)
+process_memory_percent = Gauge('process_memory_percent', 'Memory usage percentage')
+process_cpu_percent = Gauge('process_cpu_percent', 'CPU usage percentage')
+process_memory_bytes = Gauge('process_memory_bytes', 'Memory usage in bytes', ['type'])
 
 # Layer-Specific Metrics
-layer1_anonymity_violations_total = Counter(
-    'layer1_anonymity_violations_total',
-    'Total anonymity violations detected'
-)
-
-layer2_credibility_score_avg = Gauge(
-    'layer2_credibility_score_avg',
-    'Average credibility score'
-)
-
-layer2_deepfake_detected_total = Counter(
-    'layer2_deepfake_detected_total',
-    'Total deepfakes detected'
-)
-
-layer3_coordination_detected_total = Counter(
-    'layer3_coordination_detected_total',
-    'Total coordinated attacks detected'
-)
-
-layer4_consensus_iterations_avg = Gauge(
-    'layer4_consensus_iterations_avg',
-    'Average consensus iterations'
-)
-
-layer4_consensus_convergence_time_seconds = Gauge(
-    'layer4_consensus_convergence_time_seconds',
-    'Consensus convergence time in seconds'
-)
-
-layer5_counter_evidence_total = Counter(
-    'layer5_counter_evidence_total',
-    'Total counter-evidence submissions'
-)
-
-layer5_counter_evidence_impact_percent = Gauge(
-    'layer5_counter_evidence_impact_percent',
-    'Counter-evidence impact percentage'
-)
-
-layer6_reports_generated_total = Counter(
-    'layer6_reports_generated_total',
-    'Total reports generated'
-)
+layer1_anonymity_violations_total = Counter('layer1_anonymity_violations_total', 'Total anonymity violations detected')
+layer2_credibility_score_avg = Gauge('layer2_credibility_score_avg', 'Average credibility score')
+layer2_deepfake_detected_total = Counter('layer2_deepfake_detected_total', 'Total deepfakes detected')
+layer3_coordination_detected_total = Counter('layer3_coordination_detected_total', 'Total coordinated attacks detected')
+layer4_consensus_iterations_avg = Gauge('layer4_consensus_iterations_avg', 'Average consensus iterations')
+layer4_consensus_convergence_time_seconds = Gauge('layer4_consensus_convergence_time_seconds', 'Consensus convergence time')
+layer5_counter_evidence_total = Counter('layer5_counter_evidence_total', 'Total counter-evidence submissions')
+layer5_counter_evidence_impact_percent = Gauge('layer5_counter_evidence_impact_percent', 'Counter-evidence impact percentage')
+layer6_reports_generated_total = Counter('layer6_reports_generated_total', 'Total reports generated')
 
 # Model Metrics
 model_inference_duration_seconds = Histogram(
@@ -184,121 +114,38 @@ model_inference_duration_seconds = Histogram(
     ['model'],
     buckets=(0.1, 0.5, 1.0, 2.0, 5.0, 10.0, 30.0, 60.0)
 )
-
-model_loading_failures_total = Counter(
-    'model_loading_failures_total',
-    'Total model loading failures',
-    ['model']
-)
-
-model_cache_hit_total = Counter(
-    'model_cache_hit_total',
-    'Total model cache hits',
-    ['model']
-)
-
-model_cache_miss_total = Counter(
-    'model_cache_miss_total',
-    'Total model cache misses',
-    ['model']
-)
+model_loading_failures_total = Counter('model_loading_failures_total', 'Total model loading failures', ['model'])
+model_cache_hit_total = Counter('model_cache_hit_total', 'Total model cache hits', ['model'])
+model_cache_miss_total = Counter('model_cache_miss_total', 'Total model cache misses', ['model'])
 
 # Security Metrics
-hash_chain_validation_failures_total = Counter(
-    'hash_chain_validation_failures_total',
-    'Total hash chain validation failures'
-)
-
-validation_failures_total = Counter(
-    'validation_failures_total',
-    'Total input validation failures',
-    ['validation_type']
-)
-
-crypto_operation_failures_total = Counter(
-    'crypto_operation_failures_total',
-    'Total cryptographic operation failures',
-    ['operation']
-)
-
-rate_limiter_blocked_total = Counter(
-    'rate_limiter_blocked_total',
-    'Total requests blocked by rate limiter',
-    ['reason']
-)
+hash_chain_validation_failures_total = Counter('hash_chain_validation_failures_total', 'Total hash chain validation failures')
+validation_failures_total = Counter('validation_failures_total', 'Total input validation failures', ['validation_type'])
+rate_limiter_blocked_total = Counter('rate_limiter_blocked_total', 'Total requests blocked by rate limiter', ['reason'])
 
 # Storage Metrics
-storage_used_percent = Gauge(
-    'storage_used_percent',
-    'Storage usage percentage'
-)
-
-storage_corruption_detected_total = Counter(
-    'storage_corruption_detected_total',
-    'Total storage corruption events detected'
-)
-
-storage_index_inconsistencies_total = Counter(
-    'storage_index_inconsistencies_total',
-    'Total storage index inconsistencies'
-)
-
-backup_failures_total = Counter(
-    'backup_failures_total',
-    'Total backup failures'
-)
+storage_used_percent = Gauge('storage_used_percent', 'Storage usage percentage')
+storage_corruption_detected_total = Counter('storage_corruption_detected_total', 'Total storage corruption events')
 
 # Queue Metrics
-queue_pending_jobs = Gauge(
-    'queue_pending_jobs',
-    'Number of pending jobs in queue'
-)
-
-queue_processing_jobs = Gauge(
-    'queue_processing_jobs',
-    'Number of jobs currently processing'
-)
-
-queue_processing_duration_seconds = Histogram(
-    'queue_processing_duration_seconds',
-    'Job processing duration in seconds',
-    buckets=(1.0, 5.0, 10.0, 30.0, 60.0, 300.0)
-)
-
-queue_failures_total = Counter(
-    'queue_failures_total',
-    'Total queue job failures',
-    ['job_type']
-)
+queue_pending_jobs = Gauge('queue_pending_jobs', 'Number of pending jobs in queue')
+queue_processing_jobs = Gauge('queue_processing_jobs', 'Number of jobs currently processing')
+queue_processing_duration_seconds = Histogram('queue_processing_duration_seconds', 'Job processing duration', buckets=(1.0, 5.0, 10.0, 30.0, 60.0, 300.0))
+queue_failures_total = Counter('queue_failures_total', 'Total queue job failures', ['job_type'])
 
 # Research/Evaluation Metrics
-evaluation_auroc_score = Gauge(
-    'evaluation_auroc_score',
-    'Current AUROC score from evaluation'
-)
-
-evaluation_precision_score = Gauge(
-    'evaluation_precision_score',
-    'Current precision score from evaluation'
-)
-
-evaluation_recall_score = Gauge(
-    'evaluation_recall_score',
-    'Current recall score from evaluation'
-)
+evaluation_auroc_score = Gauge('evaluation_auroc_score', 'Current AUROC score from evaluation')
+evaluation_precision_score = Gauge('evaluation_precision_score', 'Current precision score')
+evaluation_recall_score = Gauge('evaluation_recall_score', 'Current recall score')
 
 
 # ==================== PROMETHEUS MIDDLEWARE ====================
 
 async def prometheus_metrics_middleware(request: Request, call_next):
     """
-    Middleware to track HTTP metrics with Prometheus.
-
-    Tracks:
-    - Request count by method, endpoint, and status
-    - Request duration
-    - Requests in progress
-    - Request/response sizes
+    Middleware to track HTTP metrics with Prometheus
+    
+    Tracks request count, duration, in-progress requests, and sizes
     """
     # Skip metrics endpoint to avoid recursion
     if request.url.path == "/metrics":
@@ -307,7 +154,7 @@ async def prometheus_metrics_middleware(request: Request, call_next):
     method = request.method
     endpoint = request.url.path
 
-    # Normalize endpoint (remove IDs, UUIDs)
+    # Normalize endpoint (remove IDs)
     import re
     endpoint_normalized = re.sub(r'/[a-f0-9-]{36}', '/{id}', endpoint)
     endpoint_normalized = re.sub(r'/\d+', '/{id}', endpoint_normalized)
@@ -326,10 +173,7 @@ async def prometheus_metrics_middleware(request: Request, call_next):
     start_time = time.time()
 
     try:
-        # Process request
         response = await call_next(request)
-
-        # Calculate duration
         duration = time.time() - start_time
 
         # Track metrics
@@ -355,33 +199,21 @@ async def prometheus_metrics_middleware(request: Request, call_next):
         return response
 
     except Exception as e:
-        # Track error
         duration = time.time() - start_time
-
-        http_requests_total.labels(
-            method=method,
-            endpoint=endpoint_normalized,
-            status=500
-        ).inc()
-
-        http_request_duration_seconds.labels(
-            method=method,
-            endpoint=endpoint_normalized
-        ).observe(duration)
-
+        http_requests_total.labels(method=method, endpoint=endpoint_normalized, status=500).inc()
+        http_request_duration_seconds.labels(method=method, endpoint=endpoint_normalized).observe(duration)
         raise
 
     finally:
-        # Decrement in-progress counter
         http_requests_in_progress.labels(method=method, endpoint=endpoint_normalized).dec()
 
 
 # ==================== SYSTEM METRICS UPDATER ====================
 
 def update_system_metrics():
-    """Update system resource metrics."""
+    """Update system resource metrics"""
     try:
-        # Get process
+        import psutil
         process = psutil.Process()
 
         # Memory metrics
@@ -406,15 +238,10 @@ def update_system_metrics():
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     """
-    Application lifespan manager.
-
-    Handles startup and shutdown tasks:
-    - Initialize services
-    - Verify storage integrity
-    - Start background workers
-    - Preload ML models (optional)
-    - Initialize Prometheus metrics
-    - Cleanup on shutdown
+    Application lifespan manager
+    
+    Handles startup and shutdown tasks including service initialization,
+    worker startup, and cleanup
     """
     logger = get_logger(__name__)
     config = get_config()
@@ -424,15 +251,25 @@ async def lifespan(app: FastAPI):
     logger.info(f"Environment: {config.environment}")
 
     try:
+        # Import services (do this during startup to catch import errors)
+        from backend.services.storage_service import StorageService
+        from backend.services.hash_chain_service import HashChainService
+        from backend.services.metrics_service import MetricsService
+        from backend.services.queue_service import QueueService
+        from backend.workers.submission_worker import SubmissionWorker
+        from backend.workers.cleanup_worker import CleanupWorker
+
         # Initialize storage
         logger.info("Initializing storage...")
         storage = StorageService()
         storage._initialize_directories()
+        app.state.storage = storage
 
         # Verify hash chain integrity
         if config.security.hash_chain_enabled:
             logger.info("Verifying hash chain integrity...")
             hash_chain = HashChainService()
+            app.state.hash_chain = hash_chain
 
             try:
                 hash_chain.verify_chain()
@@ -443,7 +280,7 @@ async def lifespan(app: FastAPI):
                 hash_chain.initialize()
                 hash_chain_validation_failures_total.inc()
 
-        # Initialize metrics
+        # Initialize metrics service
         if config.metrics.enabled:
             logger.info("Initializing metrics service...")
             metrics = MetricsService()
@@ -462,58 +299,77 @@ async def lifespan(app: FastAPI):
                 'queue_processing': queue_processing_jobs,
             }
 
-        # Start background workers
+        # Initialize queue service
         logger.info("Starting background workers...")
-
-        # CORRECT:
-        from backend.services.queue_service import QueueService
-
         queue = QueueService()
+        app.state.queue = queue
+
+        # Initialize submission worker (non-blocking)
         submission_worker = SubmissionWorker(
-            storage_service=storage,  # Already instantiated above
-            queue_service=queue,      # Now an instance, not module
-            metrics_service=metrics,  # Already instantiated above
+            storage_service=storage,
+            queue_service=queue,
+            metrics_service=metrics if config.metrics.enabled else None,
             orchestrator=orchestrator
         )
+        
+        # Start worker in background (non-blocking)
+        try:
+            await asyncio.wait_for(submission_worker.start(), timeout=5.0)
+            app.state.submission_worker = submission_worker
+            logger.info("Submission worker started successfully")
+        except asyncio.TimeoutError:
+            logger.warning("Submission worker startup timed out, continuing...")
+        except Exception as e:
+            logger.error(f"Failed to start submission worker: {e}")
+            logger.info("Continuing without submission worker")
 
-        await submission_worker.start()
-        app.state.submission_worker = submission_worker
-
-        # Cleanup worker
+        # Start cleanup worker (if not in testing mode)
         if not config.testing:
-            cleanup_worker = CleanupWorker(
-                storage_service=storage_service,
-                metrics_service=metrics_service,
-                data_dir=config.storage.data_dir,
-            )
-            cleanup_worker.start()
-            app.state.cleanup_worker = cleanup_worker
-
-        # Preload models (optional, can be slow)
-        if not config.models.lazy_loading and not config.testing:
-            logger.info("Preloading ML models (this may take a few minutes)...")
             try:
-                from backend.models import preload_models
-                preload_results = preload_models()
-
-                loaded = sum(1 for success in preload_results.values() if success)
-                logger.info(f"Preloaded {loaded}/{len(preload_results)} models")
-
-                # Track loading failures
-                for model_name, success in preload_results.items():
-                    if not success:
-                        model_loading_failures_total.labels(model=model_name).inc()
-
+                cleanup_worker = CleanupWorker(
+                    storage_service=storage,
+                    metrics_service=metrics if config.metrics.enabled else None,
+                    data_dir=config.storage.data_dir,
+                )
+                cleanup_worker.start()
+                app.state.cleanup_worker = cleanup_worker
+                logger.info("Cleanup worker started successfully")
             except Exception as e:
-                logger.warning(f"Model preloading failed: {e}")
-                logger.info("Models will be loaded on first use")
+                logger.warning(f"Failed to start cleanup worker: {e}")
+
+        # Preload models (optional, in background to not block startup)
+        if not config.models.lazy_loading and not config.testing:
+            logger.info("Scheduling model preloading (background task)...")
+            
+            async def preload_models_async():
+                try:
+                    from backend.models import preload_models
+                    logger.info("Preloading ML models...")
+                    preload_results = preload_models()
+                    loaded = sum(1 for success in preload_results.values() if success)
+                    logger.info(f"Preloaded {loaded}/{len(preload_results)} models")
+                    
+                    # Track loading failures
+                    for model_name, success in preload_results.items():
+                        if not success:
+                            model_loading_failures_total.labels(model=model_name).inc()
+                except Exception as e:
+                    logger.warning(f"Model preloading failed: {e}")
+            
+            # Start preloading in background
+            asyncio.create_task(preload_models_async())
+        else:
+            logger.info("Models will be loaded on first use (lazy loading)")
 
         # Initialize system metrics
-        logger.info("Initializing system metrics...")
         update_system_metrics()
 
+        logger.info("=" * 60)
         logger.info("Application startup complete")
-        logger.info(f"Prometheus metrics available at: /metrics")
+        logger.info(f"API available at: http://{config.server.host}:{config.server.port}/api/{API_VERSION}")
+        logger.info(f"Docs available at: http://{config.server.host}:{config.server.port}/api/{API_VERSION}/docs")
+        logger.info(f"Metrics available at: http://{config.server.host}:{config.server.port}/metrics")
+        logger.info("=" * 60)
 
         # Yield control to application
         yield
@@ -524,11 +380,17 @@ async def lifespan(app: FastAPI):
         # Stop workers
         if hasattr(app.state, 'submission_worker'):
             logger.info("Stopping submission worker...")
-            app.state.submission_worker.stop()
+            try:
+                app.state.submission_worker.stop()
+            except Exception as e:
+                logger.warning(f"Error stopping submission worker: {e}")
 
         if hasattr(app.state, 'cleanup_worker'):
             logger.info("Stopping cleanup worker...")
-            app.state.cleanup_worker.stop()
+            try:
+                app.state.cleanup_worker.stop()
+            except Exception as e:
+                logger.warning(f"Error stopping cleanup worker: {e}")
 
         # Cleanup models
         logger.info("Unloading ML models...")
@@ -557,18 +419,18 @@ async def lifespan(app: FastAPI):
 # ==================== APPLICATION FACTORY ====================
 
 def create_app(
-    config_file: str = None,
-    environment: str = None
+    config_file: Optional[str] = None,
+    environment: Optional[str] = None
 ) -> FastAPI:
     """
-    Create and configure FastAPI application.
-
+    Create and configure FastAPI application
+    
     Args:
         config_file: Path to configuration file
-        environment: Environment name (dev, prod)
-
+        environment: Environment name (dev, prod, test)
+        
     Returns:
-        FastAPI: Configured application
+        Configured FastAPI application
     """
     # Load configuration
     config = load_config(config_file, environment)
@@ -600,7 +462,7 @@ def create_app(
 
     # ========== MIDDLEWARE ==========
 
-    # CORS
+    # CORS (must be first)
     app.add_middleware(
         CORSMiddleware,
         allow_origins=config.cors.allowed_origins,
@@ -612,16 +474,12 @@ def create_app(
     # Gzip compression
     app.add_middleware(GZipMiddleware, minimum_size=1024)
 
-    # Custom middleware (order matters - error handler first)
+    # Custom middleware (order matters - error handler should wrap others)
     app.middleware("http")(ErrorHandlingMiddleware)
 
     # Prometheus metrics middleware
     if config.metrics.enabled:
         app.middleware("http")(prometheus_metrics_middleware)
-
-    # Application metrics middleware
-    # if config.metrics.enabled:
-    #     app.middleware("http")(metrics_middleware)
 
     # Rate limiting
     if config.rate_limit.enabled:
@@ -634,9 +492,8 @@ def create_app(
         request: Request,
         exc: BaseApplicationException
     ) -> JSONResponse:
-        """Handle application exceptions."""
+        """Handle application exceptions"""
         logger.warning(f"Application exception: {exc}")
-
         return JSONResponse(
             status_code=exc.status_code,
             content=exc.to_dict()
@@ -647,12 +504,10 @@ def create_app(
         request: Request,
         exc: RequestValidationError
     ) -> JSONResponse:
-        """Handle validation errors."""
+        """Handle validation errors"""
         logger.warning(f"Validation error: {exc.errors()}")
-
-        # Track validation failures
         validation_failures_total.labels(validation_type='request').inc()
-
+        
         return JSONResponse(
             status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
             content={
@@ -667,7 +522,7 @@ def create_app(
         request: Request,
         exc: Exception
     ) -> JSONResponse:
-        """Handle unexpected exceptions."""
+        """Handle unexpected exceptions"""
         logger.error(f"Unexpected error: {exc}", exc_info=True)
 
         if config.debug:
@@ -690,10 +545,9 @@ def create_app(
 
     # ========== ROUTES ==========
 
-    # Root endpoint
     @app.get("/", tags=["root"])
     async def root() -> Dict[str, Any]:
-        """Root endpoint."""
+        """Root endpoint with system information"""
         return {
             "name": APP_NAME,
             "version": APP_VERSION,
@@ -704,13 +558,12 @@ def create_app(
             "metrics": "/metrics" if config.metrics.enabled else None
         }
 
-    # Prometheus metrics endpoint
     @app.get("/metrics", tags=["monitoring"])
     async def metrics() -> Response:
         """
-        Prometheus metrics endpoint.
-
-        Exposes all application metrics in Prometheus format.
+        Prometheus metrics endpoint
+        
+        Exposes all application metrics in Prometheus format
         """
         # Update system metrics before export
         update_system_metrics()
@@ -723,10 +576,8 @@ def create_app(
             media_type=CONTENT_TYPE_LATEST
         )
 
-    # Health check
+    # Include routers
     app.include_router(health_router, prefix=f"/api/{API_VERSION}", tags=["health"])
-
-    # Main API routes
     app.include_router(api_router, prefix=f"/api/{API_VERSION}", tags=["api"])
 
     logger.info("FastAPI application created successfully")
@@ -744,43 +595,28 @@ app = create_app()
 
 if __name__ == "__main__":
     """
-    Run application with uvicorn.
-
+    Run application with uvicorn
+    
     Usage:
         python -m backend.main
         python -m backend.main --environment production
+        python -m backend.main --host 127.0.0.1 --port 8080
     """
     import argparse
     import uvicorn
 
     # Parse command line arguments
     parser = argparse.ArgumentParser(description="Run the corruption reporting system")
-    parser.add_argument(
-        "--config",
-        type=str,
-        help="Path to configuration file"
-    )
+    parser.add_argument("--config", type=str, help="Path to configuration file")
     parser.add_argument(
         "--environment",
         type=str,
         choices=["development", "production", "testing"],
         help="Environment name"
     )
-    parser.add_argument(
-        "--host",
-        type=str,
-        help="Host address"
-    )
-    parser.add_argument(
-        "--port",
-        type=int,
-        help="Port number"
-    )
-    parser.add_argument(
-        "--reload",
-        action="store_true",
-        help="Enable auto-reload"
-    )
+    parser.add_argument("--host", type=str, default="127.0.0.1", help="Host address (default: 127.0.0.1)")
+    parser.add_argument("--port", type=int, default=8000, help="Port number (default: 8000)")
+    parser.add_argument("--reload", action="store_true", help="Enable auto-reload")
 
     args = parser.parse_args()
 
@@ -788,14 +624,16 @@ if __name__ == "__main__":
     config = load_config(args.config, args.environment)
 
     # Override with command line arguments
-    host = args.host or config.server.host
-    port = args.port or config.server.port
+    host = args.host if args.host != "127.0.0.1" else config.server.host
+    port = args.port if args.port != 8000 else config.server.port
     reload = args.reload or config.server.reload
 
     # Run server
     logger = get_logger(__name__)
-    logger.info(f"Starting server: http://{host}:{port}")
-    logger.info(f"Metrics available at: http://{host}:{port}/metrics")
+    logger.info(f"Starting server on http://{host}:{port}")
+    logger.info(f"Environment: {config.environment}")
+    logger.info(f"API docs: http://{host}:{port}/api/{API_VERSION}/docs")
+    logger.info(f"Metrics: http://{host}:{port}/metrics")
 
     uvicorn.run(
         "backend.main:app",
@@ -804,4 +642,4 @@ if __name__ == "__main__":
         reload=reload,
         log_level=config.server.log_level.lower(),
         access_log=True
-    )  
+    )

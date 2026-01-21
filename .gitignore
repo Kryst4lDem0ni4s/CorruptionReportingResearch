@@ -224,3 +224,8 @@ __marimo__/
 # backend/data/validators.json
 # backend/data/index.json
 frontend/node_modules/
+evaluation/datasets/celebdf/
+evaluation/datasets/faceforensics/
+evaluation/datasets/.cache/
+evaluation/datasets/__pycache__/
+evaluation/datasets/real-and-fake-face-detection/
