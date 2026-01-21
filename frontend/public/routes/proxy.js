@@ -15,7 +15,7 @@ const router = express.Router();
 // ============================================
 // CONFIGURATION
 // ============================================
-const BACKEND_URL = process.env.BACKEND_URL || 'http://localhost:8000';
+const BACKEND_URL = process.env.BACKEND_URL || 'http://localhost:8080';
 const PROXY_TIMEOUT = parseInt(process.env.PROXY_TIMEOUT || '300000', 10); // 5 minutes for ML processing
 const MAX_RETRIES = parseInt(process.env.MAX_RETRIES || '0', 10); // No retries by default
 

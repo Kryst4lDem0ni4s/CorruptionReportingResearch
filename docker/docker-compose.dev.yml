@@ -30,7 +30,7 @@ services:
     restart: unless-stopped
     
     ports:
-      - "8000:8000"
+      - "8080:8080"
       # Expose additional port for debugging
       - "5678:5678"
     
@@ -70,7 +70,7 @@ services:
     command: >
       uvicorn main:app
       --host 0.0.0.0
-      --port 8000
+      --port 8080
       --reload
       --log-level debug
     
@@ -122,9 +122,9 @@ services:
       - DEBUG=*
       
       # Backend connection
-      - BACKEND_URL=http://backend:8000
+      - BACKEND_URL=http://backend:8080
       - BACKEND_HOST=backend
-      - BACKEND_PORT=8000
+      - BACKEND_PORT=8080
       
       # Debugging
       - NODE_OPTIONS=--inspect=0.0.0.0:9229
@@ -221,9 +221,9 @@ volumes:
 #   1. Start services: docker-compose -f docker/docker-compose.dev.yml up
 #   2. Code changes auto-reload (hot reload enabled)
 #   3. View logs: docker-compose -f docker/docker-compose.dev.yml logs -f
-#   4. Access backend: http://localhost:8000
+#   4. Access backend: http://localhost:8080
 #   5. Access frontend: http://localhost:3000
-#   6. API docs: http://localhost:8000/docs
+#   6. API docs: http://localhost:8080/docs
 #
 # Debugging:
 #   Backend (Python):

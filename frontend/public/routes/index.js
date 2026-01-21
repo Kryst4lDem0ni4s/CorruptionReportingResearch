@@ -235,7 +235,7 @@ function printRoutes(app) {
 /**
  * Route Structure:
  * 
- * /api/*                   - Proxied to Python backend (port 8000)
+ * /api/*                   - Proxied to Python backend (port 8080)
  *   /api/v1/health         - Backend health check
  *   /api/v1/submissions    - Evidence submissions (POST, GET)
  *   /api/v1/submissions/:id - Get submission by ID (GET)

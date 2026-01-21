@@ -68,6 +68,15 @@ DATASET_REGISTRY = {
         'formats': ['videos'],
         'license': 'Research use only'
     },
+    'real-and-fake-face-detection': {
+        'name': 'Real and Fake Face Detection',
+        'type': 'deepfake_detection',
+        'url': 'https://www.kaggle.com/datasets/ciplab/real-and-fake-face-detection',
+        'size_gb': 1.0,
+        'num_samples': 2041,
+        'formats': ['images'],
+        'license': 'Research use only'
+    },
     'synthetic_attacks': {
         'name': 'Synthetic Coordinated Attacks',
         'type': 'coordination_detection',

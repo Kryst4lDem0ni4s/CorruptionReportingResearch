@@ -383,7 +383,7 @@ echo      ^> venv\Scripts\activate.bat
 echo.
 echo   2. Start the backend server:
 echo      ^> cd backend
-echo      ^> python -m uvicorn main:app --reload --host 0.0.0.0 --port 8000
+echo      ^> python -m uvicorn main:app --reload --host 0.0.0.0 --port 8080
 echo.
 echo   3. In a new terminal, start the frontend server:
 echo      ^> cd frontend
@@ -391,8 +391,8 @@ echo      ^> node server.js
 echo.
 echo   4. Access the application:
 echo      Frontend: http://localhost:3000
-echo      Backend API: http://localhost:8000
-echo      API Docs: http://localhost:8000/docs
+echo      Backend API: http://localhost:8080
+echo      API Docs: http://localhost:8080/docs
 echo.
 
 call :print_info "Optional commands:"

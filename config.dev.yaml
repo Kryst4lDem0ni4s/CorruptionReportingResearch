@@ -14,7 +14,7 @@
 # # =============================================================================
 # server:
 #   host: "0.0.0.0"
-#   port: 8000
+#   port: 8080
 #   reload: true  # Auto-reload on code changes
 #   workers: 1  # Single worker for debugging
 #   log_level: "debug"
@@ -26,9 +26,9 @@
 #   #   enabled: true
 #   #   allow_origins:
 #   #     - "http://localhost:3000"
-#   #     - "http://localhost:8000"
+#   #     - "http://localhost:8080"
 #   #     - "http://127.0.0.1:3000"
-#   #     - "http://127.0.0.1:8000"
+#   #     - "http://127.0.0.1:8080"
 #   #   allow_credentials: true
 #   #   allow_methods:
 #   #     - "GET"
@@ -424,7 +424,7 @@ testing_mode: false
 
 server:
   host: "0.0.0.0"
-  port: 8000
+  port: 8080
   reload: true
   workers: 1
   log_level: "info"
@@ -432,7 +432,7 @@ server:
 cors:
   allowed_origins:
     - "http://localhost:3000"
-    - "http://localhost:8000"
+    - "http://localhost:8080"
   allow_credentials: true
   allow_methods: ["*"]
   allow_headers: ["*"]

@@ -347,24 +347,43 @@ class EvaluationRunner:
         try:
             from evaluation.experiments.deepfake_detection import run_experiment
             
-            config = self.config['experiments']['deepfake_detection']
-            results = run_experiment(
-                # num_samples=config.get('num_samples', 100),
-                # models=config.get('models', ['clip', 'xception']),
-                # output_dir=self.output_dir / 'deepfake_detection'
-            )
+            # Find all enabled deepfake datasets
+            datasets_config = self.config.get('datasets', {})
+            enabled_datasets = []
             
-            self.results['experiments']['deepfake_detection'] = results
+            for name, cfg in datasets_config.items():
+                if cfg.get('enabled') and cfg.get('dataset_type') == 'deepfake_detection':
+                    enabled_datasets.append(name)
             
-            # Update metrics
-            if evaluation_auroc_score and 'auroc' in results:
-                evaluation_auroc_score.set(results['auroc'])
-            if evaluation_precision_score and 'precision' in results:
-                evaluation_precision_score.set(results['precision'])
-            if evaluation_recall_score and 'recall' in results:
-                evaluation_recall_score.set(results['recall'])
-            
-            self.logger.info(f"✓ Deepfake Detection: AUROC={results.get('auroc', 0):.4f}")
+            if not enabled_datasets:
+                self.logger.warning("No deepfake detection datasets enabled!")
+                return
+
+            overall_results = {}
+
+            for dataset_name in enabled_datasets:
+                self.logger.info(f"\nRunning evaluation on dataset: {dataset_name}")
+                dataset_cfg = datasets_config[dataset_name]
+                
+                results = run_experiment(
+                    dataset_name=dataset_name,
+                    max_samples=dataset_cfg.get('sampling', {}).get('sample_size', 100),
+                    split=dataset_cfg.get('sampling', {}).get('split', 'test')
+                )
+                
+                overall_results[dataset_name] = results
+                self.results['experiments'][f'deepfake_detection_{dataset_name}'] = results
+                
+                # Update metrics (averaged or per dataset)
+                if evaluation_auroc_score and 'auroc' in results.get('metrics', {}):
+                    evaluation_auroc_score.set(results['metrics']['auroc'])
+                
+                if 'metrics' in results:
+                    metrics = results['metrics']
+                    self.logger.info(f"✓ {dataset_name}: AUROC={metrics.get('auroc', 0):.4f}, F1={metrics.get('f1_score', 0):.4f}")
+
+            # Store combined results under main key if needed, or just let the loop handle it
+            self.results['experiments']['deepfake_detection'] = overall_results
             
         except Exception as e:
             self.logger.error(f"✗ Deepfake Detection failed: {e}")

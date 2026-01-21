@@ -4,7 +4,7 @@
 # Description: Multi-stage Docker image for Python FastAPI backend
 #
 # Build: docker build -f docker/Dockerfile.backend -t corruption-backend:latest .
-# Run: docker run -p 8000:8000 -v $(pwd)/backend/data:/app/backend/data corruption-backend:latest
+# Run: docker run -p 8080:8080 -v $(pwd)/backend/data:/app/backend/data corruption-backend:latest
 # =============================================================================
 
 # =============================================================================
@@ -91,7 +91,7 @@ FROM application as production
 USER appuser
 
 # Expose port
-EXPOSE 8000
+EXPOSE 8080
 
 # Health check
 HEALTHCHECK --interval=30s --timeout=10s --start-period=60s --retries=3 \
@@ -101,10 +101,10 @@ HEALTHCHECK --interval=30s --timeout=10s --start-period=60s --retries=3 \
 WORKDIR /app/backend
 
 # Default command (can be overridden)
-CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000", "--workers", "2"]
+CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8080", "--workers", "2"]
 
 # Alternative production command with Gunicorn + Uvicorn workers (better performance)
-# CMD ["gunicorn", "main:app", "--workers", "4", "--worker-class", "uvicorn.workers.UvicornWorker", "--bind", "0.0.0.0:8000", "--timeout", "120", "--access-logfile", "-", "--error-logfile", "-"]
+# CMD ["gunicorn", "main:app", "--workers", "4", "--worker-class", "uvicorn.workers.UvicornWorker", "--bind", "0.0.0.0:8080", "--timeout", "120", "--access-logfile", "-", "--error-logfile", "-"]
 
 # =============================================================================
 # Stage 5: Development Runtime (Optional)
@@ -118,13 +118,13 @@ RUN pip install --no-cache-dir -r /app/requirements-dev.txt
 USER appuser
 
 # Expose port
-EXPOSE 8000
+EXPOSE 8080
 
 # Set working directory
 WORKDIR /app/backend
 
 # Development command with hot reload
-CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000", "--reload"]
+CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8080", "--reload"]
 
 # =============================================================================
 # Metadata

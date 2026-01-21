@@ -1,0 +1,26 @@
+{
+  "timestamp": "2026-01-21T17:58:34.920844",
+  "experiments": {
+    "deepfake_detection": {
+      "error": "DeepfakeDetectionExperiment.run() got an unexpected keyword argument 'num_samples'"
+    },
+    "coordination_detection": {
+      "error": "CoordinationDetectionExperiment.run() got an unexpected keyword argument 'output_dir'"
+    },
+    "consensus_simulation": {
+      "error": "ConsensusSimulationExperiment.run() got an unexpected keyword argument 'num_scenarios'"
+    },
+    "counter_evidence": {
+      "error": "CounterEvidenceExperiment.run() got an unexpected keyword argument 'output_dir'"
+    },
+    "end_to_end": {
+      "error": "No module named 'evaluation.experiments.end_to_end'"
+    }
+  },
+  "summary": {
+    "total_experiments": 5,
+    "successful_experiments": 0,
+    "failed_experiments": 5,
+    "key_metrics": {}
+  }
+}

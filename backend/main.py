@@ -615,7 +615,7 @@ if __name__ == "__main__":
         help="Environment name"
     )
     parser.add_argument("--host", type=str, default="127.0.0.1", help="Host address (default: 127.0.0.1)")
-    parser.add_argument("--port", type=int, default=8000, help="Port number (default: 8000)")
+    parser.add_argument("--port", type=int, default=8080, help="Port number (default: 8080)")
     parser.add_argument("--reload", action="store_true", help="Enable auto-reload")
 
     args = parser.parse_args()
@@ -625,7 +625,7 @@ if __name__ == "__main__":
 
     # Override with command line arguments
     host = args.host if args.host != "127.0.0.1" else config.server.host
-    port = args.port if args.port != 8000 else config.server.port
+    port = args.port if args.port != 8080 else config.server.port
     reload = args.reload or config.server.reload
 
     # Run server

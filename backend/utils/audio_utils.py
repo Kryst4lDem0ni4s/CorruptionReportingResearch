@@ -261,7 +261,7 @@ class AudioUtils:
         is_silent = features['rms'] < 0.001
         is_clipping = features['peak_amplitude'] > 0.99
         is_too_short = features['duration'] < 0.5
-        is_low_quality = sample_rate < 8000
+        is_low_quality = sample_rate < 8080
         
         quality = {
             **features,

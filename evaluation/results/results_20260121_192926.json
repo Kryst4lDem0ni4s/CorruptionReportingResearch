@@ -1,0 +1,1205 @@
+{
+  "timestamp": "2026-01-21T19:28:45.707223",
+  "experiments": {
+    "coordination_detection": {
+      "experiment": "coordination_detection",
+      "num_scenarios": 10,
+      "submissions_per_scenario": 5,
+      "metrics": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1_score": 0.0,
+        "accuracy": 0.5,
+        "confusion_matrix": {
+          "tp": 0,
+          "fp": 0,
+          "tn": 5,
+          "fn": 5
+        }
+      },
+      "predictions": {
+        "y_true": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "y_pred": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "y_score": [
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5
+        ]
+      },
+      "scenarios": [
+        {
+          "scenario_id": 0,
+          "is_coordinated": true,
+          "num_submissions": 5,
+          "submissions": [
+            {
+              "pseudonym": "coordinated_user_0_0",
+              "description": "Officials at location X engaged in serious misconduct on date Y involving funds",
+              "evidence_type": "text",
+              "timestamp": "2026-01-21T19:28:45.798362",
+              "metadata": {
+                "scenario_id": 0,
+                "submission_index": 0,
+                "coordinated": true
+              }
+            },
+            {
+              "pseudonym": "coordinated_user_0_1",
+              "description": "Government officials at location X were involved in misconduct on date Y with evidence",
+              "evidence_type": "text",
+              "timestamp": "2026-01-21T19:38:45.798362",
+              "metadata": {
+                "scenario_id": 0,
+                "submission_index": 1,
+                "coordinated": true
+              }
+            },
+            {
+              "pseudonym": "coordinated_user_0_2",
+              "description": "Authorities at location X committed misconduct on date Y affecting citizens",
+              "evidence_type": "text",
+              "timestamp": "2026-01-21T19:48:45.798362",
+              "metadata": {
+                "scenario_id": 0,
+                "submission_index": 2,
+                "coordinated": true
+              }
+            },
+            {
+              "pseudonym": "coordinated_user_0_3",
+              "description": "Officials at location X engaged in misconduct on date Y as documented",
+              "evidence_type": "text",
+              "timestamp": "2026-01-21T19:58:45.798362",
+              "metadata": {
+                "scenario_id": 0,
+                "submission_index": 3,
+                "coordinated": true
+              }
+            },
+            {
+              "pseudonym": "coordinated_user_0_4",
+              "description": "Leadership at location X involved in misconduct on date Y with witnesses",
+              "evidence_type": "text",
+              "timestamp": "2026-01-21T20:08:45.798362",
+              "metadata": {
+                "scenario_id": 0,
+                "submission_index": 4,
+                "coordinated": true
+              }
+            }
+          ],
+          "attack_type": "coordinated"
+        },
+        {
+          "scenario_id": 1,
+          "is_coordinated": true,
+          "num_submissions": 5,
+          "submissions": [
+            {
+              "pseudonym": "coordinated_user_1_0",
+              "description": "Officials at location X engaged in serious misconduct on date Y involving funds",
+              "evidence_type": "text",
+              "timestamp": "2026-01-21T19:28:45.798362",
+              "metadata": {
+                "scenario_id": 1,
+                "submission_index": 0,
+                "coordinated": true
+              }
+            },
+            {
+              "pseudonym": "coordinated_user_1_1",
+              "description": "Government officials at location X were involved in misconduct on date Y with evidence",
+              "evidence_type": "text",
+              "timestamp": "2026-01-21T19:38:45.798362",
+              "metadata": {
+                "scenario_id": 1,
+                "submission_index": 1,
+                "coordinated": true
+              }
+            },
+            {
+              "pseudonym": "coordinated_user_1_2",
+              "description": "Authorities at location X committed misconduct on date Y affecting citizens",
+              "evidence_type": "text",
+              "timestamp": "2026-01-21T19:48:45.798362",
+              "metadata": {
+                "scenario_id": 1,
+                "submission_index": 2,
+                "coordinated": true
+              }
+            },
+            {
+              "pseudonym": "coordinated_user_1_3",
+              "description": "Officials at location X engaged in misconduct on date Y as documented",
+              "evidence_type": "text",
+              "timestamp": "2026-01-21T19:58:45.798362",
+              "metadata": {
+                "scenario_id": 1,
+                "submission_index": 3,
+                "coordinated": true
+              }
+            },
+            {
+              "pseudonym": "coordinated_user_1_4",
+              "description": "Leadership at location X involved in misconduct on date Y with witnesses",
+              "evidence_type": "text",
+              "timestamp": "2026-01-21T20:08:45.798362",
+              "metadata": {
+                "scenario_id": 1,
+                "submission_index": 4,
+                "coordinated": true
+              }
+            }
+          ],
+          "attack_type": "coordinated"
+        },
+        {
+          "scenario_id": 2,
+          "is_coordinated": true,
+          "num_submissions": 5,
+          "submissions": [
+            {
+              "pseudonym": "coordinated_user_2_0",
+              "description": "Officials at location X engaged in serious misconduct on date Y involving funds",
+              "evidence_type": "text",
+              "timestamp": "2026-01-21T19:28:45.798362",
+              "metadata": {
+                "scenario_id": 2,
+                "submission_index": 0,
+                "coordinated": true
+              }
+            },
+            {
+              "pseudonym": "coordinated_user_2_1",
+              "description": "Government officials at location X were involved in misconduct on date Y with evidence",
+              "evidence_type": "text",
+              "timestamp": "2026-01-21T19:38:45.798362",
+              "metadata": {
+                "scenario_id": 2,
+                "submission_index": 1,
+                "coordinated": true
+              }
+            },
+            {
+              "pseudonym": "coordinated_user_2_2",
+              "description": "Authorities at location X committed misconduct on date Y affecting citizens",
+              "evidence_type": "text",
+              "timestamp": "2026-01-21T19:48:45.798362",
+              "metadata": {
+                "scenario_id": 2,
+                "submission_index": 2,
+                "coordinated": true
+              }
+            },
+            {
+              "pseudonym": "coordinated_user_2_3",
+              "description": "Officials at location X engaged in misconduct on date Y as documented",
+              "evidence_type": "text",
+              "timestamp": "2026-01-21T19:58:45.798362",
+              "metadata": {
+                "scenario_id": 2,
+                "submission_index": 3,
+                "coordinated": true
+              }
+            },
+            {
+              "pseudonym": "coordinated_user_2_4",
+              "description": "Leadership at location X involved in misconduct on date Y with witnesses",
+              "evidence_type": "text",
+              "timestamp": "2026-01-21T20:08:45.798362",
+              "metadata": {
+                "scenario_id": 2,
+                "submission_index": 4,
+                "coordinated": true
+              }
+            }
+          ],
+          "attack_type": "coordinated"
+        },
+        {
+          "scenario_id": 3,
+          "is_coordinated": true,
+          "num_submissions": 5,
+          "submissions": [
+            {
+              "pseudonym": "coordinated_user_3_0",
+              "description": "Officials at location X engaged in serious misconduct on date Y involving funds",
+              "evidence_type": "text",
+              "timestamp": "2026-01-21T19:28:45.798362",
+              "metadata": {
+                "scenario_id": 3,
+                "submission_index": 0,
+                "coordinated": true
+              }
+            },
+            {
+              "pseudonym": "coordinated_user_3_1",
+              "description": "Government officials at location X were involved in misconduct on date Y with evidence",
+              "evidence_type": "text",
+              "timestamp": "2026-01-21T19:38:45.798362",
+              "metadata": {
+                "scenario_id": 3,
+                "submission_index": 1,
+                "coordinated": true
+              }
+            },
+            {
+              "pseudonym": "coordinated_user_3_2",
+              "description": "Authorities at location X committed misconduct on date Y affecting citizens",
+              "evidence_type": "text",
+              "timestamp": "2026-01-21T19:48:45.798362",
+              "metadata": {
+                "scenario_id": 3,
+                "submission_index": 2,
+                "coordinated": true
+              }
+            },
+            {
+              "pseudonym": "coordinated_user_3_3",
+              "description": "Officials at location X engaged in misconduct on date Y as documented",
+              "evidence_type": "text",
+              "timestamp": "2026-01-21T19:58:45.798362",
+              "metadata": {
+                "scenario_id": 3,
+                "submission_index": 3,
+                "coordinated": true
+              }
+            },
+            {
+              "pseudonym": "coordinated_user_3_4",
+              "description": "Leadership at location X involved in misconduct on date Y with witnesses",
+              "evidence_type": "text",
+              "timestamp": "2026-01-21T20:08:45.798362",
+              "metadata": {
+                "scenario_id": 3,
+                "submission_index": 4,
+                "coordinated": true
+              }
+            }
+          ],
+          "attack_type": "coordinated"
+        },
+        {
+          "scenario_id": 4,
+          "is_coordinated": true,
+          "num_submissions": 5,
+          "submissions": [
+            {
+              "pseudonym": "coordinated_user_4_0",
+              "description": "Officials at location X engaged in serious misconduct on date Y involving funds",
+              "evidence_type": "text",
+              "timestamp": "2026-01-21T19:28:45.798362",
+              "metadata": {
+                "scenario_id": 4,
+                "submission_index": 0,
+                "coordinated": true
+              }
+            },
+            {
+              "pseudonym": "coordinated_user_4_1",
+              "description": "Government officials at location X were involved in misconduct on date Y with evidence",
+              "evidence_type": "text",
+              "timestamp": "2026-01-21T19:38:45.798362",
+              "metadata": {
+                "scenario_id": 4,
+                "submission_index": 1,
+                "coordinated": true
+              }
+            },
+            {
+              "pseudonym": "coordinated_user_4_2",
+              "description": "Authorities at location X committed misconduct on date Y affecting citizens",
+              "evidence_type": "text",
+              "timestamp": "2026-01-21T19:48:45.798362",
+              "metadata": {
+                "scenario_id": 4,
+                "submission_index": 2,
+                "coordinated": true
+              }
+            },
+            {
+              "pseudonym": "coordinated_user_4_3",
+              "description": "Officials at location X engaged in misconduct on date Y as documented",
+              "evidence_type": "text",
+              "timestamp": "2026-01-21T19:58:45.798362",
+              "metadata": {
+                "scenario_id": 4,
+                "submission_index": 3,
+                "coordinated": true
+              }
+            },
+            {
+              "pseudonym": "coordinated_user_4_4",
+              "description": "Leadership at location X involved in misconduct on date Y with witnesses",
+              "evidence_type": "text",
+              "timestamp": "2026-01-21T20:08:45.798362",
+              "metadata": {
+                "scenario_id": 4,
+                "submission_index": 4,
+                "coordinated": true
+              }
+            }
+          ],
+          "attack_type": "coordinated"
+        },
+        {
+          "scenario_id": 5,
+          "is_coordinated": false,
+          "num_submissions": 5,
+          "submissions": [
+            {
+              "pseudonym": "independent_user_5_0",
+              "description": "Observed infrastructure issues at regional office requiring attention",
+              "evidence_type": "text",
+              "timestamp": "2026-01-21T19:28:45.798362",
+              "metadata": {
+                "scenario_id": 5,
+                "submission_index": 0,
+                "coordinated": false
+              }
+            },
+            {
+              "pseudonym": "independent_user_5_1",
+              "description": "Healthcare facility experiencing supply shortages affecting patient care",
+              "evidence_type": "text",
+              "timestamp": "2026-01-22T00:28:45.798362",
+              "metadata": {
+                "scenario_id": 5,
+                "submission_index": 1,
+                "coordinated": false
+              }
+            },
+            {
+              "pseudonym": "independent_user_5_2",
+              "description": "Educational institution facing funding challenges impacting programs",
+              "evidence_type": "text",
+              "timestamp": "2026-01-22T05:28:45.798362",
+              "metadata": {
+                "scenario_id": 5,
+                "submission_index": 2,
+                "coordinated": false
+              }
+            },
+            {
+              "pseudonym": "independent_user_5_3",
+              "description": "Transportation delays causing disruptions to public services",
+              "evidence_type": "text",
+              "timestamp": "2026-01-22T10:28:45.798362",
+              "metadata": {
+                "scenario_id": 5,
+                "submission_index": 3,
+                "coordinated": false
+              }
+            },
+            {
+              "pseudonym": "independent_user_5_4",
+              "description": "Environmental concerns raised by community members",
+              "evidence_type": "text",
+              "timestamp": "2026-01-22T15:28:45.798362",
+              "metadata": {
+                "scenario_id": 5,
+                "submission_index": 4,
+                "coordinated": false
+              }
+            }
+          ],
+          "attack_type": "independent"
+        },
+        {
+          "scenario_id": 6,
+          "is_coordinated": false,
+          "num_submissions": 5,
+          "submissions": [
+            {
+              "pseudonym": "independent_user_6_0",
+              "description": "Observed infrastructure issues at regional office requiring attention",
+              "evidence_type": "text",
+              "timestamp": "2026-01-21T19:28:45.798362",
+              "metadata": {
+                "scenario_id": 6,
+                "submission_index": 0,
+                "coordinated": false
+              }
+            },
+            {
+              "pseudonym": "independent_user_6_1",
+              "description": "Healthcare facility experiencing supply shortages affecting patient care",
+              "evidence_type": "text",
+              "timestamp": "2026-01-22T00:28:45.798362",
+              "metadata": {
+                "scenario_id": 6,
+                "submission_index": 1,
+                "coordinated": false
+              }
+            },
+            {
+              "pseudonym": "independent_user_6_2",
+              "description": "Educational institution facing funding challenges impacting programs",
+              "evidence_type": "text",
+              "timestamp": "2026-01-22T05:28:45.798362",
+              "metadata": {
+                "scenario_id": 6,
+                "submission_index": 2,
+                "coordinated": false
+              }
+            },
+            {
+              "pseudonym": "independent_user_6_3",
+              "description": "Transportation delays causing disruptions to public services",
+              "evidence_type": "text",
+              "timestamp": "2026-01-22T10:28:45.798362",
+              "metadata": {
+                "scenario_id": 6,
+                "submission_index": 3,
+                "coordinated": false
+              }
+            },
+            {
+              "pseudonym": "independent_user_6_4",
+              "description": "Environmental concerns raised by community members",
+              "evidence_type": "text",
+              "timestamp": "2026-01-22T15:28:45.798362",
+              "metadata": {
+                "scenario_id": 6,
+                "submission_index": 4,
+                "coordinated": false
+              }
+            }
+          ],
+          "attack_type": "independent"
+        },
+        {
+          "scenario_id": 7,
+          "is_coordinated": false,
+          "num_submissions": 5,
+          "submissions": [
+            {
+              "pseudonym": "independent_user_7_0",
+              "description": "Observed infrastructure issues at regional office requiring attention",
+              "evidence_type": "text",
+              "timestamp": "2026-01-21T19:28:45.798362",
+              "metadata": {
+                "scenario_id": 7,
+                "submission_index": 0,
+                "coordinated": false
+              }
+            },
+            {
+              "pseudonym": "independent_user_7_1",
+              "description": "Healthcare facility experiencing supply shortages affecting patient care",
+              "evidence_type": "text",
+              "timestamp": "2026-01-22T00:28:45.798362",
+              "metadata": {
+                "scenario_id": 7,
+                "submission_index": 1,
+                "coordinated": false
+              }
+            },
+            {
+              "pseudonym": "independent_user_7_2",
+              "description": "Educational institution facing funding challenges impacting programs",
+              "evidence_type": "text",
+              "timestamp": "2026-01-22T05:28:45.798362",
+              "metadata": {
+                "scenario_id": 7,
+                "submission_index": 2,
+                "coordinated": false
+              }
+            },
+            {
+              "pseudonym": "independent_user_7_3",
+              "description": "Transportation delays causing disruptions to public services",
+              "evidence_type": "text",
+              "timestamp": "2026-01-22T10:28:45.798362",
+              "metadata": {
+                "scenario_id": 7,
+                "submission_index": 3,
+                "coordinated": false
+              }
+            },
+            {
+              "pseudonym": "independent_user_7_4",
+              "description": "Environmental concerns raised by community members",
+              "evidence_type": "text",
+              "timestamp": "2026-01-22T15:28:45.798362",
+              "metadata": {
+                "scenario_id": 7,
+                "submission_index": 4,
+                "coordinated": false
+              }
+            }
+          ],
+          "attack_type": "independent"
+        },
+        {
+          "scenario_id": 8,
+          "is_coordinated": false,
+          "num_submissions": 5,
+          "submissions": [
+            {
+              "pseudonym": "independent_user_8_0",
+              "description": "Observed infrastructure issues at regional office requiring attention",
+              "evidence_type": "text",
+              "timestamp": "2026-01-21T19:28:45.798362",
+              "metadata": {
+                "scenario_id": 8,
+                "submission_index": 0,
+                "coordinated": false
+              }
+            },
+            {
+              "pseudonym": "independent_user_8_1",
+              "description": "Healthcare facility experiencing supply shortages affecting patient care",
+              "evidence_type": "text",
+              "timestamp": "2026-01-22T00:28:45.798362",
+              "metadata": {
+                "scenario_id": 8,
+                "submission_index": 1,
+                "coordinated": false
+              }
+            },
+            {
+              "pseudonym": "independent_user_8_2",
+              "description": "Educational institution facing funding challenges impacting programs",
+              "evidence_type": "text",
+              "timestamp": "2026-01-22T05:28:45.798362",
+              "metadata": {
+                "scenario_id": 8,
+                "submission_index": 2,
+                "coordinated": false
+              }
+            },
+            {
+              "pseudonym": "independent_user_8_3",
+              "description": "Transportation delays causing disruptions to public services",
+              "evidence_type": "text",
+              "timestamp": "2026-01-22T10:28:45.798362",
+              "metadata": {
+                "scenario_id": 8,
+                "submission_index": 3,
+                "coordinated": false
+              }
+            },
+            {
+              "pseudonym": "independent_user_8_4",
+              "description": "Environmental concerns raised by community members",
+              "evidence_type": "text",
+              "timestamp": "2026-01-22T15:28:45.798362",
+              "metadata": {
+                "scenario_id": 8,
+                "submission_index": 4,
+                "coordinated": false
+              }
+            }
+          ],
+          "attack_type": "independent"
+        },
+        {
+          "scenario_id": 9,
+          "is_coordinated": false,
+          "num_submissions": 5,
+          "submissions": [
+            {
+              "pseudonym": "independent_user_9_0",
+              "description": "Observed infrastructure issues at regional office requiring attention",
+              "evidence_type": "text",
+              "timestamp": "2026-01-21T19:28:45.798362",
+              "metadata": {
+                "scenario_id": 9,
+                "submission_index": 0,
+                "coordinated": false
+              }
+            },
+            {
+              "pseudonym": "independent_user_9_1",
+              "description": "Healthcare facility experiencing supply shortages affecting patient care",
+              "evidence_type": "text",
+              "timestamp": "2026-01-22T00:28:45.798362",
+              "metadata": {
+                "scenario_id": 9,
+                "submission_index": 1,
+                "coordinated": false
+              }
+            },
+            {
+              "pseudonym": "independent_user_9_2",
+              "description": "Educational institution facing funding challenges impacting programs",
+              "evidence_type": "text",
+              "timestamp": "2026-01-22T05:28:45.798362",
+              "metadata": {
+                "scenario_id": 9,
+                "submission_index": 2,
+                "coordinated": false
+              }
+            },
+            {
+              "pseudonym": "independent_user_9_3",
+              "description": "Transportation delays causing disruptions to public services",
+              "evidence_type": "text",
+              "timestamp": "2026-01-22T10:28:45.798362",
+              "metadata": {
+                "scenario_id": 9,
+                "submission_index": 3,
+                "coordinated": false
+              }
+            },
+            {
+              "pseudonym": "independent_user_9_4",
+              "description": "Environmental concerns raised by community members",
+              "evidence_type": "text",
+              "timestamp": "2026-01-22T15:28:45.798362",
+              "metadata": {
+                "scenario_id": 9,
+                "submission_index": 4,
+                "coordinated": false
+              }
+            }
+          ],
+          "attack_type": "independent"
+        }
+      ]
+    },
+    "consensus_simulation": {
+      "experiment": "consensus_simulation",
+      "metrics": {
+        "num_submissions": 20,
+        "num_validators": 10,
+        "byzantine_ratio": 0.1,
+        "avg_convergence_time": 0.0012,
+        "median_convergence_time": 0.0011,
+        "avg_agreement_rate": 0.83,
+        "min_agreement_rate": 0.6,
+        "convergence_success_rate": 0.7,
+        "iterations_stats": {
+          "mean": 4.35,
+          "median": 2.0,
+          "max": 10
+        }
+      },
+      "consensus_results": [
+        {
+          "submission_id": "test_submission_0",
+          "converged": true,
+          "iterations": 2,
+          "final_consensus": 0.2836,
+          "true_credibility": 0.30403585356426516,
+          "error": 0.02046841443068287,
+          "agreement_rate": 0.8,
+          "vote_std": 0.0872,
+          "num_honest_votes": 9,
+          "num_byzantine_votes": 1
+        },
+        {
+          "submission_id": "test_submission_1",
+          "converged": false,
+          "iterations": 10,
+          "final_consensus": 0.2763,
+          "true_credibility": 0.22402189670686673,
+          "error": 0.05230337696125209,
+          "agreement_rate": 0.9,
+          "vote_std": 0.1314,
+          "num_honest_votes": 9,
+          "num_byzantine_votes": 1
+        },
+        {
+          "submission_id": "test_submission_2",
+          "converged": true,
+          "iterations": 1,
+          "final_consensus": 0.8578,
+          "true_credibility": 0.8123184028877295,
+          "error": 0.04551368898607455,
+          "agreement_rate": 0.8,
+          "vote_std": 0.0712,
+          "num_honest_votes": 9,
+          "num_byzantine_votes": 1
+        },
+        {
+          "submission_id": "test_submission_3",
+          "converged": true,
+          "iterations": 2,
+          "final_consensus": 0.6927,
+          "true_credibility": 0.7312318154258759,
+          "error": 0.038506194028702034,
+          "agreement_rate": 0.8,
+          "vote_std": 0.079,
+          "num_honest_votes": 9,
+          "num_byzantine_votes": 1
+        },
+        {
+          "submission_id": "test_submission_4",
+          "converged": false,
+          "iterations": 10,
+          "final_consensus": 0.683,
+          "true_credibility": 0.7867674634624628,
+          "error": 0.10378770043434615,
+          "agreement_rate": 0.9,
+          "vote_std": 0.1457,
+          "num_honest_votes": 9,
+          "num_byzantine_votes": 1
+        },
+        {
+          "submission_id": "test_submission_5",
+          "converged": true,
+          "iterations": 1,
+          "final_consensus": 0.6672,
+          "true_credibility": 0.6845531131636501,
+          "error": 0.017354299927988426,
+          "agreement_rate": 0.6,
+          "vote_std": 0.0962,
+          "num_honest_votes": 9,
+          "num_byzantine_votes": 1
+        },
+        {
+          "submission_id": "test_submission_6",
+          "converged": true,
+          "iterations": 3,
+          "final_consensus": 0.4467,
+          "true_credibility": 0.4185957500108991,
+          "error": 0.028058356233524706,
+          "agreement_rate": 0.9,
+          "vote_std": 0.0891,
+          "num_honest_votes": 9,
+          "num_byzantine_votes": 1
+        },
+        {
+          "submission_id": "test_submission_7",
+          "converged": true,
+          "iterations": 2,
+          "final_consensus": 0.7522,
+          "true_credibility": 0.7313521391276432,
+          "error": 0.020866747274068675,
+          "agreement_rate": 0.9,
+          "vote_std": 0.0727,
+          "num_honest_votes": 9,
+          "num_byzantine_votes": 1
+        },
+        {
+          "submission_id": "test_submission_8",
+          "converged": true,
+          "iterations": 1,
+          "final_consensus": 0.5397,
+          "true_credibility": 0.5238254028186748,
+          "error": 0.015842754855704966,
+          "agreement_rate": 0.9,
+          "vote_std": 0.0562,
+          "num_honest_votes": 9,
+          "num_byzantine_votes": 1
+        },
+        {
+          "submission_id": "test_submission_9",
+          "converged": true,
+          "iterations": 1,
+          "final_consensus": 0.2155,
+          "true_credibility": 0.23581619541812157,
+          "error": 0.02031846398844278,
+          "agreement_rate": 0.8,
+          "vote_std": 0.0926,
+          "num_honest_votes": 9,
+          "num_byzantine_votes": 1
+        },
+        {
+          "submission_id": "test_submission_10",
+          "converged": false,
+          "iterations": 10,
+          "final_consensus": 0.7252,
+          "true_credibility": 0.786142441029468,
+          "error": 0.06097551445304783,
+          "agreement_rate": 0.9,
+          "vote_std": 0.106,
+          "num_honest_votes": 9,
+          "num_byzantine_votes": 1
+        },
+        {
+          "submission_id": "test_submission_11",
+          "converged": true,
+          "iterations": 2,
+          "final_consensus": 0.6819,
+          "true_credibility": 0.6058998264593001,
+          "error": 0.07598217618223024,
+          "agreement_rate": 0.7,
+          "vote_std": 0.0879,
+          "num_honest_votes": 9,
+          "num_byzantine_votes": 1
+        },
+        {
+          "submission_id": "test_submission_12",
+          "converged": true,
+          "iterations": 4,
+          "final_consensus": 0.6344,
+          "true_credibility": 0.6886873809561316,
+          "error": 0.05428496335883104,
+          "agreement_rate": 0.9,
+          "vote_std": 0.0987,
+          "num_honest_votes": 9,
+          "num_byzantine_votes": 1
+        },
+        {
+          "submission_id": "test_submission_13",
+          "converged": false,
+          "iterations": 10,
+          "final_consensus": 0.6271,
+          "true_credibility": 0.737200550932908,
+          "error": 0.11008783622175722,
+          "agreement_rate": 0.9,
+          "vote_std": 0.1605,
+          "num_honest_votes": 9,
+          "num_byzantine_votes": 1
+        },
+        {
+          "submission_id": "test_submission_14",
+          "converged": true,
+          "iterations": 4,
+          "final_consensus": 0.3346,
+          "true_credibility": 0.30155547197708177,
+          "error": 0.033051368841791995,
+          "agreement_rate": 0.9,
+          "vote_std": 0.0948,
+          "num_honest_votes": 9,
+          "num_byzantine_votes": 1
+        },
+        {
+          "submission_id": "test_submission_15",
+          "converged": true,
+          "iterations": 2,
+          "final_consensus": 0.8453,
+          "true_credibility": 0.8815760267245476,
+          "error": 0.03623810298715979,
+          "agreement_rate": 0.8,
+          "vote_std": 0.0789,
+          "num_honest_votes": 9,
+          "num_byzantine_votes": 1
+        },
+        {
+          "submission_id": "test_submission_16",
+          "converged": false,
+          "iterations": 10,
+          "final_consensus": 0.6227,
+          "true_credibility": 0.5516776184870802,
+          "error": 0.07099346697278308,
+          "agreement_rate": 0.9,
+          "vote_std": 0.1152,
+          "num_honest_votes": 9,
+          "num_byzantine_votes": 1
+        },
+        {
+          "submission_id": "test_submission_17",
+          "converged": true,
+          "iterations": 1,
+          "final_consensus": 0.2541,
+          "true_credibility": 0.2852528790062802,
+          "error": 0.031103463113640317,
+          "agreement_rate": 0.6,
+          "vote_std": 0.0958,
+          "num_honest_votes": 9,
+          "num_byzantine_votes": 1
+        },
+        {
+          "submission_id": "test_submission_18",
+          "converged": true,
+          "iterations": 1,
+          "final_consensus": 0.8798,
+          "true_credibility": 0.8933180507665788,
+          "error": 0.01350864535113061,
+          "agreement_rate": 0.8,
+          "vote_std": 0.0962,
+          "num_honest_votes": 9,
+          "num_byzantine_votes": 1
+        },
+        {
+          "submission_id": "test_submission_19",
+          "converged": false,
+          "iterations": 10,
+          "final_consensus": 0.376,
+          "true_credibility": 0.2750349637623689,
+          "error": 0.10096253481491074,
+          "agreement_rate": 0.9,
+          "vote_std": 0.1453,
+          "num_honest_votes": 9,
+          "num_byzantine_votes": 1
+        }
+      ],
+      "convergence_times": [
+        0.00170135498046875,
+        0.0015132427215576172,
+        0.0006902217864990234,
+        0.0006210803985595703,
+        0.0024390220642089844,
+        0.0010271072387695312,
+        0.001050710678100586,
+        0.0011172294616699219,
+        0.0010144710540771484,
+        0.0005176067352294922,
+        0.0015952587127685547,
+        0.0,
+        0.0020189285278320312,
+        0.0013327598571777344,
+        0.0012493133544921875,
+        0.001917123794555664,
+        0.0017075538635253906,
+        0.0011115074157714844,
+        0.0005214214324951172,
+        0.0007331371307373047
+      ],
+      "agreement_rates": [
+        0.8,
+        0.9,
+        0.8,
+        0.8,
+        0.9,
+        0.6,
+        0.9,
+        0.9,
+        0.9,
+        0.8,
+        0.9,
+        0.7,
+        0.9,
+        0.9,
+        0.9,
+        0.8,
+        0.9,
+        0.6,
+        0.8,
+        0.9
+      ]
+    },
+    "counter_evidence": {
+      "experiment": "counter_evidence",
+      "metrics": {
+        "num_cases": 20,
+        "false_positives_before": 8,
+        "false_positives_after": 8,
+        "false_positive_rate_before": 0.4,
+        "false_positive_rate_after": 0.4,
+        "false_positive_reduction": 0.0,
+        "avg_credibility_change": -0.0108,
+        "presumption_weight": 1.3,
+        "identity_bonus": 1.2
+      },
+      "cases": [
+        {
+          "case_id": "case_0",
+          "is_false_positive": true,
+          "initial_credibility": 0.3253647884893429,
+          "has_counter_evidence": true,
+          "counter_evidence": {
+            "credibility": 0.8770940404588552,
+            "verified_identity": false
+          },
+          "final_credibility": 0.08076073231107926
+        },
+        {
+          "case_id": "case_1",
+          "is_false_positive": true,
+          "initial_credibility": 0.24388877394646424,
+          "has_counter_evidence": true,
+          "counter_evidence": {
+            "credibility": 0.7895451263477188,
+            "verified_identity": true
+          },
+          "final_credibility": 0.11826370273049154
+        },
+        {
+          "case_id": "case_2",
+          "is_false_positive": true,
+          "initial_credibility": 0.3213886353555485,
+          "has_counter_evidence": true,
+          "counter_evidence": {
+            "credibility": 0.8331109528516971,
+            "verified_identity": true
+          },
+          "final_credibility": 0.12891915238073964
+        },
+        {
+          "case_id": "case_3",
+          "is_false_positive": true,
+          "initial_credibility": 0.273742984828594,
+          "has_counter_evidence": false,
+          "counter_evidence": null,
+          "final_credibility": 0.273742984828594
+        },
+        {
+          "case_id": "case_4",
+          "is_false_positive": true,
+          "initial_credibility": 0.282834139560046,
+          "has_counter_evidence": true,
+          "counter_evidence": {
+            "credibility": 0.7443218024595836,
+            "verified_identity": false
+          },
+          "final_credibility": 0.14974071822967128
+        },
+        {
+          "case_id": "case_5",
+          "is_false_positive": true,
+          "initial_credibility": 0.3127268481825063,
+          "has_counter_evidence": false,
+          "counter_evidence": null,
+          "final_credibility": 0.3127268481825063
+        },
+        {
+          "case_id": "case_6",
+          "is_false_positive": true,
+          "initial_credibility": 0.3267700782241646,
+          "has_counter_evidence": false,
+          "counter_evidence": null,
+          "final_credibility": 0.3267700782241646
+        },
+        {
+          "case_id": "case_7",
+          "is_false_positive": true,
+          "initial_credibility": 0.38465225498679156,
+          "has_counter_evidence": false,
+          "counter_evidence": null,
+          "final_credibility": 0.38465225498679156
+        },
+        {
+          "case_id": "case_8",
+          "is_false_positive": false,
+          "initial_credibility": 0.29842639137360216,
+          "has_counter_evidence": false,
+          "counter_evidence": null,
+          "final_credibility": 0.29842639137360216
+        },
+        {
+          "case_id": "case_9",
+          "is_false_positive": false,
+          "initial_credibility": 0.13209406483655964,
+          "has_counter_evidence": false,
+          "counter_evidence": null,
+          "final_credibility": 0.13209406483655964
+        },
+        {
+          "case_id": "case_10",
+          "is_false_positive": false,
+          "initial_credibility": 0.1910442950084752,
+          "has_counter_evidence": true,
+          "counter_evidence": {
+            "credibility": 0.34905863322144437,
+            "verified_identity": false
+          },
+          "final_credibility": 0.3640809769520492
+        },
+        {
+          "case_id": "case_11",
+          "is_false_positive": false,
+          "initial_credibility": 0.23201744278267447,
+          "has_counter_evidence": false,
+          "counter_evidence": null,
+          "final_credibility": 0.23201744278267447
+        },
+        {
+          "case_id": "case_12",
+          "is_false_positive": false,
+          "initial_credibility": 0.29121707688579584,
+          "has_counter_evidence": false,
+          "counter_evidence": null,
+          "final_credibility": 0.29121707688579584
+        },
+        {
+          "case_id": "case_13",
+          "is_false_positive": false,
+          "initial_credibility": 0.2779101166948761,
+          "has_counter_evidence": true,
+          "counter_evidence": {
+            "credibility": 0.345129481682978,
+            "verified_identity": true
+          },
+          "final_credibility": 0.5325418889401337
+        },
+        {
+          "case_id": "case_14",
+          "is_false_positive": false,
+          "initial_credibility": 0.18701955074483984,
+          "has_counter_evidence": false,
+          "counter_evidence": null,
+          "final_credibility": 0.18701955074483984
+        },
+        {
+          "case_id": "case_15",
+          "is_false_positive": false,
+          "initial_credibility": 0.10613515263578147,
+          "has_counter_evidence": false,
+          "counter_evidence": null,
+          "final_credibility": 0.10613515263578147
+        },
+        {
+          "case_id": "case_16",
+          "is_false_positive": false,
+          "initial_credibility": 0.16102681822959736,
+          "has_counter_evidence": true,
+          "counter_evidence": {
+            "credibility": 0.5805152864328627,
+            "verified_identity": false
+          },
+          "final_credibility": 0.1527578442874675
+        },
+        {
+          "case_id": "case_17",
+          "is_false_positive": false,
+          "initial_credibility": 0.11563279581593729,
+          "has_counter_evidence": false,
+          "counter_evidence": null,
+          "final_credibility": 0.11563279581593729
+        },
+        {
+          "case_id": "case_18",
+          "is_false_positive": false,
+          "initial_credibility": 0.2704358759551758,
+          "has_counter_evidence": false,
+          "counter_evidence": null,
+          "final_credibility": 0.2704358759551758
+        },
+        {
+          "case_id": "case_19",
+          "is_false_positive": false,
+          "initial_credibility": 0.21462349872791528,
+          "has_counter_evidence": true,
+          "counter_evidence": {
+            "credibility": 0.4827465979996606,
+            "verified_identity": false
+          },
+          "final_credibility": 0.2757039417390446
+        }
+      ]
+    }
+  },
+  "summary": {
+    "total_experiments": 3,
+    "successful_experiments": 3,
+    "failed_experiments": 0,
+    "key_metrics": {
+      "coordination_accuracy": 0,
+      "consensus_convergence": 0
+    }
+  }
+}

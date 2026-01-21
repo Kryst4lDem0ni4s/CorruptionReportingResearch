@@ -258,6 +258,8 @@ class DatasetLoader:
             self._file_index = self._index_faceforensics()
         elif self.dataset_name == 'celebdf':
             self._file_index = self._index_celebdf()
+        elif self.dataset_name == 'real-and-fake-face-detection':
+            self._file_index = self._index_real_and_fake_face_detection()
         elif self.dataset_name == 'synthetic_attacks':
             self._file_index = self._index_synthetic_attacks()
         else:
@@ -304,8 +306,8 @@ class DatasetLoader:
         """Index Celeb-DF dataset"""
         index = {'all': [], 'real': [], 'fake': []}
         
-        # Real videos
-        real_dirs = ['Celeb-real', 'YouTube-real']
+        # Real vids
+        real_dirs = ['Celeb-real', 'YouTube-real', 'real']
         for dir_name in real_dirs:
             real_dir = self.dataset_path / dir_name
             if real_dir.exists():
@@ -320,22 +322,87 @@ class DatasetLoader:
                         }
                         index['all'].append(sample)
                         index['real'].append(sample)
+                    elif video_path.suffix.lower() in IMAGE_EXTENSIONS:
+                        sample = {
+                            'path': video_path,
+                            'label': 'real',
+                            'label_id': 0,
+                            'type': 'image',
+                            'source': dir_name
+                        }
+                        index['all'].append(sample)
+                        index['real'].append(sample)
         
-        # Fake videos
-        fake_dir = self.dataset_path / 'Celeb-synthesis'
-        if fake_dir.exists():
-            for video_path in fake_dir.glob('*'):
-                if video_path.suffix.lower() in VIDEO_EXTENSIONS:
-                    sample = {
-                        'path': video_path,
-                        'label': 'fake',
-                        'label_id': 1,
-                        'type': 'video',
-                        'source': 'Celeb-synthesis'
-                    }
-                    index['all'].append(sample)
-                    index['fake'].append(sample)
+        # Fake vids
+        fake_dirs = ['Celeb-synthesis', 'fake']
+        for dir_name in fake_dirs:
+            fake_dir = self.dataset_path / dir_name
+            if fake_dir.exists():
+                for video_path in fake_dir.glob('*'):
+                    if video_path.suffix.lower() in VIDEO_EXTENSIONS:
+                        sample = {
+                            'path': video_path,
+                            'label': 'fake',
+                            'label_id': 1,
+                            'type': 'video',
+                            'source': dir_name
+                        }
+                        index['all'].append(sample)
+                        index['fake'].append(sample)
+                    elif video_path.suffix.lower() in IMAGE_EXTENSIONS:
+                        sample = {
+                            'path': video_path,
+                            'label': 'fake',
+                            'label_id': 1,
+                            'type': 'image',
+                            'source': dir_name
+                        }
+                        index['all'].append(sample)
+                        index['fake'].append(sample)
         
+        return index
+    
+    def _index_real_and_fake_face_detection(self) -> Dict[str, List[Dict]]:
+        """Index Real and Fake Face dataset"""
+        index = {'all': [], 'real': [], 'fake': []}
+        
+        # Determine directory structure
+        # Check if nested 'real_and_fake_face' exists
+        nested_dir = self.dataset_path / 'real_and_fake_face'
+        base_dir = nested_dir if nested_dir.exists() else self.dataset_path
+
+        # Real images
+        real_dirs = ['training_real', 'real']
+        for dir_name in real_dirs:
+            real_dir = base_dir / dir_name
+            if real_dir.exists():
+                for img_path in real_dir.glob('*'):
+                    if img_path.suffix.lower() in IMAGE_EXTENSIONS:
+                        sample = {
+                            'path': img_path,
+                            'label': 'real',
+                            'label_id': 0,
+                            'type': 'image'
+                        }
+                        index['all'].append(sample)
+                        index['real'].append(sample)
+                        
+        # Fake images
+        fake_dirs = ['training_fake', 'fake', 'easy', 'hard']
+        for dir_name in fake_dirs:
+            fake_dir = base_dir / dir_name
+            if fake_dir.exists():
+                for img_path in fake_dir.glob('*'):
+                    if img_path.suffix.lower() in IMAGE_EXTENSIONS:
+                        sample = {
+                            'path': img_path,
+                            'label': 'fake',
+                            'label_id': 1,
+                            'type': 'image'
+                        }
+                        index['all'].append(sample)
+                        index['fake'].append(sample)
+                        
         return index
     
     def _index_synthetic_attacks(self) -> Dict[str, List[Dict]]:

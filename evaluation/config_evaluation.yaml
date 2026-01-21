@@ -28,7 +28,7 @@ general:
 datasets:
   # FaceForensics++ Dataset
   faceforensics:
-    enabled: true
+    enabled: false
     dataset_type: "deepfake_detection"
     
     # Download settings
@@ -63,11 +63,36 @@ datasets:
   celebdf:
     enabled: true
     dataset_type: "deepfake_detection"
-    
+
     # Download settings
     download:
       enabled: true
-      url: "https://github.com/yuezunli/celeb-deepfakeforensics"
+      url: "https://github.com/yuezunli/CELEB-DF-v2"  # Requires manual request, but we'll try
+      extraction_method: "zip"
+
+    # Sampling settings
+    sampling:
+      sample_size: 200  # Number of videos/images to use
+      stratified: true  # Stratified sampling
+      real_fake_ratio: 0.5  # 50% real, 50% fake
+      split: "test"  # train, val, test
+
+    # Preprocessing
+    preprocessing:
+      resize: [224, 224]
+      extract_frames: true  # Extract frames from videos
+      frames_per_video: 5
+
+  # Real and Fake Face Detection
+  real-and-fake-face-detection:
+    enabled: true
+    dataset_type: "deepfake_detection"
+
+    # Download settings
+    download:
+      enabled: true
+      url: "https://www.kaggle.com/datasets/ciplab/real-and-fake-face-detection"
+      extraction_method: "zip"
     
     # Sampling settings
     sampling:
@@ -75,20 +100,11 @@ datasets:
       stratified: true
       real_fake_ratio: 0.5
       split: "test"
-    
+
     # Preprocessing
     preprocessing:
       resize: [224, 224]
-      normalize: true
-      augmentation: false
-    
-    # Target metrics (same as FaceForensics)
-    target_metrics:
-      auroc: 0.90
-      auroc_threshold: 0.75
-      precision: 0.85
-      recall: 0.85
-  
+
   # Synthetic Coordinated Attacks
   synthetic_attacks:
     enabled: true
@@ -96,12 +112,6 @@ datasets:
     
     # Generation settings
     generation:
-      num_attack_groups: 10  # Number of coordinated attack scenarios
-      attack_size_min: 3  # Minimum submissions per attack
-      attack_size_max: 10  # Maximum submissions per attack
-      benign_submissions: 20  # Normal submissions for comparison
-    
-    # Attack patterns
     attack_patterns:
       - name: "linguistic_similarity"
         enabled: true
@@ -387,6 +397,26 @@ benchmarks:
 # ============================================
 
 experiments:
+  # Deepfake Detection
+  deepfake_detection:
+    enabled: true
+  
+  # Coordination Detection
+  coordination_detection:
+    enabled: true
+    
+  # Consensus Simulation
+  consensus_simulation:
+    enabled: true
+    
+  # Counter Evidence
+  counter_evidence:
+    enabled: true
+    
+  # End-to-End
+  end_to_end:
+    enabled: true
+
   # Ablation Studies
   ablation:
     enabled: false

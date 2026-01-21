@@ -219,7 +219,7 @@ jobs:
           sleep 10
 
           # Check health
-          curl -f http://localhost:8000/health || echo "Backend health check failed"
+          curl -f http://localhost:8080/health || echo "Backend health check failed"
           curl -f http://localhost:3000/health || echo "Frontend health check failed"
 
           echo "Deployment completed!"
@@ -257,7 +257,7 @@ jobs:
           docker pull ${{ env.DOCKER_REGISTRY }}/${{ github.repository }}/frontend:${{ needs.pre-deployment.outputs.version }}
 
           # Run containers
-          docker run -d -p 8000:8000 \
+          docker run -d -p 8080:8080 \
             --name backend \
             ${{ env.DOCKER_REGISTRY }}/${{ github.repository }}/backend:${{ needs.pre-deployment.outputs.version }}
 
@@ -268,7 +268,7 @@ jobs:
 
           ### Health Checks
 
-          - Backend: http://localhost:8000/health
+          - Backend: http://localhost:8080/health
           - Frontend: http://localhost:3000/health
 
           ### Monitoring

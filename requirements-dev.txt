@@ -344,7 +344,7 @@ huggingface-hub==0.20.2
 #    uvicorn backend.main:app --reload
 #
 # 7. Access API docs:
-#    http://localhost:8000/docs
+#    http://localhost:8080/docs
 #
 # ============================================================================
 

@@ -231,7 +231,7 @@ if _install_status["warnings"]:
 
 def quick_start(
     host: str = "0.0.0.0",
-    port: int = 8000,
+    port: int = 8080,
     config_file: str = None,
     environment: str = None
 ):
@@ -246,7 +246,7 @@ def quick_start(
     
     Example:
         >>> from backend import quick_start
-        >>> quick_start(port=8000)
+        >>> quick_start(port=8080)
     """
     import uvicorn
     
@@ -372,7 +372,7 @@ def main():
     # Run server
     run_parser = subparsers.add_parser("run", help="Run the server")
     run_parser.add_argument("--host", default="0.0.0.0", help="Host address")
-    run_parser.add_argument("--port", type=int, default=8000, help="Port number")
+    run_parser.add_argument("--port", type=int, default=8080, help="Port number")
     run_parser.add_argument("--config", help="Config file path")
     run_parser.add_argument("--env", help="Environment name")
     

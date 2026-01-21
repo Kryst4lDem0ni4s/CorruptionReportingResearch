@@ -22,7 +22,7 @@ class DeepfakeDetectionExperiment:
     
     def __init__(
         self,
-        backend_url: str = "http://localhost:8000",
+        backend_url: str = "http://localhost:8080",
         timeout: int = 300
     ):
         """Initialize experiment"""

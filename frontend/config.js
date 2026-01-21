@@ -143,7 +143,7 @@ const config = {
     
     // Backend API Configuration
     backend: {
-        url: env('BACKEND_URL', 'http://localhost:8000'),
+        url: env('BACKEND_URL', 'http://localhost:8080'),
         apiPrefix: env('BACKEND_API_PREFIX', '/api/v1'),
         timeout: envInt('BACKEND_TIMEOUT', 300000), // 5 minutes
         retries: envInt('BACKEND_RETRIES', 3),

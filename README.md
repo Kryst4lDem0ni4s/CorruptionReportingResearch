@@ -60,7 +60,7 @@ docker-compose -f docker/docker-compose.yml up -d
 
 # 5. Check health
 docker-compose -f docker/docker-compose.yml ps
-curl http://localhost:8000/health
+curl http://localhost:8080/health
 curl http://localhost:3000/health
 
 # 1. Build and tag
@@ -107,24 +107,24 @@ TIMEOUT=120
 
 # Frontend
 NODE_ENV=production
-BACKEND_URL=http://backend:8000
+BACKEND_URL=http://backend:8080
 
 # Ports
-BACKEND_PORT=8000
+BACKEND_PORT=8080
 FRONTEND_PORT=3000
 
 Network Architecture:
 ┌─────────────────────────────────────┐
 │  Host Machine                       │
 │  ┌───────────────┐  ┌─────────────┐│
-│  │ localhost:3000│  │localhost:8000││
+│  │ localhost:3000│  │localhost:8080││
 │  └───────┬───────┘  └──────┬──────┘│
 │          │                 │        │
 │  ┌───────▼─────────────────▼──────┐│
 │  │   corruption-network          ││
 │  │  ┌──────────┐  ┌────────────┐ ││
 │  │  │ frontend │──│  backend   │ ││
-│  │  │  :3000   │  │   :8000    │ ││
+│  │  │  :3000   │  │   :8080    │ ││
 │  │  └──────────┘  └────────────┘ ││
 │  └─────────────────────────────────┘│
 └─────────────────────────────────────┘

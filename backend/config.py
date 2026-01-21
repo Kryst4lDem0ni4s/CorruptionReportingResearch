@@ -43,7 +43,7 @@ logger = get_logger(__name__)
 class ServerConfig:
     """Server configuration."""
     host: str = "0.0.0.0"
-    port: int = 8000
+    port: int = 8080
     reload: bool = False
     workers: int = 1
     log_level: str = DEFAULT_LOG_LEVEL
