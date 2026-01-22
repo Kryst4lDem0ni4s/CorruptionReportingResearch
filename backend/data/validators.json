@@ -1,316 +1,138 @@
-{
-  "version": "1.0.0",
-  "created_at": "2026-01-20T09:47:41.004504Z",
-  "description": "Validator pool for Byzantine consensus simulation",
-  "validators": [
-    {
-      "validator_id": "39209d644bc9a40a",
-      "name": "Validator_009",
-      "type": "honest",
-      "reliability_score": 0.8903,
-      "voting_weight": 0.9912,
-      "active": true,
-      "created_at": "2026-01-20T09:47:40.996409Z",
-      "total_votes": 0,
-      "correct_votes": 0,
-      "metadata": {
-        "description": "Standard validator with high reliability",
-        "version": "1.0.0"
-      }
-    },
-    {
-      "validator_id": "54f960acde6795c4",
-      "name": "Validator_013",
-      "type": "honest",
-      "reliability_score": 0.9054,
-      "voting_weight": 0.949,
-      "active": true,
-      "created_at": "2026-01-20T09:47:40.996409Z",
-      "total_votes": 0,
-      "correct_votes": 0,
-      "metadata": {
-        "description": "Standard validator with high reliability",
-        "version": "1.0.0"
-      }
-    },
-    {
-      "validator_id": "e99dbf2c9cdcc855",
-      "name": "Validator_002",
-      "type": "honest",
-      "reliability_score": 0.9097,
-      "voting_weight": 0.9314,
-      "active": true,
-      "created_at": "2026-01-20T09:47:40.996409Z",
-      "total_votes": 0,
-      "correct_votes": 0,
-      "metadata": {
-        "description": "Standard validator with high reliability",
-        "version": "1.0.0"
-      }
-    },
-    {
-      "validator_id": "a387bb37f1f3c2b2",
-      "name": "Validator_020",
-      "type": "devils_advocate",
-      "reliability_score": 0.7637,
-      "voting_weight": 0.8516,
-      "active": true,
-      "created_at": "2026-01-20T09:47:40.996409Z",
-      "total_votes": 0,
-      "correct_votes": 0,
-      "metadata": {
-        "description": "Contrarian validator for robustness testing",
-        "version": "1.0.0"
-      }
-    },
-    {
-      "validator_id": "f81424977017db22",
-      "name": "Validator_010",
-      "type": "honest",
-      "reliability_score": 0.9498,
-      "voting_weight": 1.0598,
-      "active": true,
-      "created_at": "2026-01-20T09:47:40.996409Z",
-      "total_votes": 0,
-      "correct_votes": 0,
-      "metadata": {
-        "description": "Standard validator with high reliability",
-        "version": "1.0.0"
-      }
-    },
-    {
-      "validator_id": "a361450dbb61a4f6",
-      "name": "Validator_007",
-      "type": "honest",
-      "reliability_score": 0.9182,
-      "voting_weight": 1.0832,
-      "active": true,
-      "created_at": "2026-01-20T09:47:40.996409Z",
-      "total_votes": 0,
-      "correct_votes": 0,
-      "metadata": {
-        "description": "Standard validator with high reliability",
-        "version": "1.0.0"
-      }
-    },
-    {
-      "validator_id": "be9857c650d17987",
-      "name": "Validator_003",
-      "type": "honest",
-      "reliability_score": 0.9233,
-      "voting_weight": 0.9133,
-      "active": true,
-      "created_at": "2026-01-20T09:47:40.996409Z",
-      "total_votes": 0,
-      "correct_votes": 0,
-      "metadata": {
-        "description": "Standard validator with high reliability",
-        "version": "1.0.0"
-      }
-    },
-    {
-      "validator_id": "3379d0e7b4d644b1",
-      "name": "Validator_004",
-      "type": "honest",
-      "reliability_score": 0.9422,
-      "voting_weight": 1.0272,
-      "active": true,
-      "created_at": "2026-01-20T09:47:40.996409Z",
-      "total_votes": 0,
-      "correct_votes": 0,
-      "metadata": {
-        "description": "Standard validator with high reliability",
-        "version": "1.0.0"
-      }
-    },
-    {
-      "validator_id": "424d374edf4a0324",
-      "name": "Validator_018",
-      "type": "honest",
-      "reliability_score": 0.9374,
-      "voting_weight": 0.9673,
-      "active": true,
-      "created_at": "2026-01-20T09:47:40.996409Z",
-      "total_votes": 0,
-      "correct_votes": 0,
-      "metadata": {
-        "description": "Standard validator with high reliability",
-        "version": "1.0.0"
-      }
-    },
-    {
-      "validator_id": "a9ef33e3aa42fb2e",
-      "name": "Validator_008",
-      "type": "honest",
-      "reliability_score": 0.9031,
-      "voting_weight": 0.925,
-      "active": true,
-      "created_at": "2026-01-20T09:47:40.996409Z",
-      "total_votes": 0,
-      "correct_votes": 0,
-      "metadata": {
-        "description": "Standard validator with high reliability",
-        "version": "1.0.0"
-      }
-    },
-    {
-      "validator_id": "e062496a724eca68",
-      "name": "Validator_005",
-      "type": "honest",
-      "reliability_score": 0.8895,
-      "voting_weight": 1.0506,
-      "active": true,
-      "created_at": "2026-01-20T09:47:40.996409Z",
-      "total_votes": 0,
-      "correct_votes": 0,
-      "metadata": {
-        "description": "Standard validator with high reliability",
-        "version": "1.0.0"
-      }
-    },
-    {
-      "validator_id": "3de1f81cda229904",
-      "name": "Validator_014",
-      "type": "honest",
-      "reliability_score": 0.8954,
-      "voting_weight": 0.9926,
-      "active": true,
-      "created_at": "2026-01-20T09:47:40.996409Z",
-      "total_votes": 0,
-      "correct_votes": 0,
-      "metadata": {
-        "description": "Standard validator with high reliability",
-        "version": "1.0.0"
-      }
-    },
-    {
-      "validator_id": "5142e66ecc192a4f",
-      "name": "Validator_017",
-      "type": "honest",
-      "reliability_score": 0.8875,
-      "voting_weight": 1.0868,
-      "active": true,
-      "created_at": "2026-01-20T09:47:40.996409Z",
-      "total_votes": 0,
-      "correct_votes": 0,
-      "metadata": {
-        "description": "Standard validator with high reliability",
-        "version": "1.0.0"
-      }
-    },
-    {
-      "validator_id": "5ad9f4e2abcf36fe",
-      "name": "Validator_012",
-      "type": "honest",
-      "reliability_score": 0.9263,
-      "voting_weight": 0.9546,
-      "active": true,
-      "created_at": "2026-01-20T09:47:40.996409Z",
-      "total_votes": 0,
-      "correct_votes": 0,
-      "metadata": {
-        "description": "Standard validator with high reliability",
-        "version": "1.0.0"
-      }
-    },
-    {
-      "validator_id": "0a3525e68f1dc310",
-      "name": "Validator_015",
-      "type": "honest",
-      "reliability_score": 0.931,
-      "voting_weight": 1.0272,
-      "active": true,
-      "created_at": "2026-01-20T09:47:40.996409Z",
-      "total_votes": 0,
-      "correct_votes": 0,
-      "metadata": {
-        "description": "Standard validator with high reliability",
-        "version": "1.0.0"
-      }
-    },
-    {
-      "validator_id": "385cf0edfa28be98",
-      "name": "Validator_016",
-      "type": "honest",
-      "reliability_score": 0.9068,
-      "voting_weight": 0.9668,
-      "active": true,
-      "created_at": "2026-01-20T09:47:40.996409Z",
-      "total_votes": 0,
-      "correct_votes": 0,
-      "metadata": {
-        "description": "Standard validator with high reliability",
-        "version": "1.0.0"
-      }
-    },
-    {
-      "validator_id": "8d17bfbb05102570",
-      "name": "Validator_006",
-      "type": "honest",
-      "reliability_score": 0.9008,
-      "voting_weight": 1.0521,
-      "active": true,
-      "created_at": "2026-01-20T09:47:40.996409Z",
-      "total_votes": 0,
-      "correct_votes": 0,
-      "metadata": {
-        "description": "Standard validator with high reliability",
-        "version": "1.0.0"
-      }
-    },
-    {
-      "validator_id": "1438408e09bae092",
-      "name": "Validator_019",
-      "type": "devils_advocate",
-      "reliability_score": 0.8251,
-      "voting_weight": 0.8115,
-      "active": true,
-      "created_at": "2026-01-20T09:47:40.996409Z",
-      "total_votes": 0,
-      "correct_votes": 0,
-      "metadata": {
-        "description": "Contrarian validator for robustness testing",
-        "version": "1.0.0"
-      }
-    },
-    {
-      "validator_id": "e3b2e5afe3ab1f32",
-      "name": "Validator_001",
-      "type": "honest",
-      "reliability_score": 0.8848,
-      "voting_weight": 0.9199,
-      "active": true,
-      "created_at": "2026-01-20T09:47:40.996409Z",
-      "total_votes": 0,
-      "correct_votes": 0,
-      "metadata": {
-        "description": "Standard validator with high reliability",
-        "version": "1.0.0"
-      }
-    },
-    {
-      "validator_id": "5bd7d829ed1c39b6",
-      "name": "Validator_011",
-      "type": "honest",
-      "reliability_score": 0.8877,
-      "voting_weight": 0.9124,
-      "active": true,
-      "created_at": "2026-01-20T09:47:40.996409Z",
-      "total_votes": 0,
-      "correct_votes": 0,
-      "metadata": {
-        "description": "Standard validator with high reliability",
-        "version": "1.0.0"
-      }
-    }
-  ],
-  "metadata": {
-    "total_validators": 20,
-    "active_validators": 20,
-    "honest_validators": 18,
-    "devils_advocate_validators": 2,
-    "last_updated": "2026-01-20T09:47:41.004504Z",
-    "consensus_threshold": 0.67,
-    "devils_advocate_percentage": 0.1
+[
+  {
+    "id": "validator_01",
+    "type": "devils_advocate",
+    "reputation": 1.0,
+    "total_votes": 0,
+    "correct_votes": 0,
+    "bias": 0.08793717154930517
+  },
+  {
+    "id": "validator_02",
+    "type": "honest",
+    "reputation": 1.0,
+    "total_votes": 0,
+    "correct_votes": 0,
+    "bias": -0.09387701331778882
+  },
+  {
+    "id": "validator_03",
+    "type": "honest",
+    "reputation": 1.0,
+    "total_votes": 0,
+    "correct_votes": 0,
+    "bias": 0.0995134849735557
+  },
+  {
+    "id": "validator_04",
+    "type": "honest",
+    "reputation": 1.0,
+    "total_votes": 0,
+    "correct_votes": 0,
+    "bias": 0.08077912941954388
+  },
+  {
+    "id": "validator_05",
+    "type": "honest",
+    "reputation": 1.0,
+    "total_votes": 0,
+    "correct_votes": 0,
+    "bias": -0.06885660439663333
+  },
+  {
+    "id": "validator_06",
+    "type": "honest",
+    "reputation": 1.0,
+    "total_votes": 0,
+    "correct_votes": 0,
+    "bias": -0.03857699100671122
+  },
+  {
+    "id": "validator_07",
+    "type": "honest",
+    "reputation": 1.0,
+    "total_votes": 0,
+    "correct_votes": 0,
+    "bias": 0.022812812034982047
+  },
+  {
+    "id": "validator_08",
+    "type": "honest",
+    "reputation": 1.0,
+    "total_votes": 0,
+    "correct_votes": 0,
+    "bias": -0.08705957805501081
+  },
+  {
+    "id": "validator_09",
+    "type": "honest",
+    "reputation": 1.0,
+    "total_votes": 0,
+    "correct_votes": 0,
+    "bias": 0.07016400256627761
+  },
+  {
+    "id": "validator_10",
+    "type": "honest",
+    "reputation": 1.0,
+    "total_votes": 0,
+    "correct_votes": 0,
+    "bias": 0.016354124891740637
+  },
+  {
+    "id": "validator_11",
+    "type": "honest",
+    "reputation": 1.0,
+    "total_votes": 0,
+    "correct_votes": 0,
+    "bias": -0.0440597566828592
+  },
+  {
+    "id": "validator_12",
+    "type": "honest",
+    "reputation": 1.0,
+    "total_votes": 0,
+    "correct_votes": 0,
+    "bias": 0.08800067236976802
+  },
+  {
+    "id": "validator_13",
+    "type": "honest",
+    "reputation": 1.0,
+    "total_votes": 0,
+    "correct_votes": 0,
+    "bias": -0.07704905315733149
+  },
+  {
+    "id": "validator_14",
+    "type": "honest",
+    "reputation": 1.0,
+    "total_votes": 0,
+    "correct_votes": 0,
+    "bias": 0.02421157821696651
+  },
+  {
+    "id": "validator_15",
+    "type": "honest",
+    "reputation": 1.0,
+    "total_votes": 0,
+    "correct_votes": 0,
+    "bias": -0.011249695235777901
+  },
+  {
+    "id": "validator_16",
+    "type": "honest",
+    "reputation": 1.0,
+    "total_votes": 0,
+    "correct_votes": 0,
+    "bias": 0.039961356369015044
+  },
+  {
+    "id": "validator_17",
+    "type": "honest",
+    "reputation": 1.0,
+    "total_votes": 0,
+    "correct_votes": 0,
+    "bias": -0.09649005786155351
   }
-}
+]

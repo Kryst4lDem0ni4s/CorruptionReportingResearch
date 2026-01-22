@@ -51,21 +51,25 @@ from backend.api.middleware import RateLimitMiddleware, ErrorHandlingMiddleware
 def create_metric(metric_class, name, *args, **kwargs):
     """Create or retrieve existing Prometheus metric to avoid duplication errors."""
     try:
-        # Try to get existing metric from registry
+        # Try to find existing metric in registry
         for collector in list(REGISTRY._collector_to_names.keys()):
             if hasattr(collector, '_name') and collector._name == name:
+                logger.debug(f"Reusing existing metric: {name}")
                 return collector
+        
         # Create new metric if not found
+        logger.debug(f"Creating new metric: {name}")
         return metric_class(name, *args, **kwargs)
+        
     except Exception as e:
-        logger.warning(f"Could not create/find metric {name}: {e}")
-        # Return a dummy metric that does nothing to prevent crashes
+        logger.warning(f"Metric creation/retrieval failed for {name}: {e}")
+        # Return dummy metric to prevent crashes
         class DummyMetric:
-            def inc(self, *args, **kwargs): pass
-            def dec(self, *args, **kwargs): pass
-            def set(self, *args, **kwargs): pass
-            def observe(self, *args, **kwargs): pass
-            def labels(self, *args, **kwargs): return self
+            def inc(self, *a, **kw): pass
+            def dec(self, *a, **kw): pass
+            def set(self, *a, **kw): pass
+            def observe(self, *a, **kw): pass
+            def labels(self, *a, **kw): return self
         return DummyMetric()
 
 # ==================== PROMETHEUS METRICS DECLARATIONS ====================
@@ -283,21 +287,37 @@ async def lifespan(app: FastAPI):
         from backend.workers.submission_worker import SubmissionWorker
         from backend.workers.cleanup_worker import CleanupWorker
 
+        from backend.services.crypto_service import CryptoService
+        from backend.services.metadata_service import MetadataService
+        from backend.services.validation_service import ValidationService
+        from backend.utils.text_utils import TextUtils
+        from backend.utils.graph_utils import GraphUtils
+        from backend.core.orchestrator import Orchestrator
+
         # Initialize storage
         logger.info("Initializing storage...")
-        storage = StorageService()
+        storage = StorageService()  # Corrected: removed parameters
         storage._initialize_directories()
         app.state.storage = storage
         logger.info(f"Storage initialized at {config.storage.data_dir}")
 
+        # Initialize services for Orchestrator
+        logger.info("Initializing services...")
+        crypto = CryptoService()
+        metadata_service = MetadataService()
+        validation_service = ValidationService()
+        text_utils = TextUtils()
+        graph_utils = GraphUtils()
+        
         # Verify hash chain integrity
+        hash_chain = None
         if config.security.hash_chain_enabled:
             logger.info("Verifying hash chain integrity...")
-            hash_chain = HashChainService()
+            hash_chain = HashChainService()  # Corrected: removed parameters
             app.state.hash_chain = hash_chain
 
             try:
-                hash_chain.verify_chain()
+                hash_chain.verify_chain() # Kept verify_chain instead of verify_integrity
                 logger.info("Hash chain verification successful")
             except Exception as e:
                 logger.warning(f"Hash chain verification failed: {e}")
@@ -306,6 +326,7 @@ async def lifespan(app: FastAPI):
                 hash_chain_validation_failures_total.inc()
 
         # Initialize metrics service
+        metrics = None
         if config.metrics.enabled:
             logger.info("Initializing metrics service...")
             metrics = MetricsService()
@@ -324,6 +345,21 @@ async def lifespan(app: FastAPI):
                 'queue_processing': queue_processing_jobs,
             }
 
+        # Initialize Orchestrator (Singleton)
+        logger.info("Initializing Orchestrator...")
+        orchestrator = Orchestrator(
+            storage_service=storage,
+            hash_chain_service=hash_chain,
+            crypto_service=crypto,
+            metadata_service=metadata_service,
+            validation_service=validation_service,
+            text_utils=text_utils,
+            graph_utils=graph_utils,
+            metrics_service=metrics
+        )
+        app.state.orchestrator = orchestrator
+        logger.info("Orchestrator initialized successfully")
+
         # Initialize queue service
         logger.info("Starting background workers...")
         queue = QueueService()
@@ -333,12 +369,11 @@ async def lifespan(app: FastAPI):
         submission_worker = SubmissionWorker(
             storage_service=storage,
             queue_service=queue,
-            metrics_service=metrics if config.metrics.enabled else None,
+            metrics_service=metrics,
             orchestrator=orchestrator
         )
         
         # Start worker in background (non-blocking)
-        # Refactored: start() now creates a background task and returns immediately
         await submission_worker.start()
         app.state.submission_worker = submission_worker
         logger.info("Submission worker started successfully")

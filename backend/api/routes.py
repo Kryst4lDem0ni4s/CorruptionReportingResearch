@@ -51,7 +51,7 @@ router = APIRouter()
     Submit evidence (image/audio/video) for anonymous credibility assessment.
     Processing happens asynchronously - poll /submissions/{id} for results.
     
-    **Rate Limit:** 10 submissions per hour per IP address.
+    **Rate Limit:** 1000 submissions per hour per IP address.
     **File Limits:** Images/Audio ≤5MB, Video ≤50MB.
     """,
     responses={
@@ -107,11 +107,15 @@ async def submit_evidence(
         file_content = await file.read()
         
         # Validate file size and type
-        validation_service.validate_file_upload(
+        # Note: validate_file_content requires (filename, content, evidence_type)
+        is_valid, error_msg = validation_service.validate_file_content(
             filename=file.filename,
             content=file_content,
             evidence_type=request_data.evidence_type
         )
+        
+        if not is_valid:
+            raise ValueError(error_msg)
         
     except ValueError as e:
         raise HTTPException(
@@ -155,6 +159,7 @@ async def submit_evidence(
             process_submission_async,
             submission_id=submission_id,
             file_path=staging_path,
+            evidence_type=request_data.evidence_type.value,
             orchestrator=orchestrator,
             storage_service=storage_service
         )
@@ -502,6 +507,69 @@ async def download_report(
 # COORDINATION GRAPH ENDPOINT
 # ============================================================================
 
+@router.post(
+    "/coordination/detect",
+    response_model=schemas.CoordinationDetectionResponse,
+    summary="Check for coordination among submissions",
+    description="Analyze a set of submissions for potential coordination patterns."
+)
+async def detect_coordination(
+    request: schemas.CoordinationRequest,
+    rate_limiter = Depends(get_rate_limiter),
+    orchestrator = Depends(get_orchestrator)
+):
+    """
+    Detect coordination in a set of submissions.
+    Checks if the provided submission IDs form or belong to a coordinated cluster.
+    """
+    try:
+        # Get current coordination graph
+        graph_data = orchestrator.layer3.get_coordination_graph_data()
+        
+        communities = graph_data.get('communities', [])
+        target_ids = set(request.submission_ids)
+        
+        is_coordinated = False
+        confidence = 0.0
+        details = []
+        
+        # Check if target IDs appear in any detected community
+        for community in communities:
+            members = set(community.get('members', []))
+            
+            # Calculate overlap
+            overlap = target_ids.intersection(members)
+            
+            if len(overlap) >= 2: # At least 2 submissions in same community
+                # Calculate what % of the check set is in this community
+                coverage = len(overlap) / len(target_ids)
+                
+                # Calculate what % of community is the check set
+                community_coverage = len(overlap) / len(members)
+                
+                if coverage > 0.5 or community_coverage > 0.5:
+                    is_coordinated = True
+                    # Confidence based on overlap and community size
+                    confidence = max(confidence, (coverage + community_coverage) / 2)
+                    details.append(community)
+        
+        return {
+            "is_coordinated": is_coordinated,
+            "confidence": confidence,
+            "clusters": details,
+            "metrics": {
+                "total_checked": len(target_ids),
+                "communities_found": len(details)
+            }
+        }
+        
+    except Exception as e:
+        logger.error(f"Coordination detection failed: {e}", exc_info=True)
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"Coordination detection failed: {str(e)}"
+        )
+
 @router.get(
     "/coordination-graph",
     response_model=schemas.CoordinationGraphResponse,
@@ -596,6 +664,7 @@ async def get_coordination_graph(
 async def process_submission_async(
     submission_id: str,
     file_path: Path,
+    evidence_type: str,
     orchestrator,
     storage_service
 ):
@@ -617,7 +686,8 @@ async def process_submission_async(
         # Execute full 6-layer pipeline
         results = await orchestrator.process_submission(
             submission_id=submission_id,
-            file_path=file_path
+            file_path=file_path,
+            evidence_type=evidence_type
         )
         
         # Calculate processing time

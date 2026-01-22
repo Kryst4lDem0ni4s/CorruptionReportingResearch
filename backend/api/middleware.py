@@ -176,60 +176,78 @@ class RateLimitMiddleware(BaseHTTPMiddleware):
         try:
             rate_limiter = get_rate_limiter()
         except Exception as e:
-            logger.error(f"Failed to get rate limiter: {e}")
+            logger.error(f"Failed to get rate limiter: {e}", exc_info=True)
             # Fail open - allow request if rate limiter unavailable
-            return await call_next(request)
-        
-        # Check if rate limiting is enabled
-        if not rate_limiter.enabled:
             return await call_next(request)
         
         # Get client IP
         client_ip = get_client_ip(request)
         
-        # Check rate limit
+        # Determine endpoint type from path
+        endpoint_type = 'default'
+        if '/submissions' in request.url.path:
+            endpoint_type = 'submission'
+        elif '/health' in request.url.path:
+            endpoint_type = 'health'
+        elif '/report' in request.url.path:
+            endpoint_type = 'report'
+        elif '/counter-evidence' in request.url.path:
+            endpoint_type = 'counter_evidence'
+        
+        # Check rate limit using correct API
         try:
-            is_allowed = rate_limiter.check_limit(client_ip)
+            is_allowed, rate_info = rate_limiter.check_rate_limit(
+                ip_address=client_ip,
+                endpoint_type=endpoint_type
+            )
             
             if not is_allowed:
                 # Rate limit exceeded
-                retry_after = rate_limiter.get_retry_after(client_ip)
+                retry_after = rate_info.get('retry_after', 60)
+                limit = rate_info.get('limit', 10)
+                current = rate_info.get('current', limit)
                 
                 logger.warning(
-                    f"Rate limit exceeded for {client_ip} on {request.url.path}"
+                    f"Rate limit exceeded for {client_ip} on {request.url.path} "
+                    f"({current}/{limit} for {endpoint_type})"
                 )
                 
                 return JSONResponse(
                     status_code=status.HTTP_429_TOO_MANY_REQUESTS,
                     content={
-                        "error": "RateLimitExceeded",
+                        "error": "RATE_LIMIT_EXCEEDED",
                         "message": "Too many requests. Please try again later.",
-                        "retry_after": retry_after
+                        "retry_after": retry_after,
+                        "limit": limit,
+                        "endpoint_type": endpoint_type
                     },
                     headers={
                         "Retry-After": str(retry_after),
-                        "X-RateLimit-Limit": str(rate_limiter.max_requests),
+                        "X-RateLimit-Limit": str(limit),
                         "X-RateLimit-Remaining": "0",
                         "X-RateLimit-Reset": str(int(time.time()) + retry_after)
                     }
                 )
             
-            # Add rate limit headers to response
+            # Process request
             response = await call_next(request)
             
-            remaining = rate_limiter.get_remaining_requests(client_ip)
-            reset_time = rate_limiter.get_reset_time(client_ip)
+            # Add rate limit headers to response
+            limit = rate_info.get('limit', 10)
+            remaining = rate_info.get('remaining', 0)
+            reset_time = rate_info.get('reset', int(time.time()) + 3600)
             
-            response.headers["X-RateLimit-Limit"] = str(rate_limiter.max_requests)
+            response.headers["X-RateLimit-Limit"] = str(limit)
             response.headers["X-RateLimit-Remaining"] = str(remaining)
             response.headers["X-RateLimit-Reset"] = str(reset_time)
             
             return response
             
         except Exception as e:
-            logger.error(f"Rate limit check error for {client_ip}: {e}")
+            logger.error(f"Rate limit check error for {client_ip}: {e}", exc_info=True)
             # Fail open - allow request on error
             return await call_next(request)
+
 
 
 # ============================================================================
@@ -299,11 +317,15 @@ class ErrorHandlingMiddleware(BaseHTTPMiddleware):
             }
             
             # Add traceback in development mode
-            from backend.config import get_config
-            config = get_config()
-            
-            if config.get("environment") == "development":
-                error_response["traceback"] = traceback.format_exc()
+            try:
+                from backend.config import get_config
+                config = get_config()
+                
+                if config.environment == "development":
+                    error_response["traceback"] = traceback.format_exc()
+            except Exception:
+                # If config fails, don't add traceback
+                pass
             
             return JSONResponse(
                 status_code=status_code,

@@ -110,11 +110,12 @@ class Layer1Anonymity:
             logger.debug(f"Evidence encrypted")
             
             # Step 5: Add entry to hash chain
-            chain_hash = self.hash_chain.add_entry(
-                evidence_hash=evidence_hash,
+            # Use correct method add_block which generates its own timestamp
+            block = self.hash_chain.add_block(
                 submission_id=submission_id,
-                timestamp=datetime.utcnow().isoformat()
+                evidence_hash=evidence_hash
             )
+            chain_hash = block['hash']
             logger.debug(f"Chain hash: {chain_hash[:16]}...")
             
             # Step 6: Sanitize text narrative

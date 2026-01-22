@@ -39,5 +39,1055 @@
     "index_type": "in-memory-backed",
     "rebuild_on_startup": true,
     "auto_optimize": true
+  },
+  "20038538-7d16-44dc-9acd-bbfca072c3cd": {
+    "pseudonym": null,
+    "evidence_type": "image",
+    "status": "failed",
+    "timestamp_submission": "2026-01-22T13:34:44.783408",
+    "timestamp_updated": "2026-01-22T13:34:44.783408"
+  },
+  "8c00c47e-5238-4512-aa33-6cd5a8cbd8c0": {
+    "pseudonym": null,
+    "evidence_type": "image",
+    "status": "failed",
+    "timestamp_submission": "2026-01-22T13:34:59.033176",
+    "timestamp_updated": "2026-01-22T13:34:59.033176"
+  },
+  "91130d23-8e22-4d43-af14-8f5f391a2d33": {
+    "pseudonym": null,
+    "evidence_type": "image",
+    "status": "failed",
+    "timestamp_submission": "2026-01-22T13:35:13.322140",
+    "timestamp_updated": "2026-01-22T13:35:13.322140"
+  },
+  "3704d84d-28a2-41f7-9652-d7b5c75a3384": {
+    "pseudonym": null,
+    "evidence_type": "image",
+    "status": "failed",
+    "timestamp_submission": "2026-01-22T13:35:27.571046",
+    "timestamp_updated": "2026-01-22T13:35:27.571046"
+  },
+  "b41d97f2-8e6e-4fd2-b330-0a515ee7b1dd": {
+    "pseudonym": null,
+    "evidence_type": "image",
+    "status": "failed",
+    "timestamp_submission": "2026-01-22T13:35:41.872018",
+    "timestamp_updated": "2026-01-22T13:35:41.872018"
+  },
+  "8a3d28ee-f394-432d-8392-e199ac9df264": {
+    "pseudonym": null,
+    "evidence_type": "image",
+    "status": "failed",
+    "timestamp_submission": "2026-01-22T13:35:56.118578",
+    "timestamp_updated": "2026-01-22T13:35:56.118578"
+  },
+  "4071f7ea-adc3-4684-925e-1ee5743429c2": {
+    "pseudonym": null,
+    "evidence_type": "image",
+    "status": "failed",
+    "timestamp_submission": "2026-01-22T13:36:49.497602",
+    "timestamp_updated": "2026-01-22T13:36:49.607903"
+  },
+  "dfa567e9-df76-4914-b6da-edfc5afff169": {
+    "pseudonym": null,
+    "evidence_type": "image",
+    "status": "failed",
+    "timestamp_submission": "2026-01-22T13:37:03.910178",
+    "timestamp_updated": "2026-01-22T13:37:03.974909"
+  },
+  "8508e201-6c18-4ce4-813a-5c72dead65df": {
+    "pseudonym": null,
+    "evidence_type": "image",
+    "status": "failed",
+    "timestamp_submission": "2026-01-22T13:37:18.290400",
+    "timestamp_updated": "2026-01-22T13:37:18.360784"
+  },
+  "c3408111-704d-4249-bb49-0bd4ed5b0e33": {
+    "pseudonym": null,
+    "evidence_type": "image",
+    "status": "failed",
+    "timestamp_submission": "2026-01-22T13:37:32.617821",
+    "timestamp_updated": "2026-01-22T13:37:32.689393"
+  },
+  "271b5192-c8e9-4bd3-afba-91df77c681f7": {
+    "pseudonym": null,
+    "evidence_type": "image",
+    "status": "failed",
+    "timestamp_submission": "2026-01-22T13:37:46.977470",
+    "timestamp_updated": "2026-01-22T13:37:47.043893"
+  },
+  "1fea616d-7816-4c79-8bc3-f2010ffc2c48": {
+    "pseudonym": null,
+    "evidence_type": "image",
+    "status": "failed",
+    "timestamp_submission": "2026-01-22T13:38:01.295392",
+    "timestamp_updated": "2026-01-22T13:38:01.370958"
+  },
+  "52d57d55-5404-4597-ad4e-09e27aa02d79": {
+    "pseudonym": null,
+    "evidence_type": "image",
+    "status": "failed",
+    "timestamp_submission": "2026-01-22T13:38:15.663238",
+    "timestamp_updated": "2026-01-22T13:38:15.727063"
+  },
+  "521f1901-cced-4d3f-a688-eeb04763d75c": {
+    "pseudonym": null,
+    "evidence_type": "image",
+    "status": "failed",
+    "timestamp_submission": "2026-01-22T13:38:30.002617",
+    "timestamp_updated": "2026-01-22T13:38:30.079216"
+  },
+  "5582e8f7-7c7c-4209-80a2-5a4e6b1e7261": {
+    "pseudonym": null,
+    "evidence_type": "image",
+    "status": "failed",
+    "timestamp_submission": "2026-01-22T13:38:44.373830",
+    "timestamp_updated": "2026-01-22T13:38:44.444119"
+  },
+  "e31a71c0-a65b-4373-8b1a-dbdccc1d7ea2": {
+    "pseudonym": null,
+    "evidence_type": "image",
+    "status": "failed",
+    "timestamp_submission": "2026-01-22T13:38:58.713341",
+    "timestamp_updated": "2026-01-22T13:38:58.775722"
+  },
+  "5a232e43-5d16-4fa3-9ae5-27279aec5dbf": {
+    "pseudonym": null,
+    "evidence_type": "image",
+    "status": "failed",
+    "timestamp_submission": "2026-01-22T13:39:13.058112",
+    "timestamp_updated": "2026-01-22T13:39:13.130188"
+  },
+  "dcd840ad-5153-4ba4-acc4-36190a025fda": {
+    "pseudonym": null,
+    "evidence_type": "image",
+    "status": "failed",
+    "timestamp_submission": "2026-01-22T13:39:27.397455",
+    "timestamp_updated": "2026-01-22T13:39:27.460893"
+  },
+  "b0183175-a0cd-4b28-a93b-86674ac74c74": {
+    "pseudonym": null,
+    "evidence_type": "image",
+    "status": "failed",
+    "timestamp_submission": "2026-01-22T13:39:41.725315",
+    "timestamp_updated": "2026-01-22T13:39:41.792359"
+  },
+  "b48ed1ef-d62f-4f3e-b1ef-170e6f4e4692": {
+    "pseudonym": null,
+    "evidence_type": "image",
+    "status": "failed",
+    "timestamp_submission": "2026-01-22T13:39:56.035942",
+    "timestamp_updated": "2026-01-22T13:39:56.105132"
+  },
+  "cea8c96b-7916-41d7-ace1-af3ebd92e2d5": {
+    "pseudonym": null,
+    "evidence_type": "image",
+    "status": "failed",
+    "timestamp_submission": "2026-01-22T13:40:10.415403",
+    "timestamp_updated": "2026-01-22T13:40:10.488105"
+  },
+  "bc33248f-b6d7-4b09-a5a2-f80597c12126": {
+    "pseudonym": null,
+    "evidence_type": "image",
+    "status": "failed",
+    "timestamp_submission": "2026-01-22T13:40:24.801892",
+    "timestamp_updated": "2026-01-22T13:40:24.874019"
+  },
+  "ee911080-df37-4401-9d5e-3b10bf17c8ac": {
+    "pseudonym": null,
+    "evidence_type": "image",
+    "status": "failed",
+    "timestamp_submission": "2026-01-22T13:40:39.192739",
+    "timestamp_updated": "2026-01-22T13:40:39.261638"
+  },
+  "06c0296e-9f03-4c10-b97b-59a7cf4530fe": {
+    "pseudonym": null,
+    "evidence_type": "image",
+    "status": "failed",
+    "timestamp_submission": "2026-01-22T13:40:53.523175",
+    "timestamp_updated": "2026-01-22T13:40:53.598614"
+  },
+  "7b46719d-cb40-4fbe-bcc1-7261cbb81017": {
+    "pseudonym": null,
+    "evidence_type": "image",
+    "status": "failed",
+    "timestamp_submission": "2026-01-22T13:41:07.903124",
+    "timestamp_updated": "2026-01-22T13:41:07.987205"
+  },
+  "f66cc401-2a6c-4de8-86cc-39f427ee7648": {
+    "pseudonym": null,
+    "evidence_type": "image",
+    "status": "failed",
+    "timestamp_submission": "2026-01-22T13:41:22.326989",
+    "timestamp_updated": "2026-01-22T13:41:22.407134"
+  },
+  "3cbd6c4b-53a3-427f-b4a1-fb1849a63785": {
+    "pseudonym": null,
+    "evidence_type": "image",
+    "status": "failed",
+    "timestamp_submission": "2026-01-22T13:41:36.715750",
+    "timestamp_updated": "2026-01-22T13:41:36.779766"
+  },
+  "09aadf7a-b596-450c-bcaf-29203e5b7aaf": {
+    "pseudonym": null,
+    "evidence_type": "image",
+    "status": "failed",
+    "timestamp_submission": "2026-01-22T13:41:51.067583",
+    "timestamp_updated": "2026-01-22T13:41:51.137690"
+  },
+  "314bda3b-7462-4a36-bb0c-9053fda88713": {
+    "pseudonym": null,
+    "evidence_type": "image",
+    "status": "failed",
+    "timestamp_submission": "2026-01-22T13:42:05.426794",
+    "timestamp_updated": "2026-01-22T13:42:05.495141"
+  },
+  "37709980-727f-4edf-a23d-9a6f3f117c48": {
+    "pseudonym": null,
+    "evidence_type": "image",
+    "status": "failed",
+    "timestamp_submission": "2026-01-22T13:42:19.828388",
+    "timestamp_updated": "2026-01-22T13:42:19.892643"
+  },
+  "44fd0cd4-bbf1-44d9-8861-dbf2c4d9afce": {
+    "pseudonym": null,
+    "evidence_type": "image",
+    "status": "failed",
+    "timestamp_submission": "2026-01-22T13:42:34.233857",
+    "timestamp_updated": "2026-01-22T13:42:34.306206"
+  },
+  "fde67057-ddd5-4214-a772-7bb26e503cff": {
+    "pseudonym": null,
+    "evidence_type": "image",
+    "status": "failed",
+    "timestamp_submission": "2026-01-22T13:42:48.636271",
+    "timestamp_updated": "2026-01-22T13:42:48.698701"
+  },
+  "b468f3d2-b213-4e40-992e-8a6a753912f8": {
+    "pseudonym": null,
+    "evidence_type": "image",
+    "status": "failed",
+    "timestamp_submission": "2026-01-22T13:43:03.051556",
+    "timestamp_updated": "2026-01-22T13:43:03.142599"
+  },
+  "1c32c6e1-acaf-4110-8b43-b84757f988c6": {
+    "pseudonym": null,
+    "evidence_type": "image",
+    "status": "failed",
+    "timestamp_submission": "2026-01-22T13:43:17.500031",
+    "timestamp_updated": "2026-01-22T13:43:17.563643"
+  },
+  "f50ab784-c0a0-4ef4-b079-1a68d00905f4": {
+    "pseudonym": null,
+    "evidence_type": "image",
+    "status": "failed",
+    "timestamp_submission": "2026-01-22T13:43:31.870936",
+    "timestamp_updated": "2026-01-22T13:43:31.937015"
+  },
+  "8110b7dd-f16c-4610-b083-20af1b6d08fb": {
+    "pseudonym": null,
+    "evidence_type": "image",
+    "status": "failed",
+    "timestamp_submission": "2026-01-22T13:43:46.264526",
+    "timestamp_updated": "2026-01-22T13:43:46.340980"
+  },
+  "8ddb4375-c58c-46cb-9b12-0366d701fa88": {
+    "pseudonym": null,
+    "evidence_type": "image",
+    "status": "failed",
+    "timestamp_submission": "2026-01-22T13:44:00.694247",
+    "timestamp_updated": "2026-01-22T13:44:00.762658"
+  },
+  "9982d03d-8e45-440b-b63d-6a960b623d7e": {
+    "pseudonym": null,
+    "evidence_type": "image",
+    "status": "failed",
+    "timestamp_submission": "2026-01-22T13:44:15.063567",
+    "timestamp_updated": "2026-01-22T13:44:15.138224"
+  },
+  "a73f06f4-c0ac-4fc7-b979-44680df921d0": {
+    "pseudonym": null,
+    "evidence_type": "image",
+    "status": "failed",
+    "timestamp_submission": "2026-01-22T13:44:29.445943",
+    "timestamp_updated": "2026-01-22T13:44:29.511509"
+  },
+  "29c677dc-115c-454e-96c1-22d58242b144": {
+    "pseudonym": null,
+    "evidence_type": "image",
+    "status": "failed",
+    "timestamp_submission": "2026-01-22T13:44:43.798117",
+    "timestamp_updated": "2026-01-22T13:44:43.861767"
+  },
+  "5d2b2173-2953-4c67-8400-8d3e7fb55647": {
+    "pseudonym": null,
+    "evidence_type": "image",
+    "status": "failed",
+    "timestamp_submission": "2026-01-22T13:44:58.163868",
+    "timestamp_updated": "2026-01-22T13:44:58.228346"
+  },
+  "908996ea-6865-49c3-8200-e468b3dc5724": {
+    "pseudonym": null,
+    "evidence_type": "image",
+    "status": "failed",
+    "timestamp_submission": "2026-01-22T13:45:12.584633",
+    "timestamp_updated": "2026-01-22T13:45:12.648450"
+  },
+  "c9318918-56b7-479e-b9c5-2fc1ac3e3534": {
+    "pseudonym": null,
+    "evidence_type": "image",
+    "status": "failed",
+    "timestamp_submission": "2026-01-22T13:45:26.934691",
+    "timestamp_updated": "2026-01-22T13:45:26.997250"
+  },
+  "9101810b-738b-42e7-82bc-8e07b0bdc23c": {
+    "pseudonym": null,
+    "evidence_type": "image",
+    "status": "failed",
+    "timestamp_submission": "2026-01-22T13:45:41.323688",
+    "timestamp_updated": "2026-01-22T13:45:41.405743"
+  },
+  "b6c742a9-beaa-4f66-8f8f-3d4f69fbade6": {
+    "pseudonym": null,
+    "evidence_type": "image",
+    "status": "failed",
+    "timestamp_submission": "2026-01-22T13:45:55.705895",
+    "timestamp_updated": "2026-01-22T13:45:55.784511"
+  },
+  "0f64d645-6de5-4f7e-b72d-52fabe65565c": {
+    "pseudonym": null,
+    "evidence_type": "image",
+    "status": "failed",
+    "timestamp_submission": "2026-01-22T13:46:10.104923",
+    "timestamp_updated": "2026-01-22T13:46:10.168559"
+  },
+  "d1bb36ca-0621-4af7-9b7b-7f8f66ec01cb": {
+    "pseudonym": null,
+    "evidence_type": "image",
+    "status": "failed",
+    "timestamp_submission": "2026-01-22T13:46:24.449880",
+    "timestamp_updated": "2026-01-22T13:46:24.517858"
+  },
+  "d791938f-f66a-4642-b7a8-3a3eed510241": {
+    "pseudonym": null,
+    "evidence_type": "image",
+    "status": "failed",
+    "timestamp_submission": "2026-01-22T13:46:38.837930",
+    "timestamp_updated": "2026-01-22T13:46:38.912913"
+  },
+  "b3a3f73d-1fbc-4b15-a178-730adf7792fd": {
+    "pseudonym": null,
+    "evidence_type": "image",
+    "status": "failed",
+    "timestamp_submission": "2026-01-22T13:46:53.191145",
+    "timestamp_updated": "2026-01-22T13:46:53.235020"
+  },
+  "475bcb2d-d6cc-4087-b846-d3a786c0b4e7": {
+    "pseudonym": null,
+    "evidence_type": "image",
+    "status": "failed",
+    "timestamp_submission": "2026-01-22T13:47:07.549243",
+    "timestamp_updated": "2026-01-22T13:47:07.618518"
+  },
+  "f442d599-ecb8-4ded-aa0b-d16d12b0c009": {
+    "pseudonym": null,
+    "evidence_type": "image",
+    "status": "failed",
+    "timestamp_submission": "2026-01-22T13:47:21.989861",
+    "timestamp_updated": "2026-01-22T13:47:22.062832"
+  },
+  "aacf2e60-4225-4e7a-9c18-13f3f6368c45": {
+    "pseudonym": null,
+    "evidence_type": "image",
+    "status": "failed",
+    "timestamp_submission": "2026-01-22T13:47:36.388339",
+    "timestamp_updated": "2026-01-22T13:47:36.460259"
+  },
+  "4ad8c44b-71b8-4fbc-8cce-ddefb17a30a8": {
+    "pseudonym": null,
+    "evidence_type": "image",
+    "status": "failed",
+    "timestamp_submission": "2026-01-22T13:47:50.779948",
+    "timestamp_updated": "2026-01-22T13:47:50.873617"
+  },
+  "6a8b88db-96a1-41de-8778-4ba5a5534406": {
+    "pseudonym": null,
+    "evidence_type": "image",
+    "status": "failed",
+    "timestamp_submission": "2026-01-22T13:48:05.236754",
+    "timestamp_updated": "2026-01-22T13:48:05.303887"
+  },
+  "cdff47b0-05c6-411e-ad99-68fe27b32299": {
+    "pseudonym": null,
+    "evidence_type": "image",
+    "status": "failed",
+    "timestamp_submission": "2026-01-22T13:48:19.684062",
+    "timestamp_updated": "2026-01-22T13:48:19.792407"
+  },
+  "9c22c744-aa37-46f3-bf33-10cb40ec4c98": {
+    "pseudonym": null,
+    "evidence_type": "image",
+    "status": "failed",
+    "timestamp_submission": "2026-01-22T13:48:34.116406",
+    "timestamp_updated": "2026-01-22T13:48:34.196583"
+  },
+  "328f47b4-49ed-4770-9c57-a0d764a4ff3f": {
+    "pseudonym": null,
+    "evidence_type": "image",
+    "status": "failed",
+    "timestamp_submission": "2026-01-22T13:48:48.553562",
+    "timestamp_updated": "2026-01-22T13:48:48.620427"
+  },
+  "17f9541b-014b-4dbd-be50-094bf161f0ba": {
+    "pseudonym": null,
+    "evidence_type": "image",
+    "status": "failed",
+    "timestamp_submission": "2026-01-22T13:49:02.956181",
+    "timestamp_updated": "2026-01-22T13:49:03.019849"
+  },
+  "92dcc343-20c8-42e7-9865-beedf39636eb": {
+    "pseudonym": null,
+    "evidence_type": "image",
+    "status": "failed",
+    "timestamp_submission": "2026-01-22T13:49:17.356897",
+    "timestamp_updated": "2026-01-22T13:49:17.421806"
+  },
+  "f0ea80a6-4fd9-4d4a-9210-905e56930a70": {
+    "pseudonym": null,
+    "evidence_type": "image",
+    "status": "failed",
+    "timestamp_submission": "2026-01-22T13:49:31.730934",
+    "timestamp_updated": "2026-01-22T13:49:31.815540"
+  },
+  "bb87c354-bd0f-45fc-b26a-1c597438a85a": {
+    "pseudonym": null,
+    "evidence_type": "image",
+    "status": "failed",
+    "timestamp_submission": "2026-01-22T13:49:46.125434",
+    "timestamp_updated": "2026-01-22T13:49:46.191692"
+  },
+  "98debd41-60d2-4f1a-83a5-cb1429af5ddd": {
+    "pseudonym": null,
+    "evidence_type": "image",
+    "status": "failed",
+    "timestamp_submission": "2026-01-22T13:50:00.501917",
+    "timestamp_updated": "2026-01-22T13:50:00.572053"
+  },
+  "a831dd44-8581-47a1-8497-4d00c0c9f44f": {
+    "pseudonym": null,
+    "evidence_type": "image",
+    "status": "failed",
+    "timestamp_submission": "2026-01-22T13:50:14.902465",
+    "timestamp_updated": "2026-01-22T13:50:14.979661"
+  },
+  "92aaa259-21e8-41c0-b7e2-79a44f675100": {
+    "pseudonym": null,
+    "evidence_type": "image",
+    "status": "failed",
+    "timestamp_submission": "2026-01-22T13:50:29.289751",
+    "timestamp_updated": "2026-01-22T13:50:29.356090"
+  },
+  "6a8c5709-fb2e-4d9d-ab0b-7020bdcce422": {
+    "pseudonym": null,
+    "evidence_type": "image",
+    "status": "failed",
+    "timestamp_submission": "2026-01-22T13:50:43.653797",
+    "timestamp_updated": "2026-01-22T13:50:43.729781"
+  },
+  "09420485-4fe1-40c5-b146-a8121c6fc1a7": {
+    "pseudonym": null,
+    "evidence_type": "image",
+    "status": "failed",
+    "timestamp_submission": "2026-01-22T13:50:58.082667",
+    "timestamp_updated": "2026-01-22T13:50:58.153632"
+  },
+  "33fcbd3e-b698-4e06-a124-2ac8658238a5": {
+    "pseudonym": null,
+    "evidence_type": "image",
+    "status": "failed",
+    "timestamp_submission": "2026-01-22T13:51:12.484093",
+    "timestamp_updated": "2026-01-22T13:51:12.565067"
+  },
+  "51a8b9bf-6590-4f59-89af-f765527ab296": {
+    "pseudonym": null,
+    "evidence_type": "image",
+    "status": "failed",
+    "timestamp_submission": "2026-01-22T13:51:26.895485",
+    "timestamp_updated": "2026-01-22T13:51:26.962811"
+  },
+  "97460506-e882-4e29-84d2-408735a75903": {
+    "pseudonym": null,
+    "evidence_type": "image",
+    "status": "failed",
+    "timestamp_submission": "2026-01-22T13:51:41.284967",
+    "timestamp_updated": "2026-01-22T13:51:41.350494"
+  },
+  "d7c726d0-886f-4be6-9b7f-d34b204a9c2c": {
+    "pseudonym": null,
+    "evidence_type": "image",
+    "status": "failed",
+    "timestamp_submission": "2026-01-22T13:51:55.639635",
+    "timestamp_updated": "2026-01-22T13:51:55.724447"
+  },
+  "2ed2dd88-d690-4984-ac09-b3634151313a": {
+    "pseudonym": null,
+    "evidence_type": "image",
+    "status": "failed",
+    "timestamp_submission": "2026-01-22T13:52:10.089004",
+    "timestamp_updated": "2026-01-22T13:52:10.163084"
+  },
+  "ddf24600-a4ee-44da-b07f-991a4bc695e0": {
+    "pseudonym": null,
+    "evidence_type": "image",
+    "status": "failed",
+    "timestamp_submission": "2026-01-22T13:52:24.479333",
+    "timestamp_updated": "2026-01-22T13:52:24.547365"
+  },
+  "88a03fb7-8460-4303-a537-ec22a23cfcb0": {
+    "pseudonym": null,
+    "evidence_type": "image",
+    "status": "failed",
+    "timestamp_submission": "2026-01-22T13:52:38.847624",
+    "timestamp_updated": "2026-01-22T13:52:38.912013"
+  },
+  "3415af12-bb2f-4d1e-96b6-972b3c54ae92": {
+    "pseudonym": null,
+    "evidence_type": "image",
+    "status": "failed",
+    "timestamp_submission": "2026-01-22T13:52:53.234861",
+    "timestamp_updated": "2026-01-22T13:52:53.313369"
+  },
+  "02ff7d2b-537b-49a2-ad31-f3e131e0938c": {
+    "pseudonym": null,
+    "evidence_type": "image",
+    "status": "failed",
+    "timestamp_submission": "2026-01-22T13:53:07.663591",
+    "timestamp_updated": "2026-01-22T13:53:07.750148"
+  },
+  "9dbca42a-2b8f-4c3e-99f6-34989b0d74c8": {
+    "pseudonym": null,
+    "evidence_type": "image",
+    "status": "failed",
+    "timestamp_submission": "2026-01-22T13:53:22.091212",
+    "timestamp_updated": "2026-01-22T13:53:22.157709"
+  },
+  "804f3e43-cdf9-4d77-a4a0-c990f32dd74c": {
+    "pseudonym": null,
+    "evidence_type": "image",
+    "status": "failed",
+    "timestamp_submission": "2026-01-22T13:53:36.465384",
+    "timestamp_updated": "2026-01-22T13:53:36.534430"
+  },
+  "0b3ca797-93dc-494b-9a97-3fe09051c74c": {
+    "pseudonym": null,
+    "evidence_type": "image",
+    "status": "failed",
+    "timestamp_submission": "2026-01-22T13:53:50.889970",
+    "timestamp_updated": "2026-01-22T13:53:50.963690"
+  },
+  "5713176f-8c32-4db9-ace1-f2a819c64805": {
+    "pseudonym": null,
+    "evidence_type": "image",
+    "status": "failed",
+    "timestamp_submission": "2026-01-22T13:54:05.292514",
+    "timestamp_updated": "2026-01-22T13:54:05.361356"
+  },
+  "ecddcd95-d4eb-48be-888d-ac0c06c1fcb2": {
+    "pseudonym": null,
+    "evidence_type": "image",
+    "status": "failed",
+    "timestamp_submission": "2026-01-22T13:54:19.753671",
+    "timestamp_updated": "2026-01-22T13:54:19.841516"
+  },
+  "e424561d-53ea-4730-9e68-78ddb9f441a4": {
+    "pseudonym": null,
+    "evidence_type": "image",
+    "status": "failed",
+    "timestamp_submission": "2026-01-22T13:54:34.202680",
+    "timestamp_updated": "2026-01-22T13:54:34.279562"
+  },
+  "67db68f2-7bfa-4efa-9c99-f41ccc5f9507": {
+    "pseudonym": null,
+    "evidence_type": "image",
+    "status": "failed",
+    "timestamp_submission": "2026-01-22T13:54:48.578408",
+    "timestamp_updated": "2026-01-22T13:54:48.659991"
+  },
+  "65472d8d-b4b3-46d2-bcf4-52d5fbebd4af": {
+    "pseudonym": null,
+    "evidence_type": "image",
+    "status": "failed",
+    "timestamp_submission": "2026-01-22T13:55:03.012063",
+    "timestamp_updated": "2026-01-22T13:55:03.087782"
+  },
+  "fe97a67c-e14e-44c0-8e72-df015779ad1d": {
+    "pseudonym": null,
+    "evidence_type": "image",
+    "status": "failed",
+    "timestamp_submission": "2026-01-22T13:55:17.414612",
+    "timestamp_updated": "2026-01-22T13:55:17.490279"
+  },
+  "5cc55b8c-ef96-4083-a0b2-64479b7682be": {
+    "pseudonym": null,
+    "evidence_type": "image",
+    "status": "failed",
+    "timestamp_submission": "2026-01-22T13:55:31.800960",
+    "timestamp_updated": "2026-01-22T13:55:31.874324"
+  },
+  "e5a7c2bd-0a97-41d2-a22c-d2468f6fa1c8": {
+    "pseudonym": null,
+    "evidence_type": "image",
+    "status": "failed",
+    "timestamp_submission": "2026-01-22T13:55:46.232728",
+    "timestamp_updated": "2026-01-22T13:55:46.307439"
+  },
+  "649d6363-a8cd-4000-bde2-86e0986e4c20": {
+    "pseudonym": null,
+    "evidence_type": "image",
+    "status": "failed",
+    "timestamp_submission": "2026-01-22T13:56:00.665518",
+    "timestamp_updated": "2026-01-22T13:56:00.736227"
+  },
+  "be2678a9-ff40-450a-a3c0-fda37c1d345a": {
+    "pseudonym": null,
+    "evidence_type": "image",
+    "status": "failed",
+    "timestamp_submission": "2026-01-22T13:56:15.041084",
+    "timestamp_updated": "2026-01-22T13:56:15.120119"
+  },
+  "5d17a175-8659-429b-9ac1-8bb298aa6cc9": {
+    "pseudonym": null,
+    "evidence_type": "image",
+    "status": "failed",
+    "timestamp_submission": "2026-01-22T13:56:29.446015",
+    "timestamp_updated": "2026-01-22T13:56:29.523075"
+  },
+  "8a9e1cbb-bd8e-4e71-b7c8-df9d198ea24a": {
+    "pseudonym": null,
+    "evidence_type": "image",
+    "status": "failed",
+    "timestamp_submission": "2026-01-22T13:56:43.895982",
+    "timestamp_updated": "2026-01-22T13:56:44.000383"
+  },
+  "7527232f-18ad-4740-9276-aa6cbb3f5400": {
+    "pseudonym": null,
+    "evidence_type": "image",
+    "status": "failed",
+    "timestamp_submission": "2026-01-22T13:56:58.454792",
+    "timestamp_updated": "2026-01-22T13:56:58.546402"
+  },
+  "805fe9bf-b4b3-4e7a-87cd-8d99fe3e1bdc": {
+    "pseudonym": null,
+    "evidence_type": "image",
+    "status": "failed",
+    "timestamp_submission": "2026-01-22T13:57:12.948280",
+    "timestamp_updated": "2026-01-22T13:57:13.039709"
+  },
+  "e0ba92a5-4369-4a31-a6b6-03ae2fa9e1ec": {
+    "pseudonym": null,
+    "evidence_type": "image",
+    "status": "failed",
+    "timestamp_submission": "2026-01-22T13:57:27.464403",
+    "timestamp_updated": "2026-01-22T13:57:27.545325"
+  },
+  "38d340ce-f7c4-4fde-8414-2e6b7de07a32": {
+    "pseudonym": null,
+    "evidence_type": "image",
+    "status": "failed",
+    "timestamp_submission": "2026-01-22T13:57:41.904934",
+    "timestamp_updated": "2026-01-22T13:57:41.992535"
+  },
+  "6ee85ff6-49d8-4b90-9f55-92d6562ff031": {
+    "pseudonym": null,
+    "evidence_type": "image",
+    "status": "failed",
+    "timestamp_submission": "2026-01-22T13:57:56.358077",
+    "timestamp_updated": "2026-01-22T13:57:56.427891"
+  },
+  "a15861b6-3784-4a42-8e52-43853c98b75f": {
+    "pseudonym": null,
+    "evidence_type": "image",
+    "status": "failed",
+    "timestamp_submission": "2026-01-22T13:58:10.763749",
+    "timestamp_updated": "2026-01-22T13:58:10.854831"
+  },
+  "04ea2548-feac-408a-84eb-e7a7c08f28ad": {
+    "pseudonym": null,
+    "evidence_type": "image",
+    "status": "failed",
+    "timestamp_submission": "2026-01-22T13:58:25.182086",
+    "timestamp_updated": "2026-01-22T13:58:25.256989"
+  },
+  "ee5f8ea8-5bad-408d-b5bb-ca18d2c2a960": {
+    "pseudonym": null,
+    "evidence_type": "image",
+    "status": "failed",
+    "timestamp_submission": "2026-01-22T13:58:39.561672",
+    "timestamp_updated": "2026-01-22T13:58:39.635200"
+  },
+  "df30152e-6f78-42e9-83d8-b6408aebf074": {
+    "pseudonym": null,
+    "evidence_type": "image",
+    "status": "failed",
+    "timestamp_submission": "2026-01-22T13:58:53.969951",
+    "timestamp_updated": "2026-01-22T13:58:54.046460"
+  },
+  "a9a99637-bbb1-422c-9794-2595e805a856": {
+    "pseudonym": null,
+    "evidence_type": "image",
+    "status": "failed",
+    "timestamp_submission": "2026-01-22T13:59:08.390145",
+    "timestamp_updated": "2026-01-22T13:59:08.482433"
+  },
+  "0f43a6e9-b31d-4939-bbf3-64dc658cb08b": {
+    "pseudonym": null,
+    "evidence_type": "image",
+    "status": "failed",
+    "timestamp_submission": "2026-01-22T13:59:22.831857",
+    "timestamp_updated": "2026-01-22T13:59:22.924893"
+  },
+  "6b2078b4-f756-440c-8b28-b1819f958ee1": {
+    "pseudonym": null,
+    "evidence_type": "image",
+    "status": "failed",
+    "timestamp_submission": "2026-01-22T13:59:37.373198",
+    "timestamp_updated": "2026-01-22T13:59:37.463876"
+  },
+  "6b82dce9-b7e8-4333-bef2-b289804f268d": {
+    "pseudonym": null,
+    "evidence_type": "image",
+    "status": "failed",
+    "timestamp_submission": "2026-01-22T13:59:51.895343",
+    "timestamp_updated": "2026-01-22T13:59:52.011390"
+  },
+  "d494a6b5-e665-4ac2-8994-8a71a5f3cc86": {
+    "pseudonym": null,
+    "evidence_type": "image",
+    "status": "failed",
+    "timestamp_submission": "2026-01-22T14:00:06.498169",
+    "timestamp_updated": "2026-01-22T14:00:06.586584"
+  },
+  "30d1f0c3-263d-4d64-804d-3d4df25bc709": {
+    "pseudonym": null,
+    "evidence_type": "image",
+    "status": "failed",
+    "timestamp_submission": "2026-01-22T14:00:21.033926",
+    "timestamp_updated": "2026-01-22T14:00:21.136713"
+  },
+  "e167a3b7-ea49-416d-b3b0-30d4538f7bbc": {
+    "pseudonym": null,
+    "evidence_type": "image",
+    "status": "failed",
+    "timestamp_submission": "2026-01-22T14:00:35.596317",
+    "timestamp_updated": "2026-01-22T14:00:35.707026"
+  },
+  "9dc55b69-2f25-4477-92a3-ee628e57211e": {
+    "pseudonym": null,
+    "evidence_type": "image",
+    "status": "failed",
+    "timestamp_submission": "2026-01-22T14:00:50.140401",
+    "timestamp_updated": "2026-01-22T14:00:50.226548"
+  },
+  "564437a7-6598-49e7-867d-196cdcdfa06b": {
+    "pseudonym": null,
+    "evidence_type": "image",
+    "status": "failed",
+    "timestamp_submission": "2026-01-22T14:01:04.637720",
+    "timestamp_updated": "2026-01-22T14:01:04.723896"
+  },
+  "4fb5c6b1-db21-4a98-bd23-6bb9e5a4122a": {
+    "pseudonym": null,
+    "evidence_type": "image",
+    "status": "failed",
+    "timestamp_submission": "2026-01-22T14:01:19.073717",
+    "timestamp_updated": "2026-01-22T14:01:19.155846"
+  },
+  "ac5a71a7-2b60-4e6b-a4c3-3968c68f71ed": {
+    "pseudonym": null,
+    "evidence_type": "image",
+    "status": "failed",
+    "timestamp_submission": "2026-01-22T14:01:33.515793",
+    "timestamp_updated": "2026-01-22T14:01:33.598430"
+  },
+  "b0e15cfe-1337-4818-a0f3-305f87dcbce6": {
+    "pseudonym": null,
+    "evidence_type": "image",
+    "status": "failed",
+    "timestamp_submission": "2026-01-22T14:01:47.978133",
+    "timestamp_updated": "2026-01-22T14:01:48.070122"
+  },
+  "be398dbe-8a82-48b2-a09a-acb0c15ce2fa": {
+    "pseudonym": null,
+    "evidence_type": "image",
+    "status": "failed",
+    "timestamp_submission": "2026-01-22T14:02:02.447494",
+    "timestamp_updated": "2026-01-22T14:02:02.536930"
+  },
+  "678db3fa-6ba5-4d09-a90e-3b79f36e6e5b": {
+    "pseudonym": null,
+    "evidence_type": "image",
+    "status": "failed",
+    "timestamp_submission": "2026-01-22T14:02:16.930041",
+    "timestamp_updated": "2026-01-22T14:02:17.021159"
+  },
+  "9dbcb8b2-a545-448f-9d2b-6144a819d1d8": {
+    "pseudonym": null,
+    "evidence_type": "image",
+    "status": "failed",
+    "timestamp_submission": "2026-01-22T14:02:31.402650",
+    "timestamp_updated": "2026-01-22T14:02:31.503616"
+  },
+  "b7eb079a-69d2-4fa2-aa71-f64a2fab77c4": {
+    "pseudonym": null,
+    "evidence_type": "image",
+    "status": "failed",
+    "timestamp_submission": "2026-01-22T14:02:45.937351",
+    "timestamp_updated": "2026-01-22T14:02:46.052579"
+  },
+  "69ae5032-1383-4658-8d5f-891ed7a0fe92": {
+    "pseudonym": null,
+    "evidence_type": "image",
+    "status": "failed",
+    "timestamp_submission": "2026-01-22T14:03:00.448627",
+    "timestamp_updated": "2026-01-22T14:03:00.550486"
+  },
+  "003a3b88-457d-48c5-92ea-c6eb6f25c3f6": {
+    "pseudonym": null,
+    "evidence_type": "image",
+    "status": "failed",
+    "timestamp_submission": "2026-01-22T14:03:14.986148",
+    "timestamp_updated": "2026-01-22T14:03:15.086273"
+  },
+  "883700c7-74c0-4345-b511-3eb5b2ce4395": {
+    "pseudonym": null,
+    "evidence_type": "image",
+    "status": "failed",
+    "timestamp_submission": "2026-01-22T14:03:29.476687",
+    "timestamp_updated": "2026-01-22T14:03:29.566539"
+  },
+  "8b8e5eec-8f16-4be6-b5f0-2de4a57310f0": {
+    "pseudonym": null,
+    "evidence_type": "image",
+    "status": "failed",
+    "timestamp_submission": "2026-01-22T14:03:44.031597",
+    "timestamp_updated": "2026-01-22T14:03:44.120043"
+  },
+  "1788be05-dedd-42c1-8335-438cc5d92151": {
+    "pseudonym": null,
+    "evidence_type": "image",
+    "status": "failed",
+    "timestamp_submission": "2026-01-22T14:03:58.510305",
+    "timestamp_updated": "2026-01-22T14:03:58.608485"
+  },
+  "f708fd7f-29bb-41d7-8afd-f6f8e54772fa": {
+    "pseudonym": null,
+    "evidence_type": "image",
+    "status": "failed",
+    "timestamp_submission": "2026-01-22T14:04:13.056560",
+    "timestamp_updated": "2026-01-22T14:04:13.141602"
+  },
+  "34ae1401-934c-446f-abcb-a33a4cdac589": {
+    "pseudonym": null,
+    "evidence_type": "image",
+    "status": "failed",
+    "timestamp_submission": "2026-01-22T14:04:27.527904",
+    "timestamp_updated": "2026-01-22T14:04:27.620467"
+  },
+  "08f39ec9-2c17-434d-a65f-27b144ca588e": {
+    "pseudonym": null,
+    "evidence_type": "image",
+    "status": "failed",
+    "timestamp_submission": "2026-01-22T14:04:42.010485",
+    "timestamp_updated": "2026-01-22T14:04:42.098238"
+  },
+  "ce4c9bb7-a598-4ed9-92db-8e37b512c497": {
+    "pseudonym": null,
+    "evidence_type": "image",
+    "status": "failed",
+    "timestamp_submission": "2026-01-22T14:04:56.533405",
+    "timestamp_updated": "2026-01-22T14:04:56.633764"
+  },
+  "49b74308-6c0a-4bc0-9e33-8b80431df164": {
+    "pseudonym": null,
+    "evidence_type": "image",
+    "status": "failed",
+    "timestamp_submission": "2026-01-22T14:05:11.101550",
+    "timestamp_updated": "2026-01-22T14:05:11.189835"
+  },
+  "01ca3213-c286-4f72-94b1-382ab62586aa": {
+    "pseudonym": null,
+    "evidence_type": "image",
+    "status": "failed",
+    "timestamp_submission": "2026-01-22T14:05:25.537791",
+    "timestamp_updated": "2026-01-22T14:05:25.626662"
+  },
+  "b501e954-85b5-4819-b6c0-0a90bf654d1c": {
+    "pseudonym": null,
+    "evidence_type": "image",
+    "status": "failed",
+    "timestamp_submission": "2026-01-22T14:05:40.008048",
+    "timestamp_updated": "2026-01-22T14:05:40.101987"
+  },
+  "93e061b8-0f00-46a4-b757-fca9c7089a7a": {
+    "pseudonym": null,
+    "evidence_type": "image",
+    "status": "failed",
+    "timestamp_submission": "2026-01-22T14:05:54.486217",
+    "timestamp_updated": "2026-01-22T14:05:54.574095"
+  },
+  "608f3b81-a199-4de9-a77f-ff50723245bf": {
+    "pseudonym": null,
+    "evidence_type": "image",
+    "status": "failed",
+    "timestamp_submission": "2026-01-22T14:06:09.011166",
+    "timestamp_updated": "2026-01-22T14:06:09.103231"
+  },
+  "784b9ca8-68d3-40a3-a67a-a8eb2c87564b": {
+    "pseudonym": null,
+    "evidence_type": "image",
+    "status": "failed",
+    "timestamp_submission": "2026-01-22T14:06:23.517569",
+    "timestamp_updated": "2026-01-22T14:06:23.607535"
+  },
+  "890bbab6-aa4b-402e-9440-1b06a2459866": {
+    "pseudonym": null,
+    "evidence_type": "image",
+    "status": "failed",
+    "timestamp_submission": "2026-01-22T14:06:37.994287",
+    "timestamp_updated": "2026-01-22T14:06:38.081593"
+  },
+  "07ae8bfd-5cc3-4b90-bbda-310cc66ed4d4": {
+    "pseudonym": null,
+    "evidence_type": "image",
+    "status": "failed",
+    "timestamp_submission": "2026-01-22T14:06:52.543221",
+    "timestamp_updated": "2026-01-22T14:06:52.631758"
+  },
+  "49cb5928-d846-4e33-983c-54a27fb73d91": {
+    "pseudonym": null,
+    "evidence_type": "image",
+    "status": "failed",
+    "timestamp_submission": "2026-01-22T14:07:06.996537",
+    "timestamp_updated": "2026-01-22T14:07:07.079915"
+  },
+  "890b23e9-cb5a-40a0-a2d7-4e11be8903fe": {
+    "pseudonym": null,
+    "evidence_type": "image",
+    "status": "failed",
+    "timestamp_submission": "2026-01-22T14:07:21.449864",
+    "timestamp_updated": "2026-01-22T14:07:21.533934"
+  },
+  "e0b61f1a-2ffb-49b8-913f-1311c9edf18a": {
+    "pseudonym": null,
+    "evidence_type": "image",
+    "status": "failed",
+    "timestamp_submission": "2026-01-22T14:07:35.913364",
+    "timestamp_updated": "2026-01-22T14:07:36.011199"
+  },
+  "3e76039c-fefd-421f-bc7b-3ff28ca6494e": {
+    "pseudonym": null,
+    "evidence_type": "image",
+    "status": "failed",
+    "timestamp_submission": "2026-01-22T14:07:50.395124",
+    "timestamp_updated": "2026-01-22T14:07:50.481099"
+  },
+  "086285ff-803e-48ae-87ef-3d441c0bb44b": {
+    "pseudonym": null,
+    "evidence_type": "image",
+    "status": "failed",
+    "timestamp_submission": "2026-01-22T14:08:04.860865",
+    "timestamp_updated": "2026-01-22T14:08:04.939407"
+  },
+  "b38145e5-64e9-466a-9940-420d48c03535": {
+    "pseudonym": null,
+    "evidence_type": "image",
+    "status": "failed",
+    "timestamp_submission": "2026-01-22T14:08:19.284468",
+    "timestamp_updated": "2026-01-22T14:08:19.363726"
+  },
+  "2b8ac92e-11d2-4103-b66e-a730f7d0b8cb": {
+    "pseudonym": null,
+    "evidence_type": "image",
+    "status": "failed",
+    "timestamp_submission": "2026-01-22T14:08:33.778185",
+    "timestamp_updated": "2026-01-22T14:08:33.863527"
+  },
+  "220f61ae-ca94-4215-aec5-2aa6bd628a63": {
+    "pseudonym": null,
+    "evidence_type": "image",
+    "status": "failed",
+    "timestamp_submission": "2026-01-22T14:08:48.240451",
+    "timestamp_updated": "2026-01-22T14:08:48.336446"
+  },
+  "480573ed-834d-41fb-b862-650a35813e1d": {
+    "pseudonym": null,
+    "evidence_type": "image",
+    "status": "failed",
+    "timestamp_submission": "2026-01-22T14:09:02.728301",
+    "timestamp_updated": "2026-01-22T14:09:02.820196"
+  },
+  "23897951-e8a6-4eee-bb6a-1279db1b593a": {
+    "pseudonym": null,
+    "evidence_type": "image",
+    "status": "failed",
+    "timestamp_submission": "2026-01-22T14:09:17.192362",
+    "timestamp_updated": "2026-01-22T14:09:17.277284"
+  },
+  "e2640db7-d919-47e7-8691-9eeb399061fa": {
+    "pseudonym": null,
+    "evidence_type": "image",
+    "status": "failed",
+    "timestamp_submission": "2026-01-22T14:09:31.702952",
+    "timestamp_updated": "2026-01-22T14:09:31.794434"
+  },
+  "12b9660d-0818-4c13-a35c-2f3afc904291": {
+    "pseudonym": null,
+    "evidence_type": "image",
+    "status": "failed",
+    "timestamp_submission": "2026-01-22T14:09:46.213234",
+    "timestamp_updated": "2026-01-22T14:09:46.298070"
+  },
+  "9004d152-af8c-4f0b-a115-510012ca6b22": {
+    "pseudonym": null,
+    "evidence_type": "image",
+    "status": "failed",
+    "timestamp_submission": "2026-01-22T14:10:00.700134",
+    "timestamp_updated": "2026-01-22T14:10:00.804408"
+  },
+  "33317a79-e657-4917-8e03-28870c7d8b5e": {
+    "pseudonym": null,
+    "evidence_type": "image",
+    "status": "failed",
+    "timestamp_submission": "2026-01-22T14:10:15.256188",
+    "timestamp_updated": "2026-01-22T14:10:15.341976"
+  },
+  "5dd40ccf-5964-4e24-b50e-b0fca26b0f7e": {
+    "pseudonym": null,
+    "evidence_type": "image",
+    "status": "failed",
+    "timestamp_submission": "2026-01-22T14:10:29.736421",
+    "timestamp_updated": "2026-01-22T14:10:29.827135"
+  },
+  "709796e4-9df2-4fc4-9c1e-01bb41c8193c": {
+    "pseudonym": null,
+    "evidence_type": "image",
+    "status": "failed",
+    "timestamp_submission": "2026-01-22T14:10:44.236912",
+    "timestamp_updated": "2026-01-22T14:10:44.325529"
+  },
+  "1abef407-1f0c-4622-98a7-0da218b109eb": {
+    "pseudonym": null,
+    "evidence_type": "image",
+    "status": "failed",
+    "timestamp_submission": "2026-01-22T14:10:59.015338",
+    "timestamp_updated": "2026-01-22T14:10:59.134905"
+  },
+  "d2e11d1f-1eff-4221-a4e7-0a8844e7a743": {
+    "pseudonym": null,
+    "evidence_type": "image",
+    "status": "failed",
+    "timestamp_submission": "2026-01-22T14:11:13.585234",
+    "timestamp_updated": "2026-01-22T14:11:13.677933"
   }
 }

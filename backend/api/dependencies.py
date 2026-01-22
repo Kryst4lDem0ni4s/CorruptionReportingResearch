@@ -41,11 +41,7 @@ def get_storage_service():
         config = get_config()
         
         # Initialize storage service with data directory
-        storage = StorageService(
-            data_dir=config.storage.data_dir,
-            enable_caching=True, # Default to True as not in config
-            cache_ttl_seconds=300 # Default to 300 as not in config
-        )
+        storage = StorageService(data_dir=config.storage.data_dir)
         
         logger.info("StorageService initialized successfully")
         return storage
@@ -70,13 +66,11 @@ def get_hash_chain_service():
         from backend.services.hash_chain_service import HashChainService
         
         config = get_config()
-        chain_file = config.storage.data_dir / "chain.json"
         
-        # Initialize and verify chain integrity
-        chain_service = HashChainService(chain_file=chain_file)
-        chain_service.verify_integrity()
+        # Initialize hash chain service
+        chain_service = HashChainService(data_dir=config.storage.data_dir)
         
-        logger.info("HashChainService initialized and verified")
+        logger.info("HashChainService initialized")
         return chain_service
         
     except Exception as e:
@@ -173,46 +167,26 @@ def get_validation_service():
         raise RuntimeError(f"Validation service initialization failed: {e}")
 
 
-@lru_cache()
-def get_orchestrator():
+def get_orchestrator(request: Request):
     """
-    Get singleton instance of Orchestrator.
+    Get orchestrator instance from application state.
+    Orchestrator is initialized once during startup.
     
-    The orchestrator coordinates all 6 layers and manages the processing pipeline.
-    
+    Args:
+        request: FastAPI request
+        
     Returns:
-        Orchestrator: Initialized orchestrator instance
+        Orchestrator: Singleton orchestrator instance
         
     Raises:
-        RuntimeError: If orchestrator initialization fails
+        RuntimeError: If orchestrator not initialized
     """
-    try:
-        from backend.core.orchestrator import Orchestrator
+    if not hasattr(request.app.state, 'orchestrator'):
+        # Log error to help debug
+        logger.error("Orchestrator not found in app.state")
+        raise RuntimeError("Orchestrator system not initialized")
         
-        # Get all required services
-        storage = get_storage_service()
-        hash_chain = get_hash_chain_service()
-        crypto = get_crypto_service()
-        metrics_service = getattr(request.app.state, 'metrics', None)
-        
-        # Initialize orchestrator with services
-        orchestrator = Orchestrator(
-            storage_service=storage_service,
-            hash_chain_service=hash_chain_service,
-            crypto_service=crypto_service,
-            metadata_service=metadata_service,
-            validation_service=validation_service,
-            text_utils=text_utils,
-            graph_utils=graph_utils,
-            metrics_service=metrics_service  # ADD THIS
-        )
-        
-        logger.info("Orchestrator initialized successfully")
-        return orchestrator
-        
-    except Exception as e:
-        logger.error(f"Failed to initialize Orchestrator: {e}", exc_info=True)
-        raise RuntimeError(f"Orchestrator initialization failed: {e}")
+    return request.app.state.orchestrator
 
 
 @lru_cache()

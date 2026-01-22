@@ -13,6 +13,9 @@ Provides:
 import json
 import logging
 import threading
+import os
+import time
+
 from datetime import datetime
 from pathlib import Path
 from typing import Dict, List, Optional
@@ -59,7 +62,7 @@ class StorageService:
         
         # Index file
         self.index_file = self.data_dir / "index.json"
-        self.index_lock = threading.Lock()
+        self.index_lock = threading.RLock()
         
         # Validators file
         self.validators_file = self.data_dir / "validators.json"
@@ -115,8 +118,8 @@ class StorageService:
                 with open(temp_path, 'w', encoding='utf-8') as f:
                     json.dump(data, f, indent=2, ensure_ascii=False)
                 
-                # Atomic rename
-                temp_path.replace(file_path)
+                # Atomic rename with Windows support
+                self._safe_replace(temp_path, file_path)
             
             # Update index
             self._update_index(submission_id, data)
@@ -156,6 +159,30 @@ class StorageService:
         except Exception as e:
             logger.error(f"Failed to load submission {submission_id}: {e}")
             return None
+
+    def get_submission(self, submission_id: str) -> Optional[Dict]:
+        """Alias for load_submission."""
+        return self.load_submission(submission_id)
+
+    def update_submission(self, submission_id: str, updates: Dict) -> None:
+        """
+        Update submission with partial data.
+        
+        Args:
+            submission_id: Submission identifier
+            updates: Dictionary of updates to apply
+        """
+        try:
+            lock_path = self.submissions_dir / f"{submission_id}.json.lock"
+            lock = FileLock(str(lock_path), timeout=10)
+            
+            with lock:
+                submission = self.load_submission(submission_id)
+                if submission:
+                    submission.update(updates)
+                    self.save_submission(submission_id, submission)
+        except Exception as e:
+            logger.error(f"Failed to update submission {submission_id}: {e}")
     
     def delete_submission(self, submission_id: str) -> bool:
         """
@@ -417,11 +444,12 @@ class StorageService:
             dict: Index data
         """
         try:
-            if not self.index_file.exists():
-                return {}
-            
-            with open(self.index_file, 'r', encoding='utf-8') as f:
-                return json.load(f)
+            with self.index_lock:
+                if not self.index_file.exists():
+                    return {}
+                
+                with open(self.index_file, 'r', encoding='utf-8') as f:
+                    return json.load(f)
                 
         except Exception as e:
             logger.warning(f"Failed to load index: {e}")
@@ -440,7 +468,7 @@ class StorageService:
             with open(temp_path, 'w', encoding='utf-8') as f:
                 json.dump(index, f, indent=2, ensure_ascii=False)
             
-            temp_path.replace(self.index_file)
+            self._safe_replace(temp_path, self.index_file)
             
         except Exception as e:
             logger.error(f"Failed to save index: {e}")
@@ -550,3 +578,81 @@ class StorageService:
         except Exception as e:
             logger.error(f"Cache cleanup failed: {e}")
             return 0
+    
+    def save_evidence_file(
+        self,
+        submission_id: str,
+        filename: str,
+        content: bytes,
+        evidence_type: str
+    ) -> Path:
+        """
+        Save evidence file content to storage.
+        
+        Args:
+            submission_id: Submission identifier
+            filename: Original filename
+            content: File content bytes
+            evidence_type: Type of evidence
+            
+        Returns:
+            Path: Path to saved file
+        """
+        try:
+            # Get evidence path with sharding
+            safe_filename = self._sanitize_filename(filename)
+            file_path = self.get_evidence_path(submission_id, safe_filename)
+            
+            # Ensure directory exists
+            file_path.parent.mkdir(parents=True, exist_ok=True)
+            
+            # Write file content
+            with open(file_path, 'wb') as f:
+                f.write(content)
+            
+            logger.debug(f"Saved evidence file: {file_path}")
+            return file_path
+            
+        except Exception as e:
+            logger.error(f"Failed to save evidence file: {e}")
+            raise IOError(f"Failed to save evidence file: {str(e)}")
+    
+    def _sanitize_filename(self, filename: str) -> str:
+        """Sanitize filename for safe storage."""
+        import re
+        # Remove path components
+        filename = Path(filename).name
+        # Replace unsafe characters
+        safe_name = re.sub(r'[^a-zA-Z0-9._-]', '_', filename)
+        # Limit length
+        if len(safe_name) > 255:
+            name, ext = safe_name.rsplit('.', 1) if '.' in safe_name else (safe_name, '')
+            safe_name = name[:250] + ('.' + ext if ext else '')
+        return safe_name or 'unnamed_file'
+    
+    def _safe_replace(self, src: Path, dst: Path, retries: int = 3) -> None:
+        """
+        Safely replace file, handling Windows locking issues.
+        
+        Args:
+            src: Source path
+            dst: Destination path
+            retries: Number of retries on PermissionError
+        """
+        for i in range(retries):
+            try:
+                src.replace(dst)
+                return
+            except PermissionError:
+                if i == retries - 1:
+                    raise
+                
+                # On Windows, destination might be open or locked temporarily
+                # Try to unlink if it exists
+                try:
+                    if dst.exists():
+                        dst.unlink()
+                except Exception:
+                    pass  # Ignore unlink errors, retry replace
+                
+                time.sleep(0.1)

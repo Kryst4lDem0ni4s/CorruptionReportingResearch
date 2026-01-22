@@ -251,9 +251,26 @@ class CoordinationDetectionExperiment:
     def _submit_to_backend(self, submission: Dict) -> str:
         """Submit to backend API"""
         try:
+            # Prepare multipart/form-data submission
+            # Backend requires a file, create dummy one for text evidence
+            files = {
+                'file': (
+                    'narrative.txt',
+                    submission.get('description', 'No description').encode('utf-8'),
+                    'text/plain'
+                )
+            }
+            
+            data = {
+                'evidence_type': submission.get('evidence_type', 'text'),
+                'text_narrative': submission.get('description', ''),
+                'metadata': str(submission.get('metadata', {}))
+            }
+            
             response = requests.post(
                 f"{self.backend_url}/api/v1/submissions",
-                json=submission,
+                files=files,
+                data=data,
                 timeout=self.timeout
             )
             response.raise_for_status()

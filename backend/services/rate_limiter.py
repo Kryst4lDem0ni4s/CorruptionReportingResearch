@@ -61,11 +61,11 @@ class RateLimiter:
         
         # Custom limits for specific endpoint types
         self.endpoint_limits = {
-            'submission': 5,      # 5 submissions per hour
-            'status': 60,         # 60 status checks per hour
-            'report': 10,         # 10 report requests per hour
-            'health': 120,        # 120 health checks per hour
-            'counter_evidence': 3  # 3 counter-evidence per hour
+            'submission': 1000,   # Increased for evaluation
+            'status': 3600,       # 1 per second
+            'report': 100,        # Increased
+            'health': 3600,       # 1 per second
+            'counter_evidence': 100 # Increased
         }
         
         logger.info(

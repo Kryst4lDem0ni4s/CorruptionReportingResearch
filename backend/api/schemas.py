@@ -147,6 +147,19 @@ class CoordinationGraphQuery(BaseModel):
         return values
 
 
+class CoordinationRequest(BaseModel):
+    """Request for coordination detection check."""
+    submission_ids: List[str] = Field(..., description="List of submission UUIDs to check")
+
+
+class CoordinationDetectionResponse(BaseModel):
+    """Result of coordination detection check."""
+    is_coordinated: bool = Field(..., description="Whether coordination was detected")
+    confidence: float = Field(..., ge=0.0, le=1.0, description="Confidence score")
+    clusters: Optional[List[Dict]] = Field(None, description="Detected clusters")
+    metrics: Optional[Dict] = Field(None, description="Additional metrics")
+
+
 # ============================================================================
 # RESPONSE SCHEMAS
 # ============================================================================

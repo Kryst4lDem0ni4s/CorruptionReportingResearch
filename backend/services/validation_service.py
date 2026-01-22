@@ -63,6 +63,68 @@ class ValidationService:
         """Initialize validation service."""
         logger.info("ValidationService initialized")
     
+    def validate_file_content(
+        self,
+        filename: str,
+        content: bytes,
+        evidence_type: str
+    ) -> Tuple[bool, Optional[str]]:
+        """
+        Validate file content (in-memory) for security and format compliance.
+        
+        Args:
+            filename: Original filename
+            content: File content bytes
+            evidence_type: Type of evidence (image/video/audio/document)
+            
+        Returns:
+            tuple: (is_valid, error_message)
+        """
+        try:
+            # Check file size
+            file_size = len(content)
+            
+            if evidence_type == 'image':
+                if file_size > self.MAX_IMAGE_SIZE:
+                    return False, f"Image size exceeds limit ({self.MAX_IMAGE_SIZE // (1024*1024)} MB)"
+            elif evidence_type == 'video':
+                if file_size > self.MAX_VIDEO_SIZE:
+                    return False, f"Video size exceeds limit ({self.MAX_VIDEO_SIZE // (1024*1024)} MB)"
+            elif evidence_type == 'audio':
+                if file_size > self.MAX_AUDIO_SIZE:
+                    return False, f"Audio size exceeds limit ({self.MAX_AUDIO_SIZE // (1024*1024)} MB)"
+            elif evidence_type == 'document':
+                if file_size > self.MAX_DOCUMENT_SIZE:
+                    return False, f"Document size exceeds limit ({self.MAX_DOCUMENT_SIZE // (1024*1024)} MB)"
+            else:
+                return False, f"Invalid evidence type: {evidence_type}"
+            
+            # Check file extension
+            extension = Path(filename).suffix.lower() if filename else ''
+            
+            allowed_extensions = self.get_allowed_extensions(evidence_type)
+            if extension not in allowed_extensions:
+                return False, f"Invalid {evidence_type} extension: {extension}"
+            
+            # Verify MIME type / Magic Bytes
+            # For in-memory, we can check magic bytes directly
+            is_mime_valid, mime_error = self._verify_content_type(content, evidence_type)
+            if not is_mime_valid:
+                return False, mime_error
+            
+            # Additional checks for images
+            if evidence_type == 'image':
+                is_image_valid, image_error = self._verify_image_content(content)
+                if not is_image_valid:
+                    return False, image_error
+            
+            logger.debug(f"File content validation passed: {filename} ({evidence_type})")
+            return True, None
+            
+        except Exception as e:
+            logger.error(f"File content validation failed: {e}")
+            return False, f"Validation error: {str(e)}"
+
     def validate_file_upload(
         self,
         file_path: Path,
@@ -104,14 +166,9 @@ class ValidationService:
             # Check file extension
             extension = file_path.suffix.lower()
             
-            if evidence_type == 'image' and extension not in self.ALLOWED_IMAGE_EXTENSIONS:
-                return False, f"Invalid image extension: {extension}"
-            elif evidence_type == 'video' and extension not in self.ALLOWED_VIDEO_EXTENSIONS:
-                return False, f"Invalid video extension: {extension}"
-            elif evidence_type == 'audio' and extension not in self.ALLOWED_AUDIO_EXTENSIONS:
-                return False, f"Invalid audio extension: {extension}"
-            elif evidence_type == 'document' and extension not in self.ALLOWED_DOCUMENT_EXTENSIONS:
-                return False, f"Invalid document extension: {extension}"
+            allowed_extensions = self.get_allowed_extensions(evidence_type)
+            if extension not in allowed_extensions:
+                return False, f"Invalid {evidence_type} extension: {extension}"
             
             # Verify MIME type
             is_mime_valid, mime_error = self._verify_mime_type(file_path, evidence_type)
@@ -131,6 +188,43 @@ class ValidationService:
             logger.error(f"File validation failed: {e}")
             return False, f"Validation error: {str(e)}"
     
+    def _verify_content_type(self, content: bytes, evidence_type: str) -> Tuple[bool, Optional[str]]:
+        """Verify content type from magic bytes."""
+        try:
+            import io
+            # Use magic bytes check similar to _detect_mime_from_header but on content
+            header = content[:16]
+            mime_type = self._detect_mime_from_bytes(header)
+            
+            if not mime_type:
+                 # If magic bytes fail, we might trust the caller or return generic valid
+                 # For now, let's be strict only if we can identify. 
+                 # Actually, if we can't identify, return True to avoid blocking valid files we just don't know
+                 return True, None
+            
+            allowed_mimes = self.ALLOWED_MIME_TYPES.get(evidence_type, set())
+            if mime_type not in allowed_mimes:
+                return False, f"File type mismatch (detected {mime_type})"
+                
+            return True, None
+        except Exception as e:
+             logger.warning(f"Content type verification failed: {e}")
+             return True, None
+
+    def _verify_image_content(self, content: bytes) -> Tuple[bool, Optional[str]]:
+        """Verify image content integrity."""
+        try:
+            import io
+            with Image.open(io.BytesIO(content)) as img:
+                img.verify()
+                if img.size[0] > 10000 or img.size[1] > 10000:
+                    return False, "Image dimensions too large"
+                if img.size[0] < 10 or img.size[1] < 10:
+                    return False, "Image dimensions too small"
+            return True, None
+        except Exception as e:
+            return False, f"Invalid image content: {e}"
+
     def _verify_mime_type(
         self,
         file_path: Path,
@@ -169,6 +263,25 @@ class ValidationService:
             logger.warning(f"MIME type verification failed: {e}")
             return True, None  # Don't fail validation on MIME check errors
     
+    def _detect_mime_from_bytes(self, header: bytes) -> Optional[str]:
+        """Detect MIME type from header bytes."""
+        try:
+            if header.startswith(b'\xff\xd8\xff'):
+                return 'image/jpeg'
+            elif header.startswith(b'\x89PNG\r\n\x1a\n'):
+                return 'image/png'
+            elif header.startswith(b'GIF87a') or header.startswith(b'GIF89a'):
+                return 'image/gif'
+            elif header.startswith(b'RIFF') and b'WEBP' in header:
+                return 'image/webp'
+            elif header.startswith(b'%PDF'):
+                return 'application/pdf'
+            elif header.startswith(b'ID3') or header.startswith(b'\xff\xfb'):
+                return 'audio/mpeg'
+            return None
+        except Exception:
+            return None
+
     def _detect_mime_from_header(self, file_path: Path) -> Optional[str]:
         """
         Detect MIME type from file header (magic bytes).
@@ -183,21 +296,7 @@ class ValidationService:
             with open(file_path, 'rb') as f:
                 header = f.read(16)
             
-            # Common file signatures
-            if header.startswith(b'\xff\xd8\xff'):
-                return 'image/jpeg'
-            elif header.startswith(b'\x89PNG\r\n\x1a\n'):
-                return 'image/png'
-            elif header.startswith(b'GIF87a') or header.startswith(b'GIF89a'):
-                return 'image/gif'
-            elif header.startswith(b'RIFF') and b'WEBP' in header:
-                return 'image/webp'
-            elif header.startswith(b'%PDF'):
-                return 'application/pdf'
-            elif header.startswith(b'ID3') or header.startswith(b'\xff\xfb'):
-                return 'audio/mpeg'
-            
-            return None
+            return self._detect_mime_from_bytes(header)
             
         except Exception as e:
             logger.warning(f"Magic byte detection failed: {e}")
