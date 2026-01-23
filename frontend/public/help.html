@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,19 +10,20 @@
     <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16x16.png">
     <title>Help & Documentation - Corruption Reporting System</title>
-    
+
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    
+
     <!-- Bootstrap Icons -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
-    
+
     <!-- Custom CSS -->
     <link rel="stylesheet" href="/css/main.css">
-    
+
     <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="/assets/favicon.ico">
 </head>
+
 <body>
     <!-- Navigation -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
@@ -30,7 +32,8 @@
                 <i class="bi bi-shield-check"></i>
                 Corruption Reporting System
             </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" title="Toggle navigation">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                title="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
@@ -109,7 +112,8 @@
                             <!-- How does anonymity work? -->
                             <div class="accordion-item">
                                 <h2 class="accordion-header">
-                                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#faq1">
+                                    <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                                        data-bs-target="#faq1">
                                         <i class="bi bi-shield-lock me-2"></i> How does anonymity work?
                                     </button>
                                 </h2>
@@ -117,12 +121,15 @@
                                     <div class="accordion-body">
                                         <p>Your identity is protected through multiple layers:</p>
                                         <ul>
-                                            <li><strong>SHA-256 Pseudonyms:</strong> Your identity is replaced with a cryptographic hash</li>
+                                            <li><strong>SHA-256 Pseudonyms:</strong> Your identity is replaced with a
+                                                cryptographic hash</li>
                                             <li><strong>AES-256 Encryption:</strong> All data is encrypted at rest</li>
                                             <li><strong>EXIF Stripping:</strong> Metadata is removed from images</li>
-                                            <li><strong>No Personal Data:</strong> We never ask for or store personal information</li>
+                                            <li><strong>No Personal Data:</strong> We never ask for or store personal
+                                                information</li>
                                         </ul>
-                                        <p class="mb-0">Your submission is linked only to a pseudonym that cannot be traced back to you.</p>
+                                        <p class="mb-0">Your submission is linked only to a pseudonym that cannot be
+                                            traced back to you.</p>
                                     </div>
                                 </div>
                             </div>
@@ -130,7 +137,8 @@
                             <!-- What evidence should I submit? -->
                             <div class="accordion-item">
                                 <h2 class="accordion-header">
-                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq2">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                        data-bs-target="#faq2">
                                         <i class="bi bi-file-earmark-text me-2"></i> What evidence should I submit?
                                     </button>
                                 </h2>
@@ -138,9 +146,12 @@
                                     <div class="accordion-body">
                                         <p><strong>Acceptable Evidence Types:</strong></p>
                                         <ul>
-                                            <li><strong>Images:</strong> Photos of documents, locations, or incidents (JPG, PNG - max 10MB)</li>
-                                            <li><strong>Audio:</strong> Recorded conversations or statements (MP3, WAV - max 20MB)</li>
-                                            <li><strong>Video:</strong> Video recordings of incidents (MP4, AVI - max 50MB)</li>
+                                            <li><strong>Images:</strong> Photos of documents, locations, or incidents
+                                                (JPG, PNG - max 10MB)</li>
+                                            <li><strong>Audio:</strong> Recorded conversations or statements (MP3, WAV -
+                                                max 20MB)</li>
+                                            <li><strong>Video:</strong> Video recordings of incidents (MP4, AVI - max
+                                                50MB)</li>
                                             <li><strong>Documents:</strong> PDFs, Word documents (max 5MB)</li>
                                         </ul>
                                         <p><strong>Tips for Strong Evidence:</strong></p>
@@ -157,7 +168,8 @@
                             <!-- How is evidence verified? -->
                             <div class="accordion-item">
                                 <h2 class="accordion-header">
-                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq3">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                        data-bs-target="#faq3">
                                         <i class="bi bi-cpu me-2"></i> How is evidence verified?
                                     </button>
                                 </h2>
@@ -165,14 +177,21 @@
                                     <div class="accordion-body">
                                         <p>Evidence goes through 6 validation layers:</p>
                                         <ol>
-                                            <li><strong>Anonymous Submission Gateway:</strong> Creates secure pseudonyms</li>
-                                            <li><strong>Credibility Assessment:</strong> AI analyzes for deepfakes using CLIP model</li>
-                                            <li><strong>Coordination Detection:</strong> Checks for coordinated attack patterns</li>
-                                            <li><strong>Byzantine Consensus:</strong> 15-20 validators review submission</li>
-                                            <li><strong>Counter-Evidence Processing:</strong> Allows defense submissions</li>
-                                            <li><strong>Forensic Report Generation:</strong> Creates legally compliant reports</li>
+                                            <li><strong>Anonymous Submission Gateway:</strong> Creates secure pseudonyms
+                                            </li>
+                                            <li><strong>Credibility Assessment:</strong> AI analyzes for deepfakes using
+                                                CLIP model</li>
+                                            <li><strong>Coordination Detection:</strong> Checks for coordinated attack
+                                                patterns</li>
+                                            <li><strong>Byzantine Consensus:</strong> 15-20 validators review submission
+                                            </li>
+                                            <li><strong>Counter-Evidence Processing:</strong> Allows defense submissions
+                                            </li>
+                                            <li><strong>Forensic Report Generation:</strong> Creates legally compliant
+                                                reports</li>
                                         </ol>
-                                        <p class="mb-0">Each layer uses free, pre-trained AI models to ensure fair and accurate assessment.</p>
+                                        <p class="mb-0">Each layer uses free, pre-trained AI models to ensure fair and
+                                            accurate assessment.</p>
                                     </div>
                                 </div>
                             </div>
@@ -180,7 +199,8 @@
                             <!-- What is a credibility score? -->
                             <div class="accordion-item">
                                 <h2 class="accordion-header">
-                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq4">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                        data-bs-target="#faq4">
                                         <i class="bi bi-bar-chart me-2"></i> What is a credibility score?
                                     </button>
                                 </h2>
@@ -188,11 +208,17 @@
                                     <div class="accordion-body">
                                         <p>The credibility score (0.0 - 1.0) indicates evidence authenticity:</p>
                                         <ul>
-                                            <li><strong>0.90 - 1.00:</strong> <span class="badge bg-success">Highly Credible</span> - Strong authentic evidence</li>
-                                            <li><strong>0.75 - 0.89:</strong> <span class="badge bg-success">Credible</span> - Likely authentic</li>
-                                            <li><strong>0.50 - 0.74:</strong> <span class="badge bg-warning">Uncertain</span> - Requires review</li>
-                                            <li><strong>0.25 - 0.49:</strong> <span class="badge bg-danger">Questionable</span> - Likely manipulated</li>
-                                            <li><strong>0.00 - 0.24:</strong> <span class="badge bg-danger">Not Credible</span> - Strong signs of manipulation</li>
+                                            <li><strong>0.90 - 1.00:</strong> <span class="badge bg-success">Highly
+                                                    Credible</span> - Strong authentic evidence</li>
+                                            <li><strong>0.75 - 0.89:</strong> <span
+                                                    class="badge bg-success">Credible</span> - Likely authentic</li>
+                                            <li><strong>0.50 - 0.74:</strong> <span
+                                                    class="badge bg-warning">Uncertain</span> - Requires review</li>
+                                            <li><strong>0.25 - 0.49:</strong> <span
+                                                    class="badge bg-danger">Questionable</span> - Likely manipulated
+                                            </li>
+                                            <li><strong>0.00 - 0.24:</strong> <span class="badge bg-danger">Not
+                                                    Credible</span> - Strong signs of manipulation</li>
                                         </ul>
                                         <p><strong>Factors Affecting Score:</strong></p>
                                         <ul>
@@ -209,7 +235,8 @@
                             <!-- How do I submit counter-evidence? -->
                             <div class="accordion-item">
                                 <h2 class="accordion-header">
-                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq5">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                        data-bs-target="#faq5">
                                         <i class="bi bi-shield-exclamation me-2"></i> How do I submit counter-evidence?
                                     </button>
                                 </h2>
@@ -221,14 +248,18 @@
                                             <li>Enter the original submission ID you're responding to</li>
                                             <li>Write a detailed defense statement</li>
                                             <li>Upload supporting evidence</li>
-                                            <li>Optionally verify your identity (recommended for 1.2× credibility boost)</li>
+                                            <li>Optionally verify your identity (recommended for 1.2× credibility boost)
+                                            </li>
                                             <li>Submit for Bayesian aggregation</li>
                                         </ol>
                                         <p><strong>Fair Process Guarantees:</strong></p>
                                         <ul>
-                                            <li><strong>1.3× Presumption of Innocence:</strong> Counter-evidence receives automatic credibility boost</li>
-                                            <li><strong>1.2× Identity Verification Bonus:</strong> Additional boost if you verify identity</li>
-                                            <li><strong>Bayesian Aggregation:</strong> Evidence is combined fairly using statistical methods</li>
+                                            <li><strong>1.3× Presumption of Innocence:</strong> Counter-evidence
+                                                receives automatic credibility boost</li>
+                                            <li><strong>1.2× Identity Verification Bonus:</strong> Additional boost if
+                                                you verify identity</li>
+                                            <li><strong>Bayesian Aggregation:</strong> Evidence is combined fairly using
+                                                statistical methods</li>
                                         </ul>
                                     </div>
                                 </div>
@@ -237,7 +268,8 @@
                             <!-- What happens after submission? -->
                             <div class="accordion-item">
                                 <h2 class="accordion-header">
-                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq6">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                        data-bs-target="#faq6">
                                         <i class="bi bi-hourglass-split me-2"></i> What happens after submission?
                                     </button>
                                 </h2>
@@ -245,15 +277,19 @@
                                     <div class="accordion-body">
                                         <p><strong>Processing Timeline:</strong></p>
                                         <ol>
-                                            <li><strong>Immediate:</strong> Pseudonym generation and encryption (1-2 seconds)</li>
-                                            <li><strong>1-2 minutes:</strong> Deepfake detection and credibility assessment</li>
-                                            <li><strong>2-5 minutes:</strong> Coordination detection and graph analysis</li>
+                                            <li><strong>Immediate:</strong> Pseudonym generation and encryption (1-2
+                                                seconds)</li>
+                                            <li><strong>1-2 minutes:</strong> Deepfake detection and credibility
+                                                assessment</li>
+                                            <li><strong>2-5 minutes:</strong> Coordination detection and graph analysis
+                                            </li>
                                             <li><strong>5-10 minutes:</strong> Validator consensus simulation</li>
                                             <li><strong>10-15 minutes:</strong> Report generation and finalization</li>
                                         </ol>
                                         <p><strong>You can:</strong></p>
                                         <ul>
-                                            <li>Check status on the <a href="/review.html">review page</a> using your submission ID</li>
+                                            <li>Check status on the <a href="/review.html">review page</a> using your
+                                                submission ID</li>
                                             <li>Download the forensic report (PDF) once processing is complete</li>
                                             <li>Submit counter-evidence if you disagree with findings</li>
                                         </ul>
@@ -264,7 +300,8 @@
                             <!-- How long is data stored? -->
                             <div class="accordion-item">
                                 <h2 class="accordion-header">
-                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq7">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                        data-bs-target="#faq7">
                                         <i class="bi bi-clock-history me-2"></i> How long is data stored?
                                     </button>
                                 </h2>
@@ -273,11 +310,15 @@
                                         <p><strong>Data Retention Policy:</strong></p>
                                         <ul>
                                             <li><strong>Active Submissions:</strong> 90 days in primary storage</li>
-                                            <li><strong>Archived Submissions:</strong> Moved to compressed archive after 90 days</li>
-                                            <li><strong>Hash Chain:</strong> Permanently maintained for integrity verification</li>
-                                            <li><strong>Reports:</strong> Available for download during active period</li>
+                                            <li><strong>Archived Submissions:</strong> Moved to compressed archive after
+                                                90 days</li>
+                                            <li><strong>Hash Chain:</strong> Permanently maintained for integrity
+                                                verification</li>
+                                            <li><strong>Reports:</strong> Available for download during active period
+                                            </li>
                                         </ul>
-                                        <p class="mb-0"><strong>Note:</strong> Download your report PDF within 90 days. After archival, retrieval requires manual request.</p>
+                                        <p class="mb-0"><strong>Note:</strong> Download your report PDF within 90 days.
+                                            After archival, retrieval requires manual request.</p>
                                     </div>
                                 </div>
                             </div>
@@ -285,7 +326,8 @@
                             <!-- Is this system legally valid? -->
                             <div class="accordion-item">
                                 <h2 class="accordion-header">
-                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq8">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                        data-bs-target="#faq8">
                                         <i class="bi bi-file-earmark-ruled me-2"></i> Is this system legally valid?
                                     </button>
                                 </h2>
@@ -293,16 +335,21 @@
                                     <div class="accordion-body">
                                         <p><strong>Legal Compliance:</strong></p>
                                         <ul>
-                                            <li><strong>Section 45 Compliance:</strong> Reports follow forensic documentation standards</li>
-                                            <li><strong>Chain of Custody:</strong> Hash chain maintains evidence integrity</li>
-                                            <li><strong>Cryptographic Proof:</strong> SHA-256 hashing provides tamper detection</li>
+                                            <li><strong>Section 45 Compliance:</strong> Reports follow forensic
+                                                documentation standards</li>
+                                            <li><strong>Chain of Custody:</strong> Hash chain maintains evidence
+                                                integrity</li>
+                                            <li><strong>Cryptographic Proof:</strong> SHA-256 hashing provides tamper
+                                                detection</li>
                                             <li><strong>Audit Trail:</strong> All processing steps are logged</li>
                                         </ul>
                                         <p><strong>Limitations:</strong></p>
                                         <ul>
                                             <li>This is a research prototype, not a production legal system</li>
-                                            <li>Reports may be used as supporting evidence but may require expert witness testimony</li>
-                                            <li>Consult legal professionals for admissibility in specific jurisdictions</li>
+                                            <li>Reports may be used as supporting evidence but may require expert
+                                                witness testimony</li>
+                                            <li>Consult legal professionals for admissibility in specific jurisdictions
+                                            </li>
                                         </ul>
                                     </div>
                                 </div>
@@ -322,7 +369,7 @@
                     <div class="card-body">
                         <h5>System Architecture</h5>
                         <p>The system uses a 6-layer architecture:</p>
-                        
+
                         <div class="row mb-3">
                             <div class="col-md-4">
                                 <div class="card h-100 border-primary">
@@ -459,7 +506,7 @@
                             <li>Review API documentation: <a href="/api/v1/docs" target="_blank">/api/v1/docs</a></li>
                             <li>Check system health: <a href="/api/v1/health" target="_blank">/api/v1/health</a></li>
                         </ul>
-                        
+
                         <p><strong>Research Information:</strong></p>
                         <ul>
                             <li>This is a research prototype for academic publication</li>
@@ -469,7 +516,7 @@
 
                         <div class="alert alert-info mt-3">
                             <i class="bi bi-info-circle"></i>
-                            <strong>Note:</strong> This system is a proof-of-concept prototype. 
+                            <strong>Note:</strong> This system is a proof-of-concept prototype.
                             For production deployment, additional security hardening and infrastructure are recommended.
                         </div>
                     </div>
@@ -485,10 +532,10 @@
                 <strong>Corruption Reporting System</strong> - Research Prototype v1.0.0
             </p>
             <p class="text-muted small mb-0">
-                Zero-cost deployment using free ML models and open-source tools
+                Deployment using free ML models and open-source tools
             </p>
             <p class="text-muted small">
-                <a href="/help.html" class="text-white">Help</a> | 
+                <a href="/help.html" class="text-white">Help</a> |
                 <a href="/api/v1/docs" class="text-white" target="_blank">API Docs</a>
             </p>
         </div>
@@ -496,8 +543,9 @@
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    
+
     <!-- Custom JS -->
     <script src="/js/utils.js"></script>
 </body>
+
 </html>

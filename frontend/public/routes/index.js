@@ -54,7 +54,7 @@ function registerRoutes(app) {
     // EXPLICIT HTML ROUTES
     // ============================================
     // Define explicit routes for HTML pages for better SEO and routing control
-    const publicDir = path.join(__dirname, '..', 'public');
+    const publicDir = path.join(__dirname, '..');
 
     // Main submission page
     app.get('/', (req, res) => {
@@ -216,7 +216,7 @@ function getRegisteredRoutes(app) {
 function printRoutes(app) {
     console.log('\n=== Registered Routes ===');
     const routes = getRegisteredRoutes(app);
-    
+
     if (routes.length === 0) {
         console.log('No routes registered');
         return;
@@ -225,7 +225,7 @@ function printRoutes(app) {
     routes.forEach(route => {
         console.log(`${route.methods.padEnd(10)} ${route.path}`);
     });
-    
+
     console.log('========================\n');
 }
 

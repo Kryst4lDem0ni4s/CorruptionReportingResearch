@@ -375,7 +375,7 @@ class SubmissionWorker:
             update_data['error_traceback'] = traceback
         
         try:
-            self.storage.update_submission(submission_id, update_data)
+            self.storage.save_submission(submission_id, update_data)
         except Exception as e:
             logger.error(f"Failed to update status for {submission_id}: {e}")
 

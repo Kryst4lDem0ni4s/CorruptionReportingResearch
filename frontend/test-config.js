@@ -8,6 +8,6 @@ console.log('Backend:', config.backend.url);
 console.log('Logging:', config.logging.format);
 console.log('Compression:', config.compression.enabled);
 console.log('==================');
-console.log('All tests passed! ✅');
+console.log('All tests passed!');
 
 // Run: node test-config.js

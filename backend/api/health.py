@@ -9,7 +9,7 @@ from datetime import datetime
 from pathlib import Path
 from typing import Dict
 
-from fastapi import APIRouter, Depends, status
+from fastapi import APIRouter, Depends, status, Response
 from fastapi.responses import PlainTextResponse
 
 from backend.api import schemas
@@ -60,6 +60,7 @@ STARTUP_TIME = time.time()
     }
 )
 async def health_check(
+    response: Response,
     storage_service=Depends(get_storage_service),
     hash_chain_service=Depends(get_hash_chain_service),
     crypto_service=Depends(get_crypto_service)
@@ -72,10 +73,13 @@ async def health_check(
     """
     checks = {}
     
+    # ... [Implementation details omitted for brevity, logic remains same until status check] ...
+    
     # 1. Storage Service Health
     try:
-        checks["storage_readable"] = storage_service.can_read()
-        checks["storage_writable"] = storage_service.can_write()
+        storage_ok = storage_service.health_check()
+        checks["storage_readable"] = storage_ok
+        checks["storage_writable"] = storage_ok
         logger.debug("Storage health check: OK")
     except Exception as e:
         logger.error(f"Storage health check failed: {e}")
@@ -84,7 +88,7 @@ async def health_check(
     
     # 2. Hash Chain Health
     try:
-        checks["hash_chain_valid"] = hash_chain_service.verify_integrity()
+        checks["hash_chain_valid"] = hash_chain_service.verify_chain()
         logger.debug("Hash chain health check: OK")
     except Exception as e:
         logger.error(f"Hash chain health check failed: {e}")
@@ -92,7 +96,7 @@ async def health_check(
     
     # 3. Crypto Service Health
     try:
-        checks["crypto_operational"] = crypto_service.health_check()
+        checks["crypto_operational"] = crypto_service.cipher is not None
         logger.debug("Crypto health check: OK")
     except Exception as e:
         logger.error(f"Crypto health check failed: {e}")
@@ -102,7 +106,7 @@ async def health_check(
     try:
         from backend.models.model_cache import ModelCache
         cache = ModelCache()
-        checks["models_loadable"] = cache.health_check()
+        checks["models_loadable"] = cache._initialized
         logger.debug("Models health check: OK")
     except Exception as e:
         logger.error(f"Models health check failed: {e}")
@@ -124,7 +128,7 @@ async def health_check(
     try:
         from backend.config import get_config
         config = get_config()
-        data_dir = Path(config.get("data_dir", "backend/data"))
+        data_dir = config.storage.data_dir
         
         if data_dir.exists():
             disk = psutil.disk_usage(str(data_dir))
@@ -155,6 +159,7 @@ async def health_check(
     
     if len(critical_failures) >= 2:
         overall_status = "unhealthy"
+        response.status_code = status.HTTP_503_SERVICE_UNAVAILABLE
     elif len(critical_failures) == 1 or not checks.get("models_loadable", True):
         overall_status = "degraded"
     else:
@@ -166,8 +171,8 @@ async def health_check(
     # Get version from config or default
     try:
         from backend.config import get_config
-        config = get_config()
-        version = config.get("version", "1.0.0-mvp")
+        # config = get_config() # Unused here actually, usually version comes from pkg
+        version = "1.0.0-mvp"
     except Exception:
         version = "1.0.0-mvp"
     
@@ -217,7 +222,7 @@ async def detailed_health_check(
     
     # Storage details
     try:
-        storage_stats = storage_service.get_statistics()
+        storage_stats = storage_service.get_storage_statistics()
         details["components"]["storage"] = {
             "status": "healthy",
             "total_submissions": storage_stats.get("total_submissions", 0),
@@ -233,12 +238,12 @@ async def detailed_health_check(
     
     # Hash chain details
     try:
-        chain_stats = hash_chain_service.get_statistics()
+        chain_stats = hash_chain_service.get_chain_statistics()
         details["components"]["hash_chain"] = {
             "status": "healthy",
-            "chain_length": chain_stats.get("length", 0),
+            "chain_length": chain_stats.get("total_blocks", 0),
             "last_hash": chain_stats.get("last_hash", "N/A")[:16],
-            "integrity": "valid" if hash_chain_service.verify_integrity() else "invalid"
+            "integrity": "valid" if hash_chain_service.verify_chain() else "invalid"
         }
     except Exception as e:
         details["components"]["hash_chain"] = {
@@ -326,7 +331,7 @@ async def prometheus_metrics(
         
         # Storage metrics
         try:
-            storage_stats = storage_service.get_statistics()
+            storage_stats = storage_service.get_storage_statistics()
             
             metrics_lines.append(f"# HELP submissions_total Total number of submissions")
             metrics_lines.append(f"# TYPE submissions_total counter")
@@ -350,7 +355,7 @@ async def prometheus_metrics(
         
         # Request metrics
         try:
-            request_metrics = metrics_service.get_metrics()
+            request_metrics = metrics_service.get_request_stats()
             
             metrics_lines.append(f"# HELP http_requests_total Total HTTP requests")
             metrics_lines.append(f"# TYPE http_requests_total counter")
@@ -525,9 +530,9 @@ async def version_info() -> Dict[str, str]:
         config = get_config()
         
         version_data = {
-            "version": config.get("version", "1.0.0-mvp"),
-            "environment": config.get("environment", "development"),
-            "build_date": config.get("build_date", "unknown"),
+            "version": "1.0.0-mvp",
+            "environment": config.environment,
+            "build_date": "unknown",
             "python_version": f"{__import__('sys').version_info.major}."
                              f"{__import__('sys').version_info.minor}."
                              f"{__import__('sys').version_info.micro}"

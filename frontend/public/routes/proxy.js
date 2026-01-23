@@ -39,7 +39,7 @@ const backendClient = axios.create({
  */
 function getForwardHeaders(headers) {
     const forwardHeaders = {};
-    
+
     // Headers to forward
     const allowedHeaders = [
         'content-type',
@@ -51,13 +51,13 @@ function getForwardHeaders(headers) {
         'x-real-ip',
         'x-request-id'
     ];
-    
+
     allowedHeaders.forEach(header => {
         if (headers[header]) {
             forwardHeaders[header] = headers[header];
         }
     });
-    
+
     return forwardHeaders;
 }
 
@@ -87,7 +87,13 @@ function handleProxyError(error, req, res) {
         path: req.path,
         method: req.method
     });
-    
+
+    // If backend returned a response (4xx, 5xx), forward it
+    if (error.response) {
+        console.error(`[Proxy] Backend returned status ${error.response.status}`);
+        return res.status(error.response.status).json(error.response.data);
+    }
+
     // Connection errors
     if (error.code === 'ECONNREFUSED') {
         return res.status(503).json({
@@ -97,7 +103,7 @@ function handleProxyError(error, req, res) {
             timestamp: new Date().toISOString()
         });
     }
-    
+
     // Timeout errors
     if (error.code === 'ECONNABORTED' || error.message.includes('timeout')) {
         return res.status(504).json({
@@ -107,7 +113,7 @@ function handleProxyError(error, req, res) {
             timestamp: new Date().toISOString()
         });
     }
-    
+
     // Network errors
     if (error.code === 'ENOTFOUND' || error.code === 'EAI_AGAIN') {
         return res.status(502).json({
@@ -117,7 +123,7 @@ function handleProxyError(error, req, res) {
             timestamp: new Date().toISOString()
         });
     }
-    
+
     // Generic error
     return res.status(500).json({
         error: 'Proxy error',
@@ -130,15 +136,19 @@ function handleProxyError(error, req, res) {
 // ============================================
 // HEALTH CHECK ENDPOINT
 // ============================================
+// ============================================
+// HEALTH CHECK ENDPOINT
+// ============================================
 router.get('/v1/health', async (req, res) => {
     const startTime = Date.now();
-    
+    const targetUrl = '/api/v1/health';
+
     try {
-        const response = await backendClient.get('/api/v1/health');
+        const response = await backendClient.get(targetUrl);
         const duration = Date.now() - startTime;
-        
-        logProxyRequest('GET', '/api/v1/health', response.status, duration);
-        
+
+        logProxyRequest('GET', targetUrl, response.status, duration);
+
         // Add proxy information
         const healthData = response.data;
         healthData.proxy = {
@@ -146,11 +156,12 @@ router.get('/v1/health', async (req, res) => {
             backend_url: BACKEND_URL,
             latency_ms: duration
         };
-        
+
         return res.status(response.status).json(healthData);
     } catch (error) {
         const duration = Date.now() - startTime;
-        logProxyRequest('GET', '/api/v1/health', 503, duration);
+        console.error(`[Proxy] Failed to connect to backend at ${BACKEND_URL}${targetUrl}: ${error.message}`);
+        logProxyRequest('GET', targetUrl, 503, duration);
         return handleProxyError(error, req, res);
     }
 });
@@ -162,20 +173,20 @@ router.get('/v1/health', async (req, res) => {
 // POST /api/v1/submissions - Create new submission
 router.post('/v1/submissions', async (req, res) => {
     const startTime = Date.now();
-    
+
     try {
         // For multipart/form-data, forward the raw body
         const isMultipart = req.headers['content-type']?.includes('multipart/form-data');
-        
+
         const response = await backendClient.post('/api/v1/submissions', req.body, {
             headers: getForwardHeaders(req.headers),
             // For file uploads, we need to handle this specially
             ...(isMultipart && { maxBodyLength: Infinity, maxContentLength: Infinity })
         });
-        
+
         const duration = Date.now() - startTime;
         logProxyRequest('POST', '/api/v1/submissions', response.status, duration);
-        
+
         return res.status(response.status).json(response.data);
     } catch (error) {
         const duration = Date.now() - startTime;
@@ -187,16 +198,16 @@ router.post('/v1/submissions', async (req, res) => {
 // GET /api/v1/submissions - List submissions
 router.get('/v1/submissions', async (req, res) => {
     const startTime = Date.now();
-    
+
     try {
         const response = await backendClient.get('/api/v1/submissions', {
             params: req.query,
             headers: getForwardHeaders(req.headers)
         });
-        
+
         const duration = Date.now() - startTime;
         logProxyRequest('GET', '/api/v1/submissions', response.status, duration);
-        
+
         return res.status(response.status).json(response.data);
     } catch (error) {
         const duration = Date.now() - startTime;
@@ -209,15 +220,15 @@ router.get('/v1/submissions', async (req, res) => {
 router.get('/v1/submissions/:id', async (req, res) => {
     const startTime = Date.now();
     const submissionId = req.params.id;
-    
+
     try {
         const response = await backendClient.get(`/api/v1/submissions/${submissionId}`, {
             headers: getForwardHeaders(req.headers)
         });
-        
+
         const duration = Date.now() - startTime;
         logProxyRequest('GET', `/api/v1/submissions/${submissionId}`, response.status, duration);
-        
+
         return res.status(response.status).json(response.data);
     } catch (error) {
         const duration = Date.now() - startTime;
@@ -233,15 +244,15 @@ router.get('/v1/submissions/:id', async (req, res) => {
 // POST /api/v1/counter-evidence - Submit counter-evidence
 router.post('/v1/counter-evidence', async (req, res) => {
     const startTime = Date.now();
-    
+
     try {
         const response = await backendClient.post('/api/v1/counter-evidence', req.body, {
             headers: getForwardHeaders(req.headers)
         });
-        
+
         const duration = Date.now() - startTime;
         logProxyRequest('POST', '/api/v1/counter-evidence', response.status, duration);
-        
+
         return res.status(response.status).json(response.data);
     } catch (error) {
         const duration = Date.now() - startTime;
@@ -258,16 +269,16 @@ router.post('/v1/counter-evidence', async (req, res) => {
 router.get('/v1/reports/:id', async (req, res) => {
     const startTime = Date.now();
     const submissionId = req.params.id;
-    
+
     try {
         const response = await backendClient.get(`/api/v1/reports/${submissionId}`, {
             headers: getForwardHeaders(req.headers),
             responseType: 'arraybuffer' // Handle binary PDF data
         });
-        
+
         const duration = Date.now() - startTime;
         logProxyRequest('GET', `/api/v1/reports/${submissionId}`, response.status, duration);
-        
+
         // Forward content-type and other headers
         if (response.headers['content-type']) {
             res.setHeader('Content-Type', response.headers['content-type']);
@@ -278,7 +289,7 @@ router.get('/v1/reports/:id', async (req, res) => {
         if (response.headers['content-length']) {
             res.setHeader('Content-Length', response.headers['content-length']);
         }
-        
+
         return res.status(response.status).send(response.data);
     } catch (error) {
         const duration = Date.now() - startTime;
@@ -293,7 +304,7 @@ router.get('/v1/reports/:id', async (req, res) => {
 // This handles any API endpoints not explicitly defined above
 router.all('*', async (req, res) => {
     const startTime = Date.now();
-    
+
     try {
         const response = await backendClient({
             method: req.method,
@@ -303,10 +314,10 @@ router.all('*', async (req, res) => {
             headers: getForwardHeaders(req.headers),
             responseType: req.path.includes('/reports/') ? 'arraybuffer' : 'json'
         });
-        
+
         const duration = Date.now() - startTime;
         logProxyRequest(req.method, req.path, response.status, duration);
-        
+
         // Forward response headers
         Object.keys(response.headers).forEach(key => {
             // Don't forward certain headers
@@ -314,7 +325,7 @@ router.all('*', async (req, res) => {
                 res.setHeader(key, response.headers[key]);
             }
         });
-        
+
         return res.status(response.status).send(response.data);
     } catch (error) {
         const duration = Date.now() - startTime;

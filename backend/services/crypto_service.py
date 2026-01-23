@@ -68,7 +68,7 @@ class CryptoService:
         
         Args:
             submission_id: Unique submission identifier
-            salt: Optional salt for additional randomness
+            salt: Optional salt for additional randomness (str or bytes)
             
         Returns:
             str: Hex-encoded pseudonym (e.g., "whistleblower-a3b5c7...")
@@ -79,7 +79,11 @@ class CryptoService:
             
             # Add salt if provided
             if salt:
-                hash_input += salt.encode('utf-8')
+                # Handle both string and bytes salt
+                if isinstance(salt, bytes):
+                    hash_input += salt
+                else:
+                    hash_input += salt.encode('utf-8')
             else:
                 # Generate deterministic salt from submission_id
                 salt_hash = hashlib.sha256(submission_id.encode()).digest()

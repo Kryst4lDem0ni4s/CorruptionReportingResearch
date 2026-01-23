@@ -1089,5 +1089,278 @@
     "status": "failed",
     "timestamp_submission": "2026-01-22T14:11:13.585234",
     "timestamp_updated": "2026-01-22T14:11:13.677933"
+  },
+  "8d5c441b-0e89-4a03-938c-be7b96dfcbd6": {
+    "pseudonym": "whistleblower-5ef5f148f408",
+    "evidence_type": "image",
+    "status": "failed",
+    "timestamp_submission": "2026-01-23T11:29:54.659863",
+    "timestamp_updated": "2026-01-23T11:29:54.798035"
+  },
+  "8a149622-b367-4367-aff7-a35886a5d27a": {
+    "pseudonym": "whistleblower-074cc8fdceeb",
+    "evidence_type": "image",
+    "status": "failed",
+    "timestamp_submission": "2026-01-23T12:04:57.751816",
+    "timestamp_updated": "2026-01-23T12:04:57.862439"
+  },
+  "7d0d1c6b-04ae-4b3b-9c0b-0bc0e5c672c4": {
+    "pseudonym": "whistleblower-6c4013144742",
+    "evidence_type": "image",
+    "status": "failed",
+    "timestamp_submission": "2026-01-23T12:10:16.215166",
+    "timestamp_updated": "2026-01-23T12:10:16.336875"
+  },
+  "61dde086-212a-4261-b9f8-b10d832c85c1": {
+    "pseudonym": "whistleblower-e0afd72fe8a4",
+    "evidence_type": "image",
+    "status": "failed",
+    "timestamp_submission": "2026-01-23T12:12:15.552530",
+    "timestamp_updated": "2026-01-23T12:12:15.667109"
+  },
+  "73d78a52-0b55-4b6b-b58f-7e105e9a2c0d": {
+    "pseudonym": "whistleblower-3b3ffaeaa80f",
+    "evidence_type": "image",
+    "status": "failed",
+    "timestamp_submission": "2026-01-23T12:12:52.781889",
+    "timestamp_updated": "2026-01-23T12:12:52.914060"
+  },
+  "409ffea2-0709-4030-a2e1-2d66f192464c": {
+    "pseudonym": "whistleblower-992637234772",
+    "evidence_type": "image",
+    "status": "failed",
+    "timestamp_submission": "2026-01-23T12:17:39.468990",
+    "timestamp_updated": "2026-01-23T12:17:39.631770"
+  },
+  "e20a2b7f-4739-41b4-9965-d0e9d54b469d": {
+    "pseudonym": "whistleblower-08c89ace2e8f",
+    "evidence_type": "image",
+    "status": "failed",
+    "timestamp_submission": "2026-01-23T12:23:56.167850",
+    "timestamp_updated": "2026-01-23T12:23:56.291619"
+  },
+  "93de4051-9703-4af3-926a-68f6570c90a2": {
+    "pseudonym": "whistleblower-2c907678a717",
+    "evidence_type": "image",
+    "status": "failed",
+    "timestamp_submission": "2026-01-23T12:38:28.272220",
+    "timestamp_updated": "2026-01-23T12:38:28.387159"
+  },
+  "6c8e6f42-70fd-426a-b98a-d271c2efbbf4": {
+    "pseudonym": "whistleblower-f38f3d865f9d",
+    "evidence_type": "image",
+    "status": "failed",
+    "timestamp_submission": "2026-01-23T12:39:27.511217",
+    "timestamp_updated": "2026-01-23T12:39:27.624318"
+  },
+  "b09c8675-61f7-4c31-a7f8-1e2c712bc3e8": {
+    "pseudonym": "whistleblower-95f791346439",
+    "evidence_type": "image",
+    "status": "failed",
+    "timestamp_submission": "2026-01-23T12:56:54.919411",
+    "timestamp_updated": "2026-01-23T12:56:55.035545"
+  },
+  "57e56838-7f4d-4950-99ea-e338e5b30026": {
+    "pseudonym": "whistleblower-4547881cce1f",
+    "evidence_type": "image",
+    "status": "failed",
+    "timestamp_submission": "2026-01-23T13:03:31.472848",
+    "timestamp_updated": "2026-01-23T13:03:31.597513"
+  },
+  "6e5ffba8-65d4-4e57-9691-ea0b9cec3838": {
+    "pseudonym": "whistleblower-54850483c070",
+    "evidence_type": "image",
+    "status": "failed",
+    "timestamp_submission": "2026-01-23T13:04:01.553774",
+    "timestamp_updated": "2026-01-23T13:04:01.674257"
+  },
+  "0894d7c9-3181-4e44-83f8-7f03c79c3e0b": {
+    "pseudonym": "whistleblower-1204a8b09a0c",
+    "evidence_type": "image",
+    "status": "failed",
+    "timestamp_submission": "2026-01-23T13:16:27.667018",
+    "timestamp_updated": "2026-01-23T13:16:27.812405"
+  },
+  "f8d24d9f-524a-4bb8-8cb5-e1ec362ea71b": {
+    "pseudonym": "whistleblower-765ab56565d8",
+    "evidence_type": "image",
+    "status": "failed",
+    "timestamp_submission": "2026-01-23T13:18:31.330203",
+    "timestamp_updated": "2026-01-23T13:18:31.479455"
+  },
+  "325f4b40-b5ed-4c3e-8b6e-c4c048eb1f8d": {
+    "pseudonym": "whistleblower-e0fc7de7eb23",
+    "evidence_type": "image",
+    "status": "failed",
+    "timestamp_submission": "2026-01-23T13:19:51.510476",
+    "timestamp_updated": "2026-01-23T13:19:51.625487"
+  },
+  "eb2847b4-1399-4868-9fd6-8278a13fbbf3": {
+    "pseudonym": "whistleblower-9b6cc94c992f",
+    "evidence_type": "image",
+    "status": "failed",
+    "timestamp_submission": "2026-01-23T13:39:52.451640",
+    "timestamp_updated": "2026-01-23T13:39:52.565177"
+  },
+  "9173591c-1d16-440a-9456-796518656acc": {
+    "pseudonym": "whistleblower-7273ff0aab2c",
+    "evidence_type": "image",
+    "status": "failed",
+    "timestamp_submission": "2026-01-23T13:40:20.086946",
+    "timestamp_updated": "2026-01-23T13:40:20.238910"
+  },
+  "9d1abd82-9d2c-4e30-b537-e4dc67f27e99": {
+    "pseudonym": "whistleblower-1bcd8cb011eb",
+    "evidence_type": "image",
+    "status": "failed",
+    "timestamp_submission": "2026-01-23T13:59:24.277956",
+    "timestamp_updated": "2026-01-23T13:59:24.404362"
+  },
+  "f5d6568d-7eee-421c-a78b-ac67882d8c93": {
+    "pseudonym": "whistleblower-e8f412e6a718",
+    "evidence_type": "image",
+    "status": "failed",
+    "timestamp_submission": "2026-01-23T14:00:01.545200",
+    "timestamp_updated": "2026-01-23T14:00:01.699419"
+  },
+  "f68fbba9-0de2-4251-aade-7fd4508bcec5": {
+    "pseudonym": "whistleblower-a18942af3883",
+    "evidence_type": "image",
+    "status": "failed",
+    "timestamp_submission": "2026-01-23T14:23:38.016140",
+    "timestamp_updated": "2026-01-23T14:23:38.179886"
+  },
+  "16981d75-4da4-4977-a7fb-5bdf96323671": {
+    "pseudonym": "whistleblower-04d32ddb9ec9",
+    "evidence_type": "image",
+    "status": "failed",
+    "timestamp_submission": "2026-01-23T15:10:33.717862",
+    "timestamp_updated": "2026-01-23T15:10:33.869142"
+  },
+  "a7baf910-59c5-4df8-8659-2527e4b13f08": {
+    "pseudonym": "whistleblower-72df62a0ec9c",
+    "evidence_type": "image",
+    "status": "failed",
+    "timestamp_submission": "2026-01-23T15:13:20.196304",
+    "timestamp_updated": "2026-01-23T15:13:20.422201"
+  },
+  "e48b5d79-ab27-454e-8643-cd79727a99f2": {
+    "pseudonym": "whistleblower-6b4820718dae",
+    "evidence_type": "image",
+    "status": "failed",
+    "timestamp_submission": "2026-01-23T15:14:24.188202",
+    "timestamp_updated": "2026-01-23T15:14:24.306146"
+  },
+  "92313d9f-eb52-430a-8148-8192e5bef498": {
+    "pseudonym": "whistleblower-ba3bd7afc337",
+    "evidence_type": "image",
+    "status": "failed",
+    "timestamp_submission": "2026-01-23T15:15:40.611364",
+    "timestamp_updated": "2026-01-23T15:15:40.739051"
+  },
+  "94ad99ad-5eb5-42bd-b591-9d13f2f9110b": {
+    "pseudonym": "whistleblower-da1c48338701",
+    "evidence_type": "image",
+    "status": "failed",
+    "timestamp_submission": "2026-01-23T15:16:31.345333",
+    "timestamp_updated": "2026-01-23T15:16:31.495973"
+  },
+  "a0560897-be42-4c54-8ebb-19d9f4e6ddd9": {
+    "pseudonym": "whistleblower-d867b52a080d",
+    "evidence_type": "image",
+    "status": "failed",
+    "timestamp_submission": "2026-01-23T15:20:11.146867",
+    "timestamp_updated": "2026-01-23T15:20:11.380986"
+  },
+  "f7e4055c-6a13-44eb-a96b-6c1d7b398938": {
+    "pseudonym": "whistleblower-34112e55aa79",
+    "evidence_type": "image",
+    "status": "failed",
+    "timestamp_submission": "2026-01-23T18:25:10.258751",
+    "timestamp_updated": "2026-01-23T18:25:10.414714"
+  },
+  "c30d3eb7-18d6-4eca-a8df-41c4834df1c7": {
+    "pseudonym": "whistleblower-009359db93cd",
+    "evidence_type": "image",
+    "status": "failed",
+    "timestamp_submission": "2026-01-23T18:35:19.747801",
+    "timestamp_updated": "2026-01-23T18:35:19.870647"
+  },
+  "ba286a48-d509-4933-9710-a7255ce0804c": {
+    "pseudonym": "whistleblower-f140fb735edc",
+    "evidence_type": "image",
+    "status": "failed",
+    "timestamp_submission": "2026-01-23T18:36:44.850843",
+    "timestamp_updated": "2026-01-23T18:36:45.012482"
+  },
+  "f6c1ed5b-8485-4d15-8424-7875f21281e8": {
+    "pseudonym": "whistleblower-327d0590125e",
+    "evidence_type": "image",
+    "status": "failed",
+    "timestamp_submission": "2026-01-23T18:57:08.076823",
+    "timestamp_updated": "2026-01-23T18:57:08.225290"
+  },
+  "704bb2f3-c9ff-4b45-ac4e-85b5f431f444": {
+    "pseudonym": "whistleblower-1caa93e5dece",
+    "evidence_type": "image",
+    "status": "failed",
+    "timestamp_submission": "2026-01-23T19:35:12.343020",
+    "timestamp_updated": "2026-01-23T19:35:12.462177"
+  },
+  "dd2ba950-98d5-4ebd-a504-bb1b4cee5da1": {
+    "pseudonym": "whistleblower-12290974f2cd",
+    "evidence_type": "image",
+    "status": "failed",
+    "timestamp_submission": "2026-01-23T19:39:21.648710",
+    "timestamp_updated": "2026-01-23T19:39:21.769215"
+  },
+  "742974fc-6319-49d9-9797-9d2ffb765046": {
+    "pseudonym": "whistleblower-7252f179a5b6",
+    "evidence_type": "image",
+    "status": "failed",
+    "timestamp_submission": "2026-01-23T19:44:47.568423",
+    "timestamp_updated": "2026-01-23T19:44:47.687393"
+  },
+  "3bff6c2c-a421-4035-b558-ed515f0eb98a": {
+    "pseudonym": "whistleblower-f264d8e9faf1",
+    "evidence_type": "image",
+    "status": "failed",
+    "timestamp_submission": "2026-01-23T19:50:01.863438",
+    "timestamp_updated": "2026-01-23T19:50:01.984036"
+  },
+  "a7d655d6-d6c8-47c8-929a-a3be6ce6ecc1": {
+    "pseudonym": "whistleblower-7b632f46d959",
+    "evidence_type": "image",
+    "status": "failed",
+    "timestamp_submission": "2026-01-23T19:56:19.811420",
+    "timestamp_updated": "2026-01-23T19:56:19.944086"
+  },
+  "4f647a28-8da3-4f7d-9333-abe02bf5cddb": {
+    "pseudonym": "whistleblower-520ec90dabc8",
+    "evidence_type": "image",
+    "status": "failed",
+    "timestamp_submission": "2026-01-23T20:06:41.796422",
+    "timestamp_updated": "2026-01-23T20:06:41.949589"
+  },
+  "0039afbd-90bf-44a6-9354-b90022e9612d": {
+    "pseudonym": "whistleblower-008372ed44fe",
+    "evidence_type": "image",
+    "status": "failed",
+    "timestamp_submission": "2026-01-23T20:08:02.895864",
+    "timestamp_updated": "2026-01-23T20:08:03.041568"
+  },
+  "55ecc4dd-6de9-40a8-b532-645eb13526c7": {
+    "pseudonym": "whistleblower-39fad53417f0",
+    "evidence_type": "image",
+    "status": "failed",
+    "timestamp_submission": "2026-01-23T20:15:33.140759",
+    "timestamp_updated": "2026-01-23T20:15:33.278847"
+  },
+  "3003925c-7069-4b48-9c84-d01f6ee55727": {
+    "pseudonym": "whistleblower-9329f515f629",
+    "evidence_type": "image",
+    "status": "completed",
+    "timestamp_submission": "2026-01-23T20:20:56.877267",
+    "timestamp_updated": "2026-01-23T20:20:57.020918"
   }
 }

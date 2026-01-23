@@ -336,7 +336,7 @@ jobs:
                   else:
                       print(f"⚠️ {endpoint}: Status {response.status_code}")
               except Exception as e:
-                  print(f"❌ {endpoint}: {str(e)}")
+                  print(f" {endpoint}: {str(e)}")
           EOF
 
   # ============================================================================

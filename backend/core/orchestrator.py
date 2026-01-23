@@ -6,7 +6,7 @@ Manages the complete workflow:
 2. Counter-Evidence: Layer 5 (Bayesian aggregation)
 3. Report Generation: Layer 6
 """
-
+import traceback
 import asyncio
 import logging
 import time
@@ -107,8 +107,8 @@ class Orchestrator:
             validation_service=validation_service,
             image_utils=image_utils,
             audio_utils=audio_utils,
+            crypto_service=crypto_service,
             metrics_service=metrics_service
-
         )
         
         self.layer3 = Layer3Coordination(
@@ -182,6 +182,16 @@ class Orchestrator:
             "timestamp_submission": datetime.utcnow().isoformat(),
             "processing_started": datetime.utcnow().isoformat()
         }
+
+        logger.info(f"📋 Debug Info:")
+        logger.info(f"  - file_path: {file_path}")
+        logger.info(f"  - file_path type: {type(file_path)}")
+        logger.info(f"  - file exists: {file_path.exists() if isinstance(file_path, Path) else 'NOT A PATH'}")
+        logger.info(f"  - evidence_type: {evidence_type}")
+        logger.info(f"  - layer1 initialized: {self.layer1 is not None}")
+        logger.info(f"  - crypto service: {self.crypto is not None}")
+        logger.info(f"  - hash_chain service: {self.hash_chain is not None}")
+        # === END DEBUG BLOCK ===
         
         try:
             # Update status
@@ -191,10 +201,13 @@ class Orchestrator:
             logger.info(f"[{submission_id}] Starting Layer 1: Anonymity")
             layer1_start = time.time()
             
-            layer1_result = self.layer1.process(
+            layer1_result = await asyncio.to_thread(
+                self.layer1.process,
                 submission_id=submission_id,
                 file_path=file_path,
-                evidence_type=evidence_type
+                evidence_type=evidence_type,
+                text_narrative=text_narrative,
+                metadata=metadata
             )
             
             layer1_time = time.time() - layer1_start
@@ -213,10 +226,12 @@ class Orchestrator:
             logger.info(f"[{submission_id}] Starting Layer 2: Credibility Assessment")
             layer2_start = time.time()
             
-            # Use anonymized file path
-            anonymized_path = Path(layer1_result.get('file_path_anonymized', file_path))
+            # Use anonymized/encrypted file path for further analysis if needed
+            # Layer 1 returns 'encrypted_file_path'
+            anonymized_path = Path(layer1_result.get('encrypted_file_path', file_path))
             
-            layer2_result = await self.layer2.process(
+            layer2_result = await asyncio.to_thread(
+                self.layer2.process,
                 submission_id=submission_id,
                 file_path=anonymized_path,
                 evidence_type=evidence_type,
@@ -239,7 +254,8 @@ class Orchestrator:
             logger.info(f"[{submission_id}] Starting Layer 3: Coordination Detection")
             layer3_start = time.time()
             
-            layer3_result = self.layer3.process(
+            layer3_result = await asyncio.to_thread(
+                self.layer3.process,
                 submission_id=submission_id,
                 text_narrative=text_narrative,
                 timestamp=datetime.utcnow()
@@ -261,7 +277,8 @@ class Orchestrator:
             logger.info(f"[{submission_id}] Starting Layer 4: Byzantine Consensus")
             layer4_start = time.time()
             
-            layer4_result = self.layer4.process(
+            layer4_result = await asyncio.to_thread(
+                self.layer4.process,
                 submission_id=submission_id,
                 credibility_score=layer2_result.get('final_score', 0.5),
                 coordination_flagged=layer3_result.get('flagged', False),
@@ -296,21 +313,41 @@ class Orchestrator:
             
             return result
             
+        # In orchestrator.py, replace the exception handler in process_submission:
+
         except Exception as e:
             logger.error(
                 f"[{submission_id}] Processing failed: {e}",
                 exc_info=True
             )
+
+            # Mark as failed - FIRST load existing data
+            try:
+                existing_data = self.storage.load_submission(submission_id)
+                if not existing_data:
+                    existing_data = result  # Use what we have so far
+                
+                # Merge error into existing data
+                existing_data.update({
+                    'status': ProcessingStatus.FAILED,
+                    'error': str(e),
+                    'error_traceback': traceback.format_exc(),
+                    'timestamp_failed': datetime.utcnow().isoformat()
+                })
+                
+                # Save directly (not update)
+                self.storage.save_submission(submission_id, existing_data)
+                logger.info(f"✅ Error saved for {submission_id}: {str(e)[:100]}")
+                
+            except Exception as save_error:
+                logger.error(f"❌ CRITICAL: Could not save error: {save_error}")
+                logger.error(traceback.format_exc())
             
-            # Mark as failed
-            result['status'] = ProcessingStatus.FAILED
-            result['error'] = str(e)
-            result['timestamp_failed'] = datetime.utcnow().isoformat()
-            
-            self.storage.save_submission(submission_id, result)
             self._update_status(submission_id, ProcessingStatus.FAILED)
-            
+
+            # Still raise so routes.py knows it failed
             raise
+
     
     async def process_counter_evidence(
         self,
@@ -761,3 +798,18 @@ class Orchestrator:
             health['error'] = str(e)
         
         return health
+
+    def get_coordination_graph(
+        self,
+        start_date: Optional[datetime] = None,
+        end_date: Optional[datetime] = None,
+        min_similarity: Optional[float] = None
+    ) -> Dict:
+        """
+        Get coordination graph data from Layer 3.
+        """
+        return self.layer3.get_coordination_graph_data(
+            start_date=start_date,
+            end_date=end_date,
+            min_similarity=min_similarity
+        )

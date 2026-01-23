@@ -9,6 +9,10 @@ from datetime import datetime
 from pathlib import Path
 from typing import Optional
 from uuid import uuid4
+import traceback
+import json
+import asyncio
+
 
 from fastapi import (
     APIRouter,
@@ -80,7 +84,6 @@ async def submit_evidence(
     
     try:
         # Parse and validate request
-        import json
         metadata_dict = json.loads(metadata) if metadata else {}
         
         request_data = schemas.SubmissionRequest(
@@ -282,6 +285,9 @@ async def get_submission(
         if status_value == schemas.SubmissionStatus.COMPLETED:
             response.processing_time_seconds = submission.get("processing_time_seconds")
         
+        if status_value == schemas.SubmissionStatus.FAILED:
+            response.error = submission.get("error")
+            response.error_traceback = submission.get("error_traceback")
         return response
         
     except HTTPException:
@@ -673,55 +679,90 @@ async def process_submission_async(
     Updates submission status as processing progresses.
     """
     start_time = time.time()
-    
+
     try:
-        # Update status to processing
-        storage_service.update_submission_status(
-            submission_id,
-            schemas.SubmissionStatus.PROCESSING
-        )
+        logger.info(f"🚀 Background processing started for {submission_id}")
         
-        logger.info(f"Starting processing for submission {submission_id}")
+        # Load existing submission data to preserve it
+        existing_submission = storage_service.load_submission(submission_id)
+        if not existing_submission:
+            raise ValueError(f"Submission {submission_id} not found in storage")
+
+        # Update status to processing (preserve existing fields)
+        existing_submission.update({
+            'status': 'processing',
+            'progress': 10,
+            'timestamp_started': datetime.utcnow().isoformat()
+        })
+        storage_service.save_submission(submission_id, existing_submission)
         
+        logger.info(f"Processing submission {submission_id} through orchestrator")
+        logger.debug(f"File path: {file_path}, Evidence type: {evidence_type}")
+        logger.debug(f"File exists: {file_path.exists() if isinstance(file_path, Path) else 'Not a Path'}")
+
         # Execute full 6-layer pipeline
+        # Note: orchestrator.process_submission is async and returns Dict
         results = await orchestrator.process_submission(
             submission_id=submission_id,
             file_path=file_path,
             evidence_type=evidence_type
         )
-        
+
         # Calculate processing time
         processing_time = time.time() - start_time
         results["processing_time_seconds"] = processing_time
+
+        # Update submission with results (preserve all existing fields)
+        results['status'] = 'completed'
+        results['progress'] = 100
+        results['timestamp_completed'] = datetime.utcnow().isoformat()
         
-        # Update submission with results
-        storage_service.update_submission(submission_id, results)
-        
-        # Update status to completed
-        storage_service.update_submission_status(
-            submission_id,
-            schemas.SubmissionStatus.COMPLETED
-        )
-        
+        # Merge with existing submission data
+        existing_submission.update(results)
+        storage_service.save_submission(submission_id, existing_submission)
+
         logger.info(
-            f"Submission {submission_id} completed in {processing_time:.2f}s"
+            f"✅ Submission {submission_id} completed in {processing_time:.2f}s"
         )
-        
+
     except Exception as e:
-        logger.error(f"Processing failed for {submission_id}: {e}", exc_info=True)
-        
-        # Update status to failed
-        storage_service.update_submission_status(
-            submission_id,
-            schemas.SubmissionStatus.FAILED
+        error_msg = str(e)
+        error_trace = traceback.format_exc()
+        processing_time = time.time() - start_time
+
+        logger.error(
+            f"❌ Processing failed for {submission_id}: {error_msg}",
+            exc_info=True
         )
-        storage_service.update_submission(
-            submission_id,
-            {"error": str(e)}
-        )
+        logger.error(f"Full error traceback:\n{error_trace}")
+
+        # Update status to failed with detailed error
+        try:
+            # Load existing submission data to preserve all fields
+            existing_submission = storage_service.load_submission(submission_id)
+            if not existing_submission:
+                existing_submission = {'id': submission_id}
+            
+            # Update with error information (preserve all existing fields)
+            existing_submission.update({
+                'status': 'failed',
+                'progress': 0,
+                'error': error_msg,
+                'error_traceback': error_trace,
+                'processing_time_seconds': processing_time,
+                'timestamp_failed': datetime.utcnow().isoformat()
+            })
+            
+            storage_service.save_submission(submission_id, existing_submission)
+            logger.info(f"✅ Error details saved successfully for {submission_id}")
+            
+        except Exception as update_error:
+            logger.error(f"❌ CRITICAL: Failed to save error details: {update_error}")
+            logger.error(f"Update error traceback:\n{traceback.format_exc()}")
 
 
-async def process_counter_evidence_async(
+
+async def process_counter_evidence(
     counter_evidence_id: str,
     original_submission_id: str,
     file_path: Path,
@@ -738,42 +779,31 @@ async def process_counter_evidence_async(
         # Process counter-evidence through layers 1-4
         counter_results = await orchestrator.process_submission(
             submission_id=counter_evidence_id,
-            file_path=file_path
+            file_path=file_path,
+            evidence_type="image" # Default
         )
         
-        # Load original submission
-        original = storage_service.load_submission(original_submission_id)
+        # Step 2: Get counter credibility score
+        counter_score = counter_results.get('credibility', {}).get('final_score', 0.5)
         
-        # Perform Bayesian aggregation (Layer 5)
-        aggregation_results = await orchestrator.aggregate_counter_evidence(
-            original_submission=original,
-            counter_evidence=counter_results,
-            verified_identity=verified_identity
+        # Step 3: Bayesian aggregation
+        aggregation_results = await orchestrator.process_counter_evidence(
+            original_submission_id=original_submission_id,
+            counter_evidence_id=counter_evidence_id,
+            counter_credibility_score=counter_score,
+            identity_verified=verified_identity
         )
         
-        # Update original submission with counter-evidence linkage
-        storage_service.update_submission(
-            original_submission_id,
-            {
-                "counter_evidence_id": counter_evidence_id,
-                "posterior_score": aggregation_results["posterior_score"],
-                "score_delta": aggregation_results["delta"],
-                "identity_verified": verified_identity
-            }
-        )
+        # Update counter-evidence submission status
+        if hasattr(storage_service, 'update_submission'):
+            storage_service.update_submission(
+                counter_evidence_id, 
+                {'status': 'completed', 'results': counter_results}
+            )
+        else:
+            storage_service.save_submission_status(counter_evidence_id, 'completed')
         
-        # Update counter-evidence submission
-        storage_service.update_submission(counter_evidence_id, counter_results)
-        storage_service.update_submission_status(
-            counter_evidence_id,
-            schemas.SubmissionStatus.COMPLETED
-        )
-        
-        logger.info(f"Counter-evidence {counter_evidence_id} processed successfully")
+        logger.info(f"Counter-evidence aggregation completed")
         
     except Exception as e:
         logger.error(f"Counter-evidence processing failed: {e}", exc_info=True)
-        storage_service.update_submission_status(
-            counter_evidence_id,
-            schemas.SubmissionStatus.FAILED
-        )

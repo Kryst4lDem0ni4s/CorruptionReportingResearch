@@ -41,6 +41,7 @@ class Layer2Credibility:
         validation_service,
         image_utils,
         audio_utils,
+        crypto_service,
         metrics_service: Optional[MetricsService] = None,
         device: Optional[str] = None
     ):
@@ -61,6 +62,7 @@ class Layer2Credibility:
         self.image_utils = image_utils
         self.audio_utils = audio_utils
         self.metrics = metrics_service
+        self.crypto_service = crypto_service
         
         # Determine device
         if device:
@@ -255,7 +257,7 @@ class Layer2Credibility:
         Assess image credibility using CLIP and BLIP.
         
         Args:
-            image_path: Path to image file
+            image_path: Path to image file (may be encrypted)
             text_narrative: Optional narrative
             use_augmentation: Use test-time augmentation
             
@@ -264,64 +266,104 @@ class Layer2Credibility:
         """
         deepfake_scores = []
         
-        # Load image
-        from PIL import Image
-        image = Image.open(image_path).convert('RGB')
+        # === DECRYPT IF NEEDED ===
+        cleanup_needed = False
         
-        # Test-time augmentation
-        if use_augmentation:
-            augmented_images = self._augment_image(image)
-        else:
-            augmented_images = [image]
-        
-        # Run CLIP inference on each augmentation
-        for aug_image in augmented_images:
+        if image_path.suffix == '.bin' and '_encrypted' in image_path.name:
+            logger.info(f"Decrypting evidence file: {image_path.name}")
+            
+            # Create temporary decrypted file path
+            temp_decrypted = image_path.parent / f"{image_path.stem.replace('_encrypted', '')}_temp.jpg"
+            
             try:
-                score = self.clip.predict_authenticity(aug_image)
-                deepfake_scores.append(score)
-            except Exception as e:
-                logger.warning(f"CLIP inference failed: {e}")
-        
-        # If no scores obtained, use neutral score
-        if not deepfake_scores:
-            logger.warning("No deepfake scores obtained, using neutral 0.5")
-            deepfake_scores = [0.5]
-        
-        # Cross-modal consistency check
-        consistency_score = 1.0
-        if text_narrative:
-            try:
-                # Generate caption from image
-                caption = self.blip.generate_caption(image)
+                # Decrypt file
+                self.crypto_service.decrypt_file(image_path, temp_decrypted)
                 
-                # Compare caption with narrative
-                consistency_score = self._compute_text_similarity(
-                    caption,
-                    text_narrative
-                )
-                logger.debug(
-                    f"Caption: '{caption}' | "
-                    f"Consistency: {consistency_score:.3f}"
-                )
+                # Use decrypted file for analysis
+                actual_image_path = temp_decrypted
+                cleanup_needed = True
+                
+                logger.debug(f"Decrypted to: {actual_image_path.name}")
+                
             except Exception as e:
-                logger.warning(f"Consistency check failed: {e}")
+                logger.error(f"Decryption failed: {e}")
+                raise ValueError(f"Cannot decrypt evidence file: {e}")
+        else:
+            # File is not encrypted, use directly
+            actual_image_path = image_path
+            cleanup_needed = False
         
-        import time
-        inference_start = time.time()
+        # === LOAD AND ANALYZE IMAGE ===
+        try:
+            # Load image
+            from PIL import Image
+            image = Image.open(actual_image_path).convert('RGB')
+            
+            # Test-time augmentation
+            if use_augmentation:
+                augmented_images = self._augment_image(image)
+            else:
+                augmented_images = [image]
+            
+            # Run CLIP inference on each augmentation
+            for aug_image in augmented_images:
+                try:
+                    score = self.clip.predict_authenticity(aug_image)
+                    deepfake_scores.append(score)
+                except Exception as e:
+                    logger.warning(f"CLIP inference failed: {e}")
+            
+            # If no scores obtained, use neutral score
+            if not deepfake_scores:
+                logger.warning("No deepfake scores obtained, using neutral 0.5")
+                deepfake_scores = [0.5]
+            
+            # Cross-modal consistency check
+            consistency_score = 1.0
+            if text_narrative:
+                try:
+                    # Generate caption from image
+                    caption = self.blip.generate_caption(image)
+                    
+                    # Compare caption with narrative
+                    consistency_score = self._compute_text_similarity(
+                        caption,
+                        text_narrative
+                    )
+                    logger.debug(
+                        f"Caption: '{caption}' | "
+                        f"Consistency: {consistency_score:.3f}"
+                    )
+                except Exception as e:
+                    logger.warning(f"Consistency check failed: {e}")
+            
+            import time
+            inference_start = time.time()
 
-        # Physical plausibility check
-        plausibility_score = self._check_image_plausibility(image)
+            # Physical plausibility check
+            plausibility_score = self._check_image_plausibility(image)
 
-        inference_time = time.time() - inference_start
+            inference_time = time.time() - inference_start
 
-        if self.metrics:
-            self.metrics.record_model_inference("clip", inference_time)
-        
-        return {
-            'deepfake_scores': deepfake_scores,
-            'consistency_score': consistency_score,
-            'plausibility_score': plausibility_score
-        }
+            if self.metrics:
+                self.metrics.record_model_inference("clip", inference_time)
+            
+            result = {
+                'deepfake_scores': deepfake_scores,
+                'consistency_score': consistency_score,
+                'plausibility_score': plausibility_score
+            }
+            
+            return result
+            
+        finally:
+            # === CLEANUP DECRYPTED FILE ===
+            if cleanup_needed and temp_decrypted and temp_decrypted.exists():
+                try:
+                    temp_decrypted.unlink()
+                    logger.debug(f"Cleaned up temporary file: {temp_decrypted.name}")
+                except Exception as e:
+                    logger.warning(f"Failed to cleanup temp file: {e}")
     
     def _assess_audio(
         self,

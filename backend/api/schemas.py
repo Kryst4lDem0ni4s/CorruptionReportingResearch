@@ -5,7 +5,7 @@ All models include validation rules and documentation.
 
 from datetime import datetime
 from enum import Enum
-from typing import Dict, List, Optional, Tuple
+from typing import Any, Dict, List, Optional, Tuple
 from pydantic import BaseModel, Field, model_validator, validator, root_validator
 from uuid import UUID
 
@@ -313,6 +313,8 @@ class CredibilityResponse(BaseModel):
         None,
         description="Total processing time"
     )
+    error: Optional[str] = None 
+    error_traceback: Optional[str] = None 
 
     class Config:
         json_schema_extra = {
@@ -408,7 +410,7 @@ class HealthCheckResponse(BaseModel):
     """System health check response."""
     status: str = Field(..., description="healthy|degraded|unhealthy")
     timestamp: datetime
-    checks: Dict[str, bool] = Field(
+    checks: Dict[str, Any] = Field(
         ...,
         description="Individual component health status"
     )
