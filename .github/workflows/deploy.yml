@@ -82,7 +82,7 @@ jobs:
       - name: Validate Configuration Files
         run: |
           python -c "import yaml; yaml.safe_load(open('config.yaml'))"
-          echo "✅ Configuration validation passed"
+          echo " Configuration validation passed"
 
   # ============================================================================
   # JOB 2: Build Docker Images
@@ -325,16 +325,16 @@ jobs:
           endpoints = []
 
           if not endpoints:
-              print("✅ No smoke tests configured (deployment package created)")
+              print(" No smoke tests configured (deployment package created)")
               sys.exit(0)
 
           for endpoint in endpoints:
               try:
                   response = requests.get(endpoint, timeout=10)
                   if response.status_code == 200:
-                      print(f"✅ {endpoint}: OK")
+                      print(f" {endpoint}: OK")
                   else:
-                      print(f"⚠️ {endpoint}: Status {response.status_code}")
+                      print(f" {endpoint}: Status {response.status_code}")
               except Exception as e:
                   print(f" {endpoint}: {str(e)}")
           EOF
@@ -414,7 +414,7 @@ jobs:
     steps:
       - name: Trigger Rollback
         run: |
-          echo "⚠️ Deployment failed - rollback may be required"
+          echo " Deployment failed - rollback may be required"
           echo "Manual intervention needed for production rollback"
           echo "Previous stable version should be redeployed"
 

@@ -13,7 +13,7 @@ def test_endpoint(method, path, description, expected_status=200):
         if response.status_code != expected_status:
             print(f" Failed: Expected {expected_status}, got {response.status_code}")
             return False
-        print("✅ Success")
+        print(" Success")
         return True
     except Exception as e:
         print(f" Error: {e}")
@@ -31,7 +31,7 @@ def verify_frontend():
     if not test_endpoint("GET", "/api/v1/health", "Backend Proxy Health"):
         sys.exit(1)
         
-    print("\n✅ Frontend Verification Complete!")
+    print("\n Frontend Verification Complete!")
 
 if __name__ == "__main__":
     verify_frontend()

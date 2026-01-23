@@ -681,7 +681,7 @@ async def process_submission_async(
     start_time = time.time()
 
     try:
-        logger.info(f"🚀 Background processing started for {submission_id}")
+        logger.info(f" Background processing started for {submission_id}")
         
         # Load existing submission data to preserve it
         existing_submission = storage_service.load_submission(submission_id)
@@ -722,7 +722,7 @@ async def process_submission_async(
         storage_service.save_submission(submission_id, existing_submission)
 
         logger.info(
-            f"✅ Submission {submission_id} completed in {processing_time:.2f}s"
+            f" Submission {submission_id} completed in {processing_time:.2f}s"
         )
 
     except Exception as e:
@@ -754,7 +754,7 @@ async def process_submission_async(
             })
             
             storage_service.save_submission(submission_id, existing_submission)
-            logger.info(f"✅ Error details saved successfully for {submission_id}")
+            logger.info(f" Error details saved successfully for {submission_id}")
             
         except Exception as update_error:
             logger.error(f"❌ CRITICAL: Failed to save error details: {update_error}")

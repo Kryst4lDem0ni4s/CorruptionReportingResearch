@@ -3,136 +3,136 @@
     "id": "validator_01",
     "type": "devils_advocate",
     "reputation": 1.0,
-    "total_votes": 1,
-    "correct_votes": 1,
+    "total_votes": 3,
+    "correct_votes": 3,
     "bias": 0.08793717154930517
   },
   {
     "id": "validator_02",
     "type": "honest",
     "reputation": 1.0,
-    "total_votes": 1,
-    "correct_votes": 1,
+    "total_votes": 3,
+    "correct_votes": 3,
     "bias": -0.09387701331778882
   },
   {
     "id": "validator_03",
     "type": "honest",
     "reputation": 1.0,
-    "total_votes": 1,
-    "correct_votes": 1,
+    "total_votes": 3,
+    "correct_votes": 3,
     "bias": 0.0995134849735557
   },
   {
     "id": "validator_04",
     "type": "honest",
     "reputation": 1.0,
-    "total_votes": 1,
-    "correct_votes": 1,
+    "total_votes": 3,
+    "correct_votes": 3,
     "bias": 0.08077912941954388
   },
   {
     "id": "validator_05",
     "type": "honest",
     "reputation": 1.0,
-    "total_votes": 1,
-    "correct_votes": 1,
+    "total_votes": 3,
+    "correct_votes": 3,
     "bias": -0.06885660439663333
   },
   {
     "id": "validator_06",
     "type": "honest",
     "reputation": 1.0,
-    "total_votes": 1,
-    "correct_votes": 1,
+    "total_votes": 3,
+    "correct_votes": 3,
     "bias": -0.03857699100671122
   },
   {
     "id": "validator_07",
     "type": "honest",
     "reputation": 1.0,
-    "total_votes": 1,
-    "correct_votes": 1,
+    "total_votes": 3,
+    "correct_votes": 3,
     "bias": 0.022812812034982047
   },
   {
     "id": "validator_08",
     "type": "honest",
     "reputation": 1.0,
-    "total_votes": 1,
-    "correct_votes": 1,
+    "total_votes": 3,
+    "correct_votes": 3,
     "bias": -0.08705957805501081
   },
   {
     "id": "validator_09",
     "type": "honest",
     "reputation": 1.0,
-    "total_votes": 1,
-    "correct_votes": 1,
+    "total_votes": 3,
+    "correct_votes": 3,
     "bias": 0.07016400256627761
   },
   {
     "id": "validator_10",
     "type": "honest",
     "reputation": 1.0,
-    "total_votes": 1,
-    "correct_votes": 1,
+    "total_votes": 3,
+    "correct_votes": 3,
     "bias": 0.016354124891740637
   },
   {
     "id": "validator_11",
     "type": "honest",
     "reputation": 1.0,
-    "total_votes": 1,
-    "correct_votes": 1,
+    "total_votes": 3,
+    "correct_votes": 3,
     "bias": -0.0440597566828592
   },
   {
     "id": "validator_12",
     "type": "honest",
     "reputation": 1.0,
-    "total_votes": 1,
-    "correct_votes": 1,
+    "total_votes": 3,
+    "correct_votes": 3,
     "bias": 0.08800067236976802
   },
   {
     "id": "validator_13",
     "type": "honest",
     "reputation": 1.0,
-    "total_votes": 1,
-    "correct_votes": 1,
+    "total_votes": 3,
+    "correct_votes": 3,
     "bias": -0.07704905315733149
   },
   {
     "id": "validator_14",
     "type": "honest",
     "reputation": 1.0,
-    "total_votes": 1,
-    "correct_votes": 1,
+    "total_votes": 3,
+    "correct_votes": 3,
     "bias": 0.02421157821696651
   },
   {
     "id": "validator_15",
     "type": "honest",
     "reputation": 1.0,
-    "total_votes": 1,
-    "correct_votes": 1,
+    "total_votes": 3,
+    "correct_votes": 3,
     "bias": -0.011249695235777901
   },
   {
     "id": "validator_16",
     "type": "honest",
     "reputation": 1.0,
-    "total_votes": 1,
-    "correct_votes": 1,
+    "total_votes": 3,
+    "correct_votes": 3,
     "bias": 0.039961356369015044
   },
   {
     "id": "validator_17",
     "type": "honest",
     "reputation": 1.0,
-    "total_votes": 1,
-    "correct_votes": 1,
+    "total_votes": 3,
+    "correct_votes": 3,
     "bias": -0.09649005786155351
   }
 ]

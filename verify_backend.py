@@ -16,7 +16,7 @@ def test_endpoint(method, path, description, expected_status=200):
             print(f" Failed: Expected {expected_status}, got {response.status_code}")
             print(f"Response: {response.text[:200]}")
             return False
-        print("✅ Success")
+        print(" Success")
         return True
     except Exception as e:
         print(f" Error: {e}")

@@ -337,7 +337,7 @@ class Orchestrator:
                 
                 # Save directly (not update)
                 self.storage.save_submission(submission_id, existing_data)
-                logger.info(f"✅ Error saved for {submission_id}: {str(e)[:100]}")
+                logger.info(f" Error saved for {submission_id}: {str(e)[:100]}")
                 
             except Exception as save_error:
                 logger.error(f"❌ CRITICAL: Could not save error: {save_error}")

@@ -249,9 +249,9 @@ jobs:
           done
 
           if [ ${#missing_files[@]} -eq 0 ]; then
-            echo "✅ All required documentation files present"
+            echo " All required documentation files present"
           else
-            echo "⚠️ Missing documentation files:"
+            echo " Missing documentation files:"
             printf '%s\n' "${missing_files[@]}"
           fi
 
@@ -274,11 +274,11 @@ jobs:
         run: |
           echo "## Code Quality Summary" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
-          echo "✅ Python Linting: Completed" >> $GITHUB_STEP_SUMMARY
-          echo "✅ JavaScript Linting: Completed" >> $GITHUB_STEP_SUMMARY
-          echo "✅ Config Validation: Completed" >> $GITHUB_STEP_SUMMARY
-          echo "✅ Dependency Check: Completed" >> $GITHUB_STEP_SUMMARY
-          echo "✅ Complexity Analysis: Completed" >> $GITHUB_STEP_SUMMARY
-          echo "✅ Documentation Check: Completed" >> $GITHUB_STEP_SUMMARY
+          echo " Python Linting: Completed" >> $GITHUB_STEP_SUMMARY
+          echo " JavaScript Linting: Completed" >> $GITHUB_STEP_SUMMARY
+          echo " Config Validation: Completed" >> $GITHUB_STEP_SUMMARY
+          echo " Dependency Check: Completed" >> $GITHUB_STEP_SUMMARY
+          echo " Complexity Analysis: Completed" >> $GITHUB_STEP_SUMMARY
+          echo " Documentation Check: Completed" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "Review individual jobs for detailed findings." >> $GITHUB_STEP_SUMMARY

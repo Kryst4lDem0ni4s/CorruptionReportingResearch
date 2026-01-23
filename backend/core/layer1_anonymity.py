@@ -192,7 +192,7 @@ class Layer1Anonymity:
         """
         try:
             if evidence_type == "image":
-                # ✅ Fix: provide output path
+                #  Fix: provide output path
                 output_path = file_path.with_suffix('.cleaned' + file_path.suffix)
                 self.metadata.strip_image_metadata(file_path, output_path)
                 return output_path

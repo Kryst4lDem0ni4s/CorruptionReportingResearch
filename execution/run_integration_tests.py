@@ -44,7 +44,7 @@ class IntegrationTester:
                     full_url = f"{url}{endpoint}"
                     response = self.session.get(full_url, timeout=5)
                     if response.status_code == 200:
-                        logger.info(f"✅ {service_name} is healthy (endpoint: {endpoint})")
+                        logger.info(f" {service_name} is healthy (endpoint: {endpoint})")
                         return True
                 except requests.RequestException:
                     continue
@@ -67,7 +67,7 @@ class IntegrationTester:
                 data = response.json()
                 # Check if response looks like backend response
                 if "status" in data or "environment" in data:
-                    logger.info("✅ Proxy verification successful")
+                    logger.info(" Proxy verification successful")
                     return True
             
             logger.error(f" Proxy verification failed: Status {response.status_code}")
@@ -101,7 +101,7 @@ class IntegrationTester:
             loaded = storage.load_submission(test_id)
             
             if loaded and loaded.get('status') == 'test_heartbeat':
-                logger.info(f"✅ Storage test passed: {loaded['id']}")
+                logger.info(f" Storage test passed: {loaded['id']}")
                 # Cleanup
                 try:
                     storage.delete_submission(test_id)
@@ -207,7 +207,7 @@ class IntegrationTester:
                 logger.error(f"Response data: {submission_data}")
                 return False
             
-            logger.info(f"✅ Submission accepted. ID: {submission_id}")
+            logger.info(f" Submission accepted. ID: {submission_id}")
             
             # 2. Poll Status with exponential backoff
             logger.info(f"3. Polling status for {submission_id}...")
@@ -232,15 +232,15 @@ class IntegrationTester:
                     
                     # Check for terminal states
                     if status == 'completed':
-                        logger.info("✅ Processing completed successfully")
+                        logger.info(" Processing completed successfully")
                         
                         # 3. Verify Result Details
                         logger.info("4. Verifying submission details...")
                         if self._verify_submission_details(poll_data):
-                            logger.info("✅ Submission details verified")
+                            logger.info(" Submission details verified")
                             return True
                         else:
-                            logger.warning("⚠️ Submission details incomplete")
+                            logger.warning(" Submission details incomplete")
                             return True  # Still consider success if processing completed
                     
                     elif status == 'failed':
@@ -260,7 +260,7 @@ class IntegrationTester:
                         continue
                     
                     else:
-                        logger.warning(f"⚠️ Unknown status: {status}")
+                        logger.warning(f" Unknown status: {status}")
                         time.sleep(wait_times[min(i, len(wait_times)-1)])
                         continue
                 
@@ -301,14 +301,14 @@ class IntegrationTester:
             if response.status_code == 200:
                 data = response.json()
                 submissions = data.get('submissions', [])
-                logger.info(f"✅ List endpoint working. Found {len(submissions)} submissions")
+                logger.info(f" List endpoint working. Found {len(submissions)} submissions")
                 return True
             else:
-                logger.warning(f"⚠️ List endpoint returned {response.status_code}")
+                logger.warning(f" List endpoint returned {response.status_code}")
                 return False
                 
         except Exception as e:
-            logger.warning(f"⚠️ List endpoint test failed: {e}")
+            logger.warning(f" List endpoint test failed: {e}")
             return False
 
     def test_metrics_endpoint(self) -> bool:
@@ -320,14 +320,14 @@ class IntegrationTester:
             response = self.session.get(metrics_url, timeout=10)
             
             if response.status_code == 200:
-                logger.info("✅ Metrics endpoint accessible")
+                logger.info(" Metrics endpoint accessible")
                 return True
             else:
-                logger.warning(f"⚠️ Metrics endpoint returned {response.status_code}")
+                logger.warning(f" Metrics endpoint returned {response.status_code}")
                 return False
                 
         except Exception as e:
-            logger.warning(f"⚠️ Metrics endpoint test failed: {e}")
+            logger.warning(f" Metrics endpoint test failed: {e}")
             return False
 
 
@@ -363,7 +363,7 @@ def main():
 
     tester = IntegrationTester(args.backend, args.frontend)
     
-    logger.info("🚀 Starting Integration Tests...")
+    logger.info(" Starting Integration Tests...")
     logger.info(f"   Backend: {args.backend}")
     logger.info(f"   Frontend: {args.frontend}")
     
@@ -390,7 +390,7 @@ def main():
             # 3. Proxy Verification
             results['proxy'] = tester.check_proxy()
         else:
-            logger.warning("⚠️ Frontend unreachable. Skipping proxy tests.")
+            logger.warning(" Frontend unreachable. Skipping proxy tests.")
     
     # 3. Storage Verification (Local)
     results['storage'] = tester.test_storage_service()
@@ -415,7 +415,7 @@ def main():
     logger.info("="*60)
     
     for test_name, passed in results.items():
-        status = "✅ PASS" if passed else " FAIL"
+        status = " PASS" if passed else " FAIL"
         logger.info(f"{status}: {test_name}")
     
     logger.info("="*60)
@@ -425,7 +425,7 @@ def main():
     all_critical_passed = all(results[test] for test in critical_tests)
     
     if all_critical_passed:
-        logger.info("🎉 All Critical Integration Tests Passed!")
+        logger.info(" All Critical Integration Tests Passed!")
         sys.exit(0)
     else:
         logger.error(" Some critical tests failed")

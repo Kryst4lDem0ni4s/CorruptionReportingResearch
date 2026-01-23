@@ -1362,5 +1362,19 @@
     "status": "completed",
     "timestamp_submission": "2026-01-23T20:20:56.877267",
     "timestamp_updated": "2026-01-23T20:20:57.020918"
+  },
+  "06fc8af4-8383-4abc-9488-6c0990e8bf81": {
+    "pseudonym": "whistleblower-dd8c39e8d60a",
+    "evidence_type": "image",
+    "status": "completed",
+    "timestamp_submission": "2026-01-23T20:22:44.802052",
+    "timestamp_updated": "2026-01-23T20:22:44.986183"
+  },
+  "2a60b542-566e-4a61-8c0c-cf3641f0672c": {
+    "pseudonym": "whistleblower-05c31c2cb60c",
+    "evidence_type": "image",
+    "status": "completed",
+    "timestamp_submission": "2026-01-23T20:25:26.872096",
+    "timestamp_updated": "2026-01-23T20:25:27.009915"
   }
 }
