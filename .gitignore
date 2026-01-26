@@ -231,6 +231,5 @@ evaluation/datasets/__pycache__/
 evaluation/datasets/real-and-fake-face-detection/
 backend/data/evidence/
 backend/data/submissions/
-evaluation/results/
 logs/
 directives/

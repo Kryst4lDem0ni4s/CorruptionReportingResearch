@@ -1,0 +1,246 @@
+{
+  "setup": {
+    "timestamp": "2026-01-26T09:25:20.762125"
+  },
+  "layer_stats": {
+    "layer1_count": 15,
+    "layer2_count": 15,
+    "layer3_count": 15,
+    "layer4_processed": 15,
+    "layer5_count": 0,
+    "layer6_count": 15
+  },
+  "reports": [
+    {
+      "id": "sub_7912",
+      "evidence_hash": "594d61966833b7b1d30d852ff011f249453964ea5d8893b92080b940914b551d",
+      "status": "REJECTED",
+      "credibility_score": 0.2801122605800629,
+      "timestamp": "2026-01-26T09:25:51.573014"
+    },
+    {
+      "id": "sub_1520",
+      "evidence_hash": "2b80f3abe4ce0b3cb3880331ebb856516caeed84aa50fd096e0549ee02eb2db6",
+      "status": "REJECTED",
+      "credibility_score": 0.362984761595726,
+      "timestamp": "2026-01-26T09:25:52.031951"
+    },
+    {
+      "id": "sub_1488",
+      "evidence_hash": "0b2b137c4323b0d505112de3d5111dc12039f061ae7529eda8e48f7d317a4116",
+      "status": "REJECTED",
+      "credibility_score": 0.31737303733825684,
+      "timestamp": "2026-01-26T09:25:52.452379"
+    },
+    {
+      "id": "sub_2535",
+      "evidence_hash": "635eab71c99ebca549df1dacd657291822e8731db5a783cbfef0157568fd5277",
+      "status": "REJECTED",
+      "credibility_score": 0.38385486602783203,
+      "timestamp": "2026-01-26T09:25:52.832362"
+    },
+    {
+      "id": "sub_4582",
+      "evidence_hash": "067b2e91c7f497d308909a7c925b9df3c8674c3a32f59c78463d664481f9bd82",
+      "status": "VERIFIED",
+      "credibility_score": 0.7,
+      "timestamp": "2026-01-26T09:25:53.217912"
+    },
+    {
+      "id": "sub_4811",
+      "evidence_hash": "7c0a5613a6cb542f80a97677ff423be133d74900c032c1749e47c1e6cd9ab928",
+      "status": "VERIFIED",
+      "credibility_score": 0.7,
+      "timestamp": "2026-01-26T09:25:53.609715"
+    },
+    {
+      "id": "sub_9279",
+      "evidence_hash": "fd605e597e0f800c65616e541f3a906bdddf2a5ddbfac8244cc3a52206a391d7",
+      "status": "VERIFIED",
+      "credibility_score": 0.7,
+      "timestamp": "2026-01-26T09:25:54.000121"
+    },
+    {
+      "id": "sub_1434",
+      "evidence_hash": "daa9c59a1d9d87b9b87d8f5c4628969ad1434a7e1361ef38fbeecac97d650f43",
+      "status": "VERIFIED",
+      "credibility_score": 0.7,
+      "timestamp": "2026-01-26T09:25:54.384661"
+    },
+    {
+      "id": "sub_4257",
+      "evidence_hash": "f3ead6ad27477c6ea92fce14b20a0da4212674a67fde06dd1592aec0bf409063",
+      "status": "VERIFIED",
+      "credibility_score": 0.7,
+      "timestamp": "2026-01-26T09:25:54.738093"
+    },
+    {
+      "id": "sub_9928",
+      "evidence_hash": "1c49565a162a115529a479ea50f4830e75bb62bc5b1170d45490c1f264d4dd52",
+      "status": "VERIFIED",
+      "credibility_score": 0.7,
+      "timestamp": "2026-01-26T09:25:55.109972"
+    },
+    {
+      "id": "sub_7873",
+      "evidence_hash": "5fbe1de84673e7394162d0afb0af022da985ff1a846e31f6543cf060da914287",
+      "status": "VERIFIED",
+      "credibility_score": 0.7,
+      "timestamp": "2026-01-26T09:25:55.485133"
+    },
+    {
+      "id": "sub_4611",
+      "evidence_hash": "d43710306c08b44175ada1107840c562fdab0c85eeb3d3f1799577bf355f9e10",
+      "status": "VERIFIED",
+      "credibility_score": 0.7,
+      "timestamp": "2026-01-26T09:25:55.879362"
+    },
+    {
+      "id": "sub_8359",
+      "evidence_hash": "8b21e8517f576acf19c10b56dc5f125d97e9c86f93f79930e693f6872ba7cbfa",
+      "status": "VERIFIED",
+      "credibility_score": 0.7,
+      "timestamp": "2026-01-26T09:25:56.272962"
+    },
+    {
+      "id": "sub_5557",
+      "evidence_hash": "0f72960dc101c42ae5f9f30fcbb517876ceba5d293372552cc4c900d39750d5f",
+      "status": "VERIFIED",
+      "credibility_score": 0.7,
+      "timestamp": "2026-01-26T09:25:56.629254"
+    },
+    {
+      "id": "sub_mismatched_001",
+      "evidence_hash": "c4226c3d6b7f4f0a761e08a33042bc22f98e09abe917fd474da3e3597f4e7844",
+      "status": "REJECTED",
+      "credibility_score": 0.32700333893299105,
+      "timestamp": "2026-01-26T09:25:56.995785"
+    },
+    {
+      "id": "sub_7912",
+      "evidence_hash": "7a96a5ff70fe5c16a638f0c39bc43833b3e8f09132bb19da06a8965871f26003",
+      "status": "REJECTED",
+      "credibility_score": 0.2801122605800629,
+      "timestamp": "2026-01-26T09:25:57.382755"
+    },
+    {
+      "id": "sub_1520",
+      "evidence_hash": "e63d00395990a012d1304e227df0262a835429c45f6f172d6c1094bfbb98b80c",
+      "status": "REJECTED",
+      "credibility_score": 0.362984761595726,
+      "timestamp": "2026-01-26T09:25:57.767931"
+    },
+    {
+      "id": "sub_1488",
+      "evidence_hash": "fec773219f4d15a11edebdeb6adb13baf6c3d24fd9a0caf21fda75110440ff14",
+      "status": "REJECTED",
+      "credibility_score": 0.31737303733825684,
+      "timestamp": "2026-01-26T09:25:58.190010"
+    },
+    {
+      "id": "sub_2535",
+      "evidence_hash": "74ff3faddd8c754e156414081a365c24fa1c468cc7e2792d79d7f9a02bc4b196",
+      "status": "REJECTED",
+      "credibility_score": 0.38385486602783203,
+      "timestamp": "2026-01-26T09:25:58.707058"
+    },
+    {
+      "id": "sub_4582",
+      "evidence_hash": "c31d912e9faa77816a6baf86f701da32bc044d07f4c2376bcf54380be1775455",
+      "status": "VERIFIED",
+      "credibility_score": 0.7,
+      "timestamp": "2026-01-26T09:25:59.127580"
+    },
+    {
+      "id": "sub_4811",
+      "evidence_hash": "746c8312d735d7b34d120c0f052f726abfd4902538df7ee24aafe920b8b0bc64",
+      "status": "VERIFIED",
+      "credibility_score": 0.7,
+      "timestamp": "2026-01-26T09:25:59.544089"
+    },
+    {
+      "id": "sub_9279",
+      "evidence_hash": "d117abf6c4571201592ab6bf880da0e54570dc1391835f86083c2b61e66ee8ac",
+      "status": "VERIFIED",
+      "credibility_score": 0.7,
+      "timestamp": "2026-01-26T09:25:59.894500"
+    },
+    {
+      "id": "sub_1434",
+      "evidence_hash": "a90e70c326df790baa7ac691304a23ad87b7b680303bb4ed5f046d279fa29f23",
+      "status": "VERIFIED",
+      "credibility_score": 0.7,
+      "timestamp": "2026-01-26T09:26:00.280166"
+    },
+    {
+      "id": "sub_4257",
+      "evidence_hash": "54d5938f2c14327b031e80d4adc7fd4e3db72a0dbb792d713d42e3ccec6806e3",
+      "status": "VERIFIED",
+      "credibility_score": 0.7,
+      "timestamp": "2026-01-26T09:26:00.650864"
+    },
+    {
+      "id": "sub_9928",
+      "evidence_hash": "14e2dee719e7fc52c8d31c1c4408b3f23a039743907d3a8f34fd98baa78d6a84",
+      "status": "VERIFIED",
+      "credibility_score": 0.7,
+      "timestamp": "2026-01-26T09:26:01.039526"
+    },
+    {
+      "id": "sub_7873",
+      "evidence_hash": "13f3f72850f0b562f521ceaad12289fcdb76021058d07bd086de38bfa4d79875",
+      "status": "VERIFIED",
+      "credibility_score": 0.7,
+      "timestamp": "2026-01-26T09:26:01.430328"
+    },
+    {
+      "id": "sub_4611",
+      "evidence_hash": "89858f0595e6fd9d913f383c98ea18258d40a29eb1dcb3d0d2042c7d11e559e9",
+      "status": "VERIFIED",
+      "credibility_score": 0.7,
+      "timestamp": "2026-01-26T09:26:01.872892"
+    },
+    {
+      "id": "sub_8359",
+      "evidence_hash": "8ca06ad1ece143e6570e18c28192373a2ebb74a09ef3a5d3b63f52abad298984",
+      "status": "VERIFIED",
+      "credibility_score": 0.7,
+      "timestamp": "2026-01-26T09:26:02.238669"
+    },
+    {
+      "id": "sub_5557",
+      "evidence_hash": "dc2bad60406e1df20fd3edbc6c3e53a186279eff71bf9ec0fae56020b30e79f2",
+      "status": "VERIFIED",
+      "credibility_score": 0.7,
+      "timestamp": "2026-01-26T09:26:02.607350"
+    },
+    {
+      "id": "sub_mismatched_001",
+      "evidence_hash": "7f3fdf32190984f6fced0138a38df450a011a8fd9b971f7558c4d92a23339ff5",
+      "status": "REJECTED",
+      "credibility_score": 0.32700333893299105,
+      "timestamp": "2026-01-26T09:26:02.992333"
+    }
+  ],
+  "ledger_stats": {
+    "total_blocks": 31,
+    "chain_version": "1.0.0",
+    "genesis_timestamp": "2026-01-26T09:25:20.747298",
+    "latest_timestamp": "2026-01-26T09:26:02.995345",
+    "chain_age_seconds": 42.248047,
+    "chain_age_hours": 0.01,
+    "average_block_time_seconds": 1.4082682333333334,
+    "chain_verified": true,
+    "timestamp": "2026-01-26T09:26:03.025896"
+  },
+  "metrics": {
+    "accuracy": 0.8,
+    "precision": 0.4,
+    "recall": 1.0,
+    "f1_score": 0.5714285714285714,
+    "auroc": 1.0,
+    "total_samples": 15,
+    "fake_samples": 2,
+    "real_samples": 13
+  }
+}

@@ -1,0 +1,820 @@
+{
+  "setup": {
+    "timestamp": "2026-01-26T09:03:44.031158"
+  },
+  "layer_stats": {
+    "layer1_count": 56,
+    "layer2_count": 56,
+    "layer3_count": 56,
+    "layer4_processed": 56,
+    "layer5_count": 3,
+    "layer6_count": 56
+  },
+  "reports": [
+    {
+      "id": "sub_7912",
+      "evidence_hash": "fe91d8dff0db1029959bc215fdc19386aefc860fd29285cbfe74cf671517b663",
+      "status": "REJECTED",
+      "credibility_score": 0.2801122605800629,
+      "timestamp": "2026-01-26T09:07:07.701774"
+    },
+    {
+      "id": "sub_1520",
+      "evidence_hash": "8dfbe3c4b2dcb31cf4c8dd23cdd2e79ec785f29693cf433af94b6537142b6dd4",
+      "status": "REJECTED",
+      "credibility_score": 0.362984761595726,
+      "timestamp": "2026-01-26T09:07:08.133245"
+    },
+    {
+      "id": "sub_1488",
+      "evidence_hash": "09b2a9cbfd08a986e011982758d31ada22b80e1a9eeeda4d84a51aa9cdb7af08",
+      "status": "REJECTED",
+      "credibility_score": 0.3653416097164154,
+      "timestamp": "2026-01-26T09:07:08.584099"
+    },
+    {
+      "id": "sub_2535",
+      "evidence_hash": "16d0c1b43487d2c246889ca3e64cc04262fe396ab221c57b802a40707feb1a1d",
+      "status": "REJECTED",
+      "credibility_score": 0.38556630611419673,
+      "timestamp": "2026-01-26T09:07:08.964309"
+    },
+    {
+      "id": "sub_4582",
+      "evidence_hash": "476f24c04fe382ad04ff72139bf645915a90813244a260fa81d709df2128a916",
+      "status": "REJECTED",
+      "credibility_score": 0.28646449744701385,
+      "timestamp": "2026-01-26T09:07:09.344067"
+    },
+    {
+      "id": "sub_4811",
+      "evidence_hash": "717645893d98109c2c233cfadca8b2518a0d31a88a41e360b7c9cb236e52f3a1",
+      "status": "REJECTED",
+      "credibility_score": 0.31672863066196444,
+      "timestamp": "2026-01-26T09:07:09.827829"
+    },
+    {
+      "id": "sub_9279",
+      "evidence_hash": "5ade9d186da12c752006edcf3dbe0384d528e8a9566ab6d4f9ddd470d691c44e",
+      "status": "REJECTED",
+      "credibility_score": 0.2748310714960098,
+      "timestamp": "2026-01-26T09:07:10.212376"
+    },
+    {
+      "id": "sub_1434",
+      "evidence_hash": "3063dcab7dc423401f3429b58fea2db40dec95fa569878ad51658ec2a1e6975d",
+      "status": "REJECTED",
+      "credibility_score": 0.2887417823076248,
+      "timestamp": "2026-01-26T09:07:10.595067"
+    },
+    {
+      "id": "sub_4257",
+      "evidence_hash": "b1095a3cc5e8e6abb5303ff376236d32d35237bfcf0c62f2ce78bfa101aa7174",
+      "status": "REJECTED",
+      "credibility_score": 0.4464121580123901,
+      "timestamp": "2026-01-26T09:07:10.992839"
+    },
+    {
+      "id": "sub_9928",
+      "evidence_hash": "0d372f138c7b0293726b04422bf434498bf6e0132cf630d17c6b714cb6c38308",
+      "status": "REJECTED",
+      "credibility_score": 0.3624765858054161,
+      "timestamp": "2026-01-26T09:07:11.439189"
+    },
+    {
+      "id": "sub_7873",
+      "evidence_hash": "bbc9f58fad395920a533accd81b73532fa97156a2bc2132ac27911df23f1e648",
+      "status": "REJECTED",
+      "credibility_score": 0.3209125205874443,
+      "timestamp": "2026-01-26T09:07:11.843437"
+    },
+    {
+      "id": "sub_4611",
+      "evidence_hash": "504f8acf97c99bf73c3511ef12962343704a552ed261af721caf64a2fe3b2205",
+      "status": "REJECTED",
+      "credibility_score": 0.32776509821414945,
+      "timestamp": "2026-01-26T09:07:12.222763"
+    },
+    {
+      "id": "sub_8359",
+      "evidence_hash": "8539acc42870647b2bd67bb382b8ad17ba651d1f7ad119f49579f70245ea8af7",
+      "status": "REJECTED",
+      "credibility_score": 0.3032801121473312,
+      "timestamp": "2026-01-26T09:07:12.630611"
+    },
+    {
+      "id": "sub_5557",
+      "evidence_hash": "4bf06d3953a26c7372ba85615b1351d34630af34dc3eb420b637bc22c1f4890b",
+      "status": "REJECTED",
+      "credibility_score": 0.3364949285984039,
+      "timestamp": "2026-01-26T09:07:13.041189"
+    },
+    {
+      "id": "sub_1106",
+      "evidence_hash": "2eecd3ec2c1fc4bb94ff43ec832cb1d7f95b634c846cc108ae2e7ec1f81cda02",
+      "status": "REJECTED",
+      "credibility_score": 0.36393251419067385,
+      "timestamp": "2026-01-26T09:07:13.470079"
+    },
+    {
+      "id": "sub_3615",
+      "evidence_hash": "12389134074c8fb66c28da284bae0de1c02624d78448ce768f6931d01ca9f831",
+      "status": "REJECTED",
+      "credibility_score": 0.31737303733825684,
+      "timestamp": "2026-01-26T09:07:13.997294"
+    },
+    {
+      "id": "sub_7924",
+      "evidence_hash": "9f5d4ef88371dd0c4ba4ce96f87b35102e02710f3e824df0dfb3da25b96fc062",
+      "status": "REJECTED",
+      "credibility_score": 0.38385486602783203,
+      "timestamp": "2026-01-26T09:07:14.420867"
+    },
+    {
+      "id": "sub_6574",
+      "evidence_hash": "01003d1e4cb77b9ec21690cce1e9cefd59da848f56510ca5117ea6e4a5a13545",
+      "status": "VERIFIED",
+      "credibility_score": 0.5141721293330193,
+      "timestamp": "2026-01-26T09:07:14.809632"
+    },
+    {
+      "id": "sub_5552",
+      "evidence_hash": "793679b49363bb73c8c42ead3a0a0461cc5e7704d5118ec7436a29b43b4b3dd2",
+      "status": "REJECTED",
+      "credibility_score": 0.32908238172531123,
+      "timestamp": "2026-01-26T09:07:15.192082"
+    },
+    {
+      "id": "sub_3547",
+      "evidence_hash": "ff33ab1987e02b0575d334b1520d1b34242bd7ecd75a4ae9c72b6323761f164d",
+      "status": "REJECTED",
+      "credibility_score": 0.4155724465847015,
+      "timestamp": "2026-01-26T09:07:15.590360"
+    },
+    {
+      "id": "sub_4527",
+      "evidence_hash": "508faec43a73067ed80e8727f947ab0896e128bb9e475290e3670ed50ba6f0b9",
+      "status": "REJECTED",
+      "credibility_score": 0.3632091090083122,
+      "timestamp": "2026-01-26T09:07:16.020605"
+    },
+    {
+      "id": "sub_6514",
+      "evidence_hash": "c4a4bd5370cfc3a7e236a2243a6c6e96f3c6b1815e059cdd3e2af0b8a5c8c8f1",
+      "status": "DISPUTED",
+      "credibility_score": 0.4141553401947021,
+      "timestamp": "2026-01-26T09:07:16.395781"
+    },
+    {
+      "id": "sub_2674",
+      "evidence_hash": "bc3d0ee3b089d5ead3d772e866146ab345c41496f489945a6ddf6d731bb85459",
+      "status": "VERIFIED",
+      "credibility_score": 0.5289886444807053,
+      "timestamp": "2026-01-26T09:07:16.797279"
+    },
+    {
+      "id": "sub_2519",
+      "evidence_hash": "8014ae7a9e68b9e74380416dc12afa479d73aa2317e7fada206b5e4302ac27d5",
+      "status": "REJECTED",
+      "credibility_score": 0.30842968374490737,
+      "timestamp": "2026-01-26T09:07:17.177719"
+    },
+    {
+      "id": "sub_7224",
+      "evidence_hash": "ea237265de37b9ffc3d64695b3ea09e4efb4de94ab3bea2e499dfe3606362c7f",
+      "status": "REJECTED",
+      "credibility_score": 0.37070133090019225,
+      "timestamp": "2026-01-26T09:07:17.552152"
+    },
+    {
+      "id": "sub_2584",
+      "evidence_hash": "fa6a09e430dc7657132a2235f44ce7489cec83ac328d2561cc0982027fbd8c3c",
+      "status": "REJECTED",
+      "credibility_score": 0.3923985466361046,
+      "timestamp": "2026-01-26T09:07:17.919976"
+    },
+    {
+      "id": "sub_6881",
+      "evidence_hash": "30a937006d790f4e5b959cad01cf5b83e6330ef3cb5682ad3acea51e0ce82f3f",
+      "status": "DISPUTED",
+      "credibility_score": 0.34083046168088915,
+      "timestamp": "2026-01-26T09:07:18.298785"
+    },
+    {
+      "id": "sub_6635",
+      "evidence_hash": "8596831d32839098db5e3cc39b4ccb808146da5263d10a4c771ece1f063746ec",
+      "status": "REJECTED",
+      "credibility_score": 0.36393251419067385,
+      "timestamp": "2026-01-26T09:07:18.663841"
+    },
+    {
+      "id": "sub_5333",
+      "evidence_hash": "54dd9b6e759218d3b4258eb64faf3cfb5ff139bd930379213c574c2b53883df7",
+      "status": "VERIFIED",
+      "credibility_score": 0.34961879551410674,
+      "timestamp": "2026-01-26T09:07:19.024246"
+    },
+    {
+      "id": "sub_1711",
+      "evidence_hash": "f6ba894e7634ed8e6d4319c707c642d9b25689d74bce78847d0db370bd474309",
+      "status": "REJECTED",
+      "credibility_score": 0.36953184604644773,
+      "timestamp": "2026-01-26T09:07:19.391863"
+    },
+    {
+      "id": "sub_8527",
+      "evidence_hash": "1c2797e5628a852db540e2fb2fb872e877a03eca4b82e0df33bea65a89f05e00",
+      "status": "REJECTED",
+      "credibility_score": 0.33576794862747195,
+      "timestamp": "2026-01-26T09:07:19.772531"
+    },
+    {
+      "id": "sub_9785",
+      "evidence_hash": "27ab67add8682c4c248b842bed4f1c1c5438b546718f46022986624d1d072314",
+      "status": "REJECTED",
+      "credibility_score": 0.4256178110837936,
+      "timestamp": "2026-01-26T09:07:20.145727"
+    },
+    {
+      "id": "sub_3045",
+      "evidence_hash": "43fbad1c25a0e061a1499307f8c8aadb0e7708ed1f634effa801a218681346b3",
+      "status": "DISPUTED",
+      "credibility_score": 0.401867538690567,
+      "timestamp": "2026-01-26T09:07:20.552418"
+    },
+    {
+      "id": "sub_7201",
+      "evidence_hash": "19d9e4423bc2c3a287c3b19e08d546f4bb259e713c079e88f28a43559a4d8fa5",
+      "status": "REJECTED",
+      "credibility_score": 0.368765190243721,
+      "timestamp": "2026-01-26T09:07:21.075578"
+    },
+    {
+      "id": "sub_2291",
+      "evidence_hash": "6142914d9095e72d266da38129f8a84a8452a9789a16e7256e2bdf6dbec59978",
+      "status": "REJECTED",
+      "credibility_score": 0.31599137336015704,
+      "timestamp": "2026-01-26T09:07:21.562181"
+    },
+    {
+      "id": "sub_5803",
+      "evidence_hash": "39700b3b586b9d983682d9107586ebe71d5d6ad194bc045f4477d81005c9d035",
+      "status": "REJECTED",
+      "credibility_score": 0.3669983625411987,
+      "timestamp": "2026-01-26T09:07:22.073067"
+    },
+    {
+      "id": "sub_6925",
+      "evidence_hash": "df6cfb8e1c35e3bc21d1e27f805494a01f43e12fc7bf5648c0fd72712c011777",
+      "status": "REJECTED",
+      "credibility_score": 0.41840040981769566,
+      "timestamp": "2026-01-26T09:07:22.455668"
+    },
+    {
+      "id": "sub_4150",
+      "evidence_hash": "c658ca1181b0d94766910f9353034aa057939a4b05db3d43fadb744b972f80d4",
+      "status": "VERIFIED",
+      "credibility_score": 0.5971115067601204,
+      "timestamp": "2026-01-26T09:07:22.938208"
+    },
+    {
+      "id": "sub_2139",
+      "evidence_hash": "34b2dbfc5e2a9ed534355f65f2b8e55f84f580dcdd149c0ae8ce0b0361c036ab",
+      "status": "REJECTED",
+      "credibility_score": 0.33019639551639557,
+      "timestamp": "2026-01-26T09:07:23.331841"
+    },
+    {
+      "id": "sub_1750",
+      "evidence_hash": "6ac889c86cdafe1a68f4e3d0e8be141e86bef1bc9902e66004b61909f518336a",
+      "status": "REJECTED",
+      "credibility_score": 0.39672125726938245,
+      "timestamp": "2026-01-26T09:07:23.693043"
+    },
+    {
+      "id": "sub_4733",
+      "evidence_hash": "04f3575390d492b832d550bc7cc0ec609ead6eed6d94ea54e18034e2caeaf2da",
+      "status": "REJECTED",
+      "credibility_score": 0.4557642057538033,
+      "timestamp": "2026-01-26T09:07:24.070423"
+    },
+    {
+      "id": "sub_5741",
+      "evidence_hash": "afccc0ae6f88057237684e2f1e0fd67c58c6634c5723df934198743302de4b53",
+      "status": "REJECTED",
+      "credibility_score": 0.3335988119244575,
+      "timestamp": "2026-01-26T09:07:24.443063"
+    },
+    {
+      "id": "sub_2307",
+      "evidence_hash": "875f70e86dfdd3a196eed964d449e15e5715ff843321fd1e87bceff0ff43d409",
+      "status": "REJECTED",
+      "credibility_score": 0.374474036693573,
+      "timestamp": "2026-01-26T09:07:24.809607"
+    },
+    {
+      "id": "sub_4814",
+      "evidence_hash": "e6080d10b8a572eb1fc9f4fef991c890e945643a512a4008e918b2367415ccfd",
+      "status": "REJECTED",
+      "credibility_score": 0.43065438568592074,
+      "timestamp": "2026-01-26T09:07:25.161881"
+    },
+    {
+      "id": "sub_2654",
+      "evidence_hash": "dc607e7540ae1eefe129de01e05d71ec11bc104a2029a9252db493b8f4f7c270",
+      "status": "REJECTED",
+      "credibility_score": 0.3156019419431686,
+      "timestamp": "2026-01-26T09:07:25.522948"
+    },
+    {
+      "id": "sub_7227",
+      "evidence_hash": "e4bd9aa322cc5c730741b9e1eda3abcc536f9458a2a0724a6d954da7b01eeaad",
+      "status": "REJECTED",
+      "credibility_score": 0.40788491368293767,
+      "timestamp": "2026-01-26T09:07:25.876422"
+    },
+    {
+      "id": "sub_5554",
+      "evidence_hash": "252105a6a093672cc5e2fafb23c5f48003032d90e6f951ec25da86faea6f573d",
+      "status": "REJECTED",
+      "credibility_score": 0.3532157301902771,
+      "timestamp": "2026-01-26T09:07:26.230436"
+    },
+    {
+      "id": "sub_8428",
+      "evidence_hash": "9291c8bc293f2913f1612dc0df15b57e505901249e0e4ac534db65fe652e7901",
+      "status": "REJECTED",
+      "credibility_score": 0.36791796088218687,
+      "timestamp": "2026-01-26T09:07:26.588162"
+    },
+    {
+      "id": "sub_6977",
+      "evidence_hash": "933465be41073e47b37dc74521f1ede19c54dd7b2fc7abb14f0bda3b10cc0d14",
+      "status": "REJECTED",
+      "credibility_score": 0.3442944914102554,
+      "timestamp": "2026-01-26T09:07:26.995938"
+    },
+    {
+      "id": "sub_3664",
+      "evidence_hash": "1159be184a2f23d17eecdd8fb1a3dbbfce48064c50f134a43a1c7c676b084e7e",
+      "status": "REJECTED",
+      "credibility_score": 0.38766603767871854,
+      "timestamp": "2026-01-26T09:07:27.373165"
+    },
+    {
+      "id": "sub_7065",
+      "evidence_hash": "3c6bce4c6c560f76266ffa0568499af52ce25031df75caee027908f05b1826ad",
+      "status": "VERIFIED",
+      "credibility_score": 0.7,
+      "timestamp": "2026-01-26T09:07:27.751704"
+    },
+    {
+      "id": "sub_6820",
+      "evidence_hash": "c1d97b2d8a380b7a88d3a10c7724fa003750a0f4c2a78429a40ac790e5fd75d8",
+      "status": "VERIFIED",
+      "credibility_score": 0.7,
+      "timestamp": "2026-01-26T09:07:28.195012"
+    },
+    {
+      "id": "sub_4432",
+      "evidence_hash": "261b6065a273fbee95144e4425d993cdba0b6f89498de7b3e227aae110b339e6",
+      "status": "VERIFIED",
+      "credibility_score": 0.7,
+      "timestamp": "2026-01-26T09:07:28.574543"
+    },
+    {
+      "id": "sub_5374",
+      "evidence_hash": "0d96580a72ff0c6c69425651c9fcb876c508276249958d1d845347dc32c7ac1c",
+      "status": "VERIFIED",
+      "credibility_score": 0.7,
+      "timestamp": "2026-01-26T09:07:28.929567"
+    },
+    {
+      "id": "sub_2169",
+      "evidence_hash": "4b27131e4534176d785c5b036e2ff86cc43e8afbf88ca4a7942c0d869b175bc5",
+      "status": "VERIFIED",
+      "credibility_score": 0.7,
+      "timestamp": "2026-01-26T09:07:29.292196"
+    },
+    {
+      "id": "sub_mismatched_001",
+      "evidence_hash": "40575671f89f03b8d8f14cec58ff34449ebb1cc2bda594fb68e8849d6a15cc23",
+      "status": "REJECTED",
+      "credibility_score": 0.32700333893299105,
+      "timestamp": "2026-01-26T09:07:29.725857"
+    },
+    {
+      "id": "sub_7912",
+      "evidence_hash": "eb7fc0318c3d4316476227b4bf685bfa28b8da151421246dafb640ccf4cda7ed",
+      "status": "REJECTED",
+      "credibility_score": 0.2801122605800629,
+      "timestamp": "2026-01-26T09:07:30.124749"
+    },
+    {
+      "id": "sub_1520",
+      "evidence_hash": "b3c074fa7e71a99de34095bc51eb58e617f4df812cc8fda0e208b713cdd7e1bc",
+      "status": "REJECTED",
+      "credibility_score": 0.362984761595726,
+      "timestamp": "2026-01-26T09:07:30.492043"
+    },
+    {
+      "id": "sub_1488",
+      "evidence_hash": "bbfad669971163f0dd58d6b0c0b0208a7ce6802bffe6fcbf022aa86bac31fb96",
+      "status": "REJECTED",
+      "credibility_score": 0.3653416097164154,
+      "timestamp": "2026-01-26T09:07:30.850580"
+    },
+    {
+      "id": "sub_2535",
+      "evidence_hash": "27d36781805145e88a9b9f401be7659d848adf993ab89cd03d2a2cc1b4389513",
+      "status": "REJECTED",
+      "credibility_score": 0.38556630611419673,
+      "timestamp": "2026-01-26T09:07:31.235108"
+    },
+    {
+      "id": "sub_4582",
+      "evidence_hash": "2585fb72d35a8db4e5cf532f36729dfd3c9af862f45cffedc4004743e95af186",
+      "status": "REJECTED",
+      "credibility_score": 0.28646449744701385,
+      "timestamp": "2026-01-26T09:07:31.599306"
+    },
+    {
+      "id": "sub_4811",
+      "evidence_hash": "b374ed20687439d3174a068b3db140b7b590e380e4e6f4607f407b9d9f925e63",
+      "status": "REJECTED",
+      "credibility_score": 0.31672863066196444,
+      "timestamp": "2026-01-26T09:07:31.974260"
+    },
+    {
+      "id": "sub_9279",
+      "evidence_hash": "4f740f5ff3ae494cd454f268accc37e2236f336a4f54d7c1a81530cf63e71fbb",
+      "status": "REJECTED",
+      "credibility_score": 0.2748310714960098,
+      "timestamp": "2026-01-26T09:07:32.342144"
+    },
+    {
+      "id": "sub_1434",
+      "evidence_hash": "7b123ce386bf1420e90a79f3d2c5cd68176bf55e583b896983e112b46df82b28",
+      "status": "REJECTED",
+      "credibility_score": 0.2887417823076248,
+      "timestamp": "2026-01-26T09:07:32.696136"
+    },
+    {
+      "id": "sub_4257",
+      "evidence_hash": "20d680be9ececbcfa619fb4b327c4c6cc7d424750e3dc2bb75a7109629664217",
+      "status": "REJECTED",
+      "credibility_score": 0.4464121580123901,
+      "timestamp": "2026-01-26T09:07:33.102164"
+    },
+    {
+      "id": "sub_9928",
+      "evidence_hash": "97adc0fc2895e1ea18e497dd09cead8fef3fb20ed3e9487c698c2a109c428a27",
+      "status": "REJECTED",
+      "credibility_score": 0.3624765858054161,
+      "timestamp": "2026-01-26T09:07:33.466395"
+    },
+    {
+      "id": "sub_7873",
+      "evidence_hash": "7d3544c5e6db258f962188981700be41e6527aca2d43383797f69f44f9c2e2b9",
+      "status": "REJECTED",
+      "credibility_score": 0.3209125205874443,
+      "timestamp": "2026-01-26T09:07:33.822017"
+    },
+    {
+      "id": "sub_4611",
+      "evidence_hash": "78c67761dd728ce4619cdcf4305811e76253489e4bc61eab2cbf894ffc0ed413",
+      "status": "REJECTED",
+      "credibility_score": 0.32776509821414945,
+      "timestamp": "2026-01-26T09:07:34.212035"
+    },
+    {
+      "id": "sub_8359",
+      "evidence_hash": "8aff304e72bb8c8a2028416e104352454e67272e69044f202734faef8fba9917",
+      "status": "REJECTED",
+      "credibility_score": 0.3032801121473312,
+      "timestamp": "2026-01-26T09:07:34.572144"
+    },
+    {
+      "id": "sub_5557",
+      "evidence_hash": "82735de41390e5ed9ea42478d04c8a12185c955802f1ea3885b547e28d44412d",
+      "status": "REJECTED",
+      "credibility_score": 0.3364949285984039,
+      "timestamp": "2026-01-26T09:07:34.933056"
+    },
+    {
+      "id": "sub_1106",
+      "evidence_hash": "ee899e1f40ea580ba5c93b1202258f39df050900fc540042834163198f1919c6",
+      "status": "REJECTED",
+      "credibility_score": 0.36393251419067385,
+      "timestamp": "2026-01-26T09:07:35.381756"
+    },
+    {
+      "id": "sub_3615",
+      "evidence_hash": "8e0b2e18075f97c114c77f7c9d0420248093d03ec8e22e8bebfa707e71ac8d2c",
+      "status": "REJECTED",
+      "credibility_score": 0.31737303733825684,
+      "timestamp": "2026-01-26T09:07:36.088025"
+    },
+    {
+      "id": "sub_7924",
+      "evidence_hash": "d09679668ef465c4e86a59dab8b025dc137d1d2aa16ccd78643cf42c9c385a62",
+      "status": "REJECTED",
+      "credibility_score": 0.38385486602783203,
+      "timestamp": "2026-01-26T09:07:36.492114"
+    },
+    {
+      "id": "sub_6574",
+      "evidence_hash": "424b040df181e323d8bd12f09c0af200a2cbc8cb72f4757e10597cf2d0c2e5cc",
+      "status": "VERIFIED",
+      "credibility_score": 0.5141721293330193,
+      "timestamp": "2026-01-26T09:07:36.848475"
+    },
+    {
+      "id": "sub_5552",
+      "evidence_hash": "2fb775869ed6304c66b67a3bfb522f0b77263d8daffe07750804b405db7497d7",
+      "status": "REJECTED",
+      "credibility_score": 0.32908238172531123,
+      "timestamp": "2026-01-26T09:07:37.211294"
+    },
+    {
+      "id": "sub_3547",
+      "evidence_hash": "aa4c9811a2ee58557ff1a1c238bd5210d1a6ee68001112eb498e17a16597e4aa",
+      "status": "REJECTED",
+      "credibility_score": 0.4155724465847015,
+      "timestamp": "2026-01-26T09:07:37.621652"
+    },
+    {
+      "id": "sub_4527",
+      "evidence_hash": "db23cac6e89ac1861adbf20993843402874ff19c433f97b1f392eba5997cef24",
+      "status": "REJECTED",
+      "credibility_score": 0.3632091090083122,
+      "timestamp": "2026-01-26T09:07:37.969949"
+    },
+    {
+      "id": "sub_6514",
+      "evidence_hash": "cda04b6e929051ed608b8215b6b4c787675e8f6b90e11e04c0280ea57ff0b7e9",
+      "status": "DISPUTED",
+      "credibility_score": 0.4141553401947021,
+      "timestamp": "2026-01-26T09:07:38.333760"
+    },
+    {
+      "id": "sub_2674",
+      "evidence_hash": "69be06af0ea815f18f756841c39acbafdfc7a0a0053a6f1b786169aeaa021e6b",
+      "status": "VERIFIED",
+      "credibility_score": 0.5289886444807053,
+      "timestamp": "2026-01-26T09:07:38.693742"
+    },
+    {
+      "id": "sub_2519",
+      "evidence_hash": "d3730e1b88d1082042a623e2ee2acb5ac15c72fd190081014ada012c9bd14e46",
+      "status": "REJECTED",
+      "credibility_score": 0.30842968374490737,
+      "timestamp": "2026-01-26T09:07:39.049915"
+    },
+    {
+      "id": "sub_7224",
+      "evidence_hash": "b360600747f8ff4d0d33d084b8635515795a0a973d73bcbb36c2b7a3d6154c40",
+      "status": "REJECTED",
+      "credibility_score": 0.37070133090019225,
+      "timestamp": "2026-01-26T09:07:39.471363"
+    },
+    {
+      "id": "sub_2584",
+      "evidence_hash": "5f00500b1f67d17d96c0eb839d0889508aac92d2931476a080d8592953cf8d69",
+      "status": "REJECTED",
+      "credibility_score": 0.3923985466361046,
+      "timestamp": "2026-01-26T09:07:39.819914"
+    },
+    {
+      "id": "sub_6881",
+      "evidence_hash": "622285a05394e1e2638853fe199d2ec6428aab2f2849af5a8e3bb73cb6e0a50c",
+      "status": "DISPUTED",
+      "credibility_score": 0.34083046168088915,
+      "timestamp": "2026-01-26T09:07:40.201857"
+    },
+    {
+      "id": "sub_6635",
+      "evidence_hash": "2ae976b851a29225b47ddd345ec4a5a76fb8cc296e1f938db20038624c2f92fd",
+      "status": "REJECTED",
+      "credibility_score": 0.36393251419067385,
+      "timestamp": "2026-01-26T09:07:40.573404"
+    },
+    {
+      "id": "sub_5333",
+      "evidence_hash": "b5d1e8a7c5945d31e9c6699d971170d76019de298196e3e164c685d361a7a09e",
+      "status": "VERIFIED",
+      "credibility_score": 0.34961879551410674,
+      "timestamp": "2026-01-26T09:07:40.932877"
+    },
+    {
+      "id": "sub_1711",
+      "evidence_hash": "4967af4190bf0556464685a827f44d6d6bb6decc19e033d693753e66fae08352",
+      "status": "REJECTED",
+      "credibility_score": 0.36953184604644773,
+      "timestamp": "2026-01-26T09:07:41.322844"
+    },
+    {
+      "id": "sub_8527",
+      "evidence_hash": "29791131a253969e581209b581030744d4d210d1be3fefc3fef419af60369a6a",
+      "status": "REJECTED",
+      "credibility_score": 0.33576794862747195,
+      "timestamp": "2026-01-26T09:07:41.688814"
+    },
+    {
+      "id": "sub_9785",
+      "evidence_hash": "a87e94035906e246f91486f0d830b39ea10a3f615b508d95d85d58d10656a0a7",
+      "status": "REJECTED",
+      "credibility_score": 0.4256178110837936,
+      "timestamp": "2026-01-26T09:07:42.037138"
+    },
+    {
+      "id": "sub_3045",
+      "evidence_hash": "78b762ce12440ee7ebe40cabcbac1310d0b1f88abbbae05b7628a94a36ae06f0",
+      "status": "DISPUTED",
+      "credibility_score": 0.401867538690567,
+      "timestamp": "2026-01-26T09:07:42.483881"
+    },
+    {
+      "id": "sub_7201",
+      "evidence_hash": "50822ae911e7bdfa4910856199d6bbb6cf249aa44bc41c76331aff9c54503afe",
+      "status": "REJECTED",
+      "credibility_score": 0.368765190243721,
+      "timestamp": "2026-01-26T09:07:42.866581"
+    },
+    {
+      "id": "sub_2291",
+      "evidence_hash": "070761bc5d3e1b63eac35d2ba32e5410c57e0df69bb8c58acd1e8574bf414454",
+      "status": "REJECTED",
+      "credibility_score": 0.31599137336015704,
+      "timestamp": "2026-01-26T09:07:43.222153"
+    },
+    {
+      "id": "sub_5803",
+      "evidence_hash": "d0850e8ee3c07c19bcd481ad931a9098809d74efaf217291ce8f8c8d70732470",
+      "status": "REJECTED",
+      "credibility_score": 0.3669983625411987,
+      "timestamp": "2026-01-26T09:07:43.580771"
+    },
+    {
+      "id": "sub_6925",
+      "evidence_hash": "949fc3448c89b420a12bef224def31d526a14297304cacee33034ca798b67b53",
+      "status": "REJECTED",
+      "credibility_score": 0.41840040981769566,
+      "timestamp": "2026-01-26T09:07:43.945825"
+    },
+    {
+      "id": "sub_4150",
+      "evidence_hash": "bf516589cbfc3db25f01958b37385eb6a23078f6efb39f33476b66ccb69fe8f2",
+      "status": "VERIFIED",
+      "credibility_score": 0.5971115067601204,
+      "timestamp": "2026-01-26T09:07:44.318766"
+    },
+    {
+      "id": "sub_2139",
+      "evidence_hash": "4e76872095cb9f40c7abdf23c3cc5ab5f1a552924ac02d42c6d6f883aec573c2",
+      "status": "REJECTED",
+      "credibility_score": 0.33019639551639557,
+      "timestamp": "2026-01-26T09:07:44.677948"
+    },
+    {
+      "id": "sub_1750",
+      "evidence_hash": "c6d94879f627cb1c95b3dab5b58e89d9a43fa48ea98d6e3dbd0c362fcc75841e",
+      "status": "REJECTED",
+      "credibility_score": 0.39672125726938245,
+      "timestamp": "2026-01-26T09:07:45.058250"
+    },
+    {
+      "id": "sub_4733",
+      "evidence_hash": "48951e06c3f906f05dca0494b02ae7935b954c8f21d3385784c9d6e5705231d6",
+      "status": "REJECTED",
+      "credibility_score": 0.4557642057538033,
+      "timestamp": "2026-01-26T09:07:45.417955"
+    },
+    {
+      "id": "sub_5741",
+      "evidence_hash": "da2ab45b5fa813ef66f91503aa7cdcc4d8be470ee00c6ac0f1d19bf72939b84b",
+      "status": "REJECTED",
+      "credibility_score": 0.3335988119244575,
+      "timestamp": "2026-01-26T09:07:45.777318"
+    },
+    {
+      "id": "sub_2307",
+      "evidence_hash": "188a3f067cdf17df5acfc8fd8a72a054570265eb6c7ba1bf65f819e9a444056e",
+      "status": "REJECTED",
+      "credibility_score": 0.374474036693573,
+      "timestamp": "2026-01-26T09:07:46.187058"
+    },
+    {
+      "id": "sub_4814",
+      "evidence_hash": "c1ee6381dbcdd7d5e11dfffd6efba9be719098d6462368d660173ae074b7fec6",
+      "status": "REJECTED",
+      "credibility_score": 0.43065438568592074,
+      "timestamp": "2026-01-26T09:07:46.552278"
+    },
+    {
+      "id": "sub_2654",
+      "evidence_hash": "2cd47a6e30d571d05107203ac50c6656f008aef8b9108991148ec01def862590",
+      "status": "REJECTED",
+      "credibility_score": 0.3156019419431686,
+      "timestamp": "2026-01-26T09:07:46.920712"
+    },
+    {
+      "id": "sub_7227",
+      "evidence_hash": "efe9a9e98c4e39a3999b659f5f426584e1b25282456d4312463a8cc19c0d9142",
+      "status": "REJECTED",
+      "credibility_score": 0.40788491368293767,
+      "timestamp": "2026-01-26T09:07:47.284055"
+    },
+    {
+      "id": "sub_5554",
+      "evidence_hash": "004e28f0b96fc83827fbcad1cd517bc3bf1b021abf661e40e6492be15cc8c67b",
+      "status": "REJECTED",
+      "credibility_score": 0.3532157301902771,
+      "timestamp": "2026-01-26T09:07:47.642276"
+    },
+    {
+      "id": "sub_8428",
+      "evidence_hash": "d92f605b3f49fd38cc823f9039b976cf5beed1a4b6a79e8bfe2788e96b9832bb",
+      "status": "REJECTED",
+      "credibility_score": 0.36791796088218687,
+      "timestamp": "2026-01-26T09:07:48.002990"
+    },
+    {
+      "id": "sub_6977",
+      "evidence_hash": "ede00170c21ece2fb204379a9924fecdd32e17b6a55abc9325cc8f9114ecca43",
+      "status": "REJECTED",
+      "credibility_score": 0.3442944914102554,
+      "timestamp": "2026-01-26T09:07:48.382755"
+    },
+    {
+      "id": "sub_3664",
+      "evidence_hash": "209c38e019c5e0b920878c43b011d36ae30cf9b4885d933548a6798dcae1063f",
+      "status": "REJECTED",
+      "credibility_score": 0.38766603767871854,
+      "timestamp": "2026-01-26T09:07:48.801162"
+    },
+    {
+      "id": "sub_7065",
+      "evidence_hash": "a224cb02c28cd25b4c8c22867b6fd9b1205f08599124fba952c034aa6b10c4ed",
+      "status": "VERIFIED",
+      "credibility_score": 0.7,
+      "timestamp": "2026-01-26T09:07:49.355619"
+    },
+    {
+      "id": "sub_6820",
+      "evidence_hash": "b167b287f7d18ea94982bd6a060ae25cf60a71576a7f72ea5bf80ffcc15a1bdb",
+      "status": "VERIFIED",
+      "credibility_score": 0.7,
+      "timestamp": "2026-01-26T09:07:49.772959"
+    },
+    {
+      "id": "sub_4432",
+      "evidence_hash": "155705fea61ea2d96acfc78020b0500fd3a73c581d2d3b28f3d49aa6d6086e33",
+      "status": "VERIFIED",
+      "credibility_score": 0.7,
+      "timestamp": "2026-01-26T09:07:50.222509"
+    },
+    {
+      "id": "sub_5374",
+      "evidence_hash": "d5947ece4a35a4e29061d2fef19d42767bc1df08cd9c0e6f1a49cc4fbeceed9a",
+      "status": "VERIFIED",
+      "credibility_score": 0.7,
+      "timestamp": "2026-01-26T09:07:50.596473"
+    },
+    {
+      "id": "sub_2169",
+      "evidence_hash": "c97d39d8a35867a5326e8a5aadaaee01ba6bf8a1966f6fabb2b702482a482518",
+      "status": "VERIFIED",
+      "credibility_score": 0.7,
+      "timestamp": "2026-01-26T09:07:50.948755"
+    },
+    {
+      "id": "sub_mismatched_001",
+      "evidence_hash": "529fbfdba0ec3177b4a735a0fa1e019b4b71adda2f6356ca9a8a2e240dc99962",
+      "status": "REJECTED",
+      "credibility_score": 0.32700333893299105,
+      "timestamp": "2026-01-26T09:07:51.320987"
+    }
+  ],
+  "ledger_stats": {
+    "total_blocks": 113,
+    "chain_version": "1.0.0",
+    "genesis_timestamp": "2026-01-26T09:03:44.000953",
+    "latest_timestamp": "2026-01-26T09:07:51.324517",
+    "chain_age_seconds": 247.323564,
+    "chain_age_hours": 0.07,
+    "average_block_time_seconds": 2.208246107142857,
+    "chain_verified": true,
+    "timestamp": "2026-01-26T09:07:51.363648"
+  },
+  "metrics": {
+    "accuracy": 0.6607142857142857,
+    "precision": 0.5957446808510638,
+    "recall": 1.0,
+    "f1_score": 0.7466666666666667,
+    "auroc": 0.6071428571428572,
+    "total_samples": 56,
+    "fake_samples": 28,
+    "real_samples": 28
+  }
+}

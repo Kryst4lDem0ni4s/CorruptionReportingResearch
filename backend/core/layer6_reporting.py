@@ -510,8 +510,8 @@ class Layer6Reporting:
         # Vote distribution
         elements.append(Spacer(1, 0.1*inch))
         elements.append(Paragraph(
-            f"<b>Vote Distribution:</b> Accept: {votes.get('accept', 0)} | "
-            f"Reject: {votes.get('reject', 0)}",
+            f"<b>Vote Distribution:</b> Accept: {consensus.get('approve', 0)} | "
+            f"Reject: {consensus.get('reject', 0)}",
             styles['BodyJustify']
         ))
         

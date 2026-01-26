@@ -639,4 +639,12 @@ Generated synthetic attack scenarios for testing coordination detection.
 }}
 
 # Command-line usage
-# python evaluation/datasets/generate_synthetic.py --num-groups 20 --with-defense"""
+# python evaluation/datasets/generate_synthetic.py --num-groups 20 --with-defense
+"""
+    
+    # Save README
+    with open(readme_path, 'w') as f:
+        f.write(readme_content)
+
+if __name__ == "__main__":
+    main()

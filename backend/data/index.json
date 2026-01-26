@@ -1376,5 +1376,12 @@
     "status": "completed",
     "timestamp_submission": "2026-01-23T20:25:26.872096",
     "timestamp_updated": "2026-01-23T20:25:27.009915"
+  },
+  "1b1f2d5d-5771-4775-a0f8-00df6206cd45": {
+    "pseudonym": "whistleblower-b3b5fdbb98ee",
+    "evidence_type": "image",
+    "status": "completed",
+    "timestamp_submission": "2026-01-24T17:43:49.853174",
+    "timestamp_updated": "2026-01-24T17:43:50.024043"
   }
 }

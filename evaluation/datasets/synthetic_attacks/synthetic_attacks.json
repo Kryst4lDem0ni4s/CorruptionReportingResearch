@@ -1,0 +1,868 @@
+[
+  {
+    "id": "attack_000",
+    "group_size": 4,
+    "pattern": "linguistic_similarity",
+    "target": "Michael Brown",
+    "submissions": [
+      {
+        "id": "sub_000",
+        "pseudonym": "7c156e690a54b7a2",
+        "narrative": "substantial evidence indicates that michael brown misused public funds totaling $244,053 for personal gain.",
+        "timestamp": "2025-10-19T19:13:33.727414",
+        "evidence_type": "document",
+        "metadata": {
+          "length": 107,
+          "words": 14,
+          "pattern_marker": "linguistic_similarity"
+        }
+      },
+      {
+        "id": "sub_001",
+        "pseudonym": "f27ef2822a184b1b",
+        "narrative": "Additionally, substantial evidence indicates that official michael brown accepted bribe of $244,053 from xyz industries on 2025-10-17.",
+        "timestamp": "2025-10-18T18:13:33.727414",
+        "evidence_type": "document",
+        "metadata": {
+          "length": 134,
+          "words": 17,
+          "pattern_marker": "linguistic_similarity"
+        }
+      },
+      {
+        "id": "sub_002",
+        "pseudonym": "c62c81a0cb372ef0",
+        "narrative": "Additionally, reliable witnesses attest that michael brown awarded contract to xyz industries without proper bidding process.",
+        "timestamp": "2025-10-19T22:13:33.727414",
+        "evidence_type": "audio",
+        "metadata": {
+          "length": 125,
+          "words": 16,
+          "pattern_marker": "linguistic_similarity"
+        }
+      },
+      {
+        "id": "sub_003",
+        "pseudonym": "5deca5c8a6b0f1c2",
+        "narrative": "Moreover, credible sources confirm that official michael brown accepted bribe of $244,053 from xyz industries on 2025-10-17.",
+        "timestamp": "2025-10-19T19:13:33.727414",
+        "evidence_type": "audio",
+        "metadata": {
+          "length": 124,
+          "words": 17,
+          "pattern_marker": "linguistic_similarity"
+        }
+      }
+    ],
+    "metrics": {
+      "pattern": "linguistic_similarity",
+      "similarity_score": 0.842,
+      "temporal_window_hours": 28.0,
+      "avg_time_diff_hours": 0.0,
+      "avg_narrative_length": 122.5,
+      "detection_difficulty": "high"
+    },
+    "created": "2026-01-26T13:13:33.727414"
+  },
+  {
+    "id": "attack_001",
+    "group_size": 6,
+    "pattern": "style_consistency",
+    "target": "Jane Doe",
+    "submissions": [
+      {
+        "id": "sub_000",
+        "pseudonym": "7c156e690a54b7a2",
+        "narrative": "JANE DOE FACILITATED ILLEGAL DEAL WORTH $408,382 WITH ABC CORPORATION.",
+        "timestamp": "2025-11-09T11:13:33.727414",
+        "evidence_type": "audio",
+        "metadata": {
+          "length": 70,
+          "words": 10,
+          "pattern_marker": "style_consistency"
+        }
+      },
+      {
+        "id": "sub_001",
+        "pseudonym": "f27ef2822a184b1b",
+        "narrative": "OFFICIAL JANE DOE ACCEPTED BRIBE OF $408,382 FROM ABC CORPORATION ON 2025-11-08.",
+        "timestamp": "2025-11-10T11:13:33.727414",
+        "evidence_type": "video",
+        "metadata": {
+          "length": 80,
+          "words": 12,
+          "pattern_marker": "style_consistency"
+        }
+      },
+      {
+        "id": "sub_002",
+        "pseudonym": "c62c81a0cb372ef0",
+        "narrative": "JANE DOE MISUSED PUBLIC FUNDS TOTALING $408,382 FOR PERSONAL GAIN.",
+        "timestamp": "2025-11-09T13:13:33.727414",
+        "evidence_type": "document",
+        "metadata": {
+          "length": 66,
+          "words": 10,
+          "pattern_marker": "style_consistency"
+        }
+      },
+      {
+        "id": "sub_003",
+        "pseudonym": "5deca5c8a6b0f1c2",
+        "narrative": "EVIDENCE SHOWS JANE DOE RECEIVED ILLEGAL PAYMENTS FROM ABC CORPORATION.",
+        "timestamp": "2025-11-10T05:13:33.727414",
+        "evidence_type": "audio",
+        "metadata": {
+          "length": 71,
+          "words": 10,
+          "pattern_marker": "style_consistency"
+        }
+      },
+      {
+        "id": "sub_004",
+        "pseudonym": "4fe709033e8aa885",
+        "narrative": "JANE DOE AWARDED CONTRACT TO ABC CORPORATION WITHOUT PROPER BIDDING PROCESS.",
+        "timestamp": "2025-11-10T10:13:33.727414",
+        "evidence_type": "document",
+        "metadata": {
+          "length": 76,
+          "words": 11,
+          "pattern_marker": "style_consistency"
+        }
+      },
+      {
+        "id": "sub_005",
+        "pseudonym": "3795d0c03f939d7a",
+        "narrative": "OFFICIAL JANE DOE ACCEPTED BRIBE OF $408,382 FROM ABC CORPORATION ON 2025-11-08.",
+        "timestamp": "2025-11-10T07:13:33.727414",
+        "evidence_type": "image",
+        "metadata": {
+          "length": 80,
+          "words": 12,
+          "pattern_marker": "style_consistency"
+        }
+      }
+    ],
+    "metrics": {
+      "pattern": "style_consistency",
+      "similarity_score": 0.632,
+      "temporal_window_hours": 24.0,
+      "avg_time_diff_hours": 4.0,
+      "avg_narrative_length": 73.8,
+      "detection_difficulty": "medium"
+    },
+    "created": "2026-01-26T13:13:33.728926"
+  },
+  {
+    "id": "attack_002",
+    "group_size": 4,
+    "pattern": "temporal_clustering",
+    "target": "Jane Doe",
+    "submissions": [
+      {
+        "id": "sub_000",
+        "pseudonym": "7c156e690a54b7a2",
+        "narrative": "Jane Doe facilitated illegal deal worth $301,476 with National Construction.",
+        "timestamp": "2025-05-09T13:33:33.728926",
+        "evidence_type": "audio",
+        "metadata": {
+          "length": 76,
+          "words": 10,
+          "pattern_marker": "temporal_clustering"
+        }
+      },
+      {
+        "id": "sub_001",
+        "pseudonym": "f27ef2822a184b1b",
+        "narrative": "Jane Doe facilitated illegal deal worth $301,476 with National Construction.",
+        "timestamp": "2025-05-09T13:39:33.728926",
+        "evidence_type": "audio",
+        "metadata": {
+          "length": 76,
+          "words": 10,
+          "pattern_marker": "temporal_clustering"
+        }
+      },
+      {
+        "id": "sub_002",
+        "pseudonym": "c62c81a0cb372ef0",
+        "narrative": "Jane Doe misused public funds totaling $301,476 for personal gain.",
+        "timestamp": "2025-05-09T14:30:33.728926",
+        "evidence_type": "image",
+        "metadata": {
+          "length": 66,
+          "words": 10,
+          "pattern_marker": "temporal_clustering"
+        }
+      },
+      {
+        "id": "sub_003",
+        "pseudonym": "5deca5c8a6b0f1c2",
+        "narrative": "Jane Doe awarded contract to National Construction without proper bidding process.",
+        "timestamp": "2025-05-09T13:33:33.728926",
+        "evidence_type": "video",
+        "metadata": {
+          "length": 82,
+          "words": 11,
+          "pattern_marker": "temporal_clustering"
+        }
+      }
+    ],
+    "metrics": {
+      "pattern": "temporal_clustering",
+      "similarity_score": 0.657,
+      "temporal_window_hours": 0.85,
+      "avg_time_diff_hours": 0.0,
+      "avg_narrative_length": 75.0,
+      "detection_difficulty": "medium"
+    },
+    "created": "2026-01-26T13:13:33.728926"
+  },
+  {
+    "id": "attack_003",
+    "group_size": 6,
+    "pattern": "style_consistency",
+    "target": "John Smith",
+    "submissions": [
+      {
+        "id": "sub_000",
+        "pseudonym": "7c156e690a54b7a2",
+        "narrative": "JOHN SMITH FACILITATED ILLEGAL DEAL WORTH $871,722 WITH XYZ INDUSTRIES.",
+        "timestamp": "2025-12-12T14:13:33.728926",
+        "evidence_type": "audio",
+        "metadata": {
+          "length": 71,
+          "words": 10,
+          "pattern_marker": "style_consistency"
+        }
+      },
+      {
+        "id": "sub_001",
+        "pseudonym": "f27ef2822a184b1b",
+        "narrative": "JOHN SMITH MISUSED PUBLIC FUNDS TOTALING $871,722 FOR PERSONAL GAIN.",
+        "timestamp": "2025-12-12T02:13:33.728926",
+        "evidence_type": "audio",
+        "metadata": {
+          "length": 68,
+          "words": 10,
+          "pattern_marker": "style_consistency"
+        }
+      },
+      {
+        "id": "sub_002",
+        "pseudonym": "c62c81a0cb372ef0",
+        "narrative": "JOHN SMITH AWARDED CONTRACT TO XYZ INDUSTRIES WITHOUT PROPER BIDDING PROCESS.",
+        "timestamp": "2025-12-13T06:13:33.728926",
+        "evidence_type": "video",
+        "metadata": {
+          "length": 77,
+          "words": 11,
+          "pattern_marker": "style_consistency"
+        }
+      },
+      {
+        "id": "sub_003",
+        "pseudonym": "5deca5c8a6b0f1c2",
+        "narrative": "INVESTIGATION REVEALS JOHN SMITH EMBEZZLED $871,722 FROM PUBLIC FUNDS.",
+        "timestamp": "2025-12-13T06:13:33.728926",
+        "evidence_type": "video",
+        "metadata": {
+          "length": 70,
+          "words": 9,
+          "pattern_marker": "style_consistency"
+        }
+      },
+      {
+        "id": "sub_004",
+        "pseudonym": "4fe709033e8aa885",
+        "narrative": "CORRUPTION SCHEME INVOLVING JOHN SMITH AND XYZ INDUSTRIES DISCOVERED.",
+        "timestamp": "2025-12-12T05:13:33.728926",
+        "evidence_type": "image",
+        "metadata": {
+          "length": 69,
+          "words": 9,
+          "pattern_marker": "style_consistency"
+        }
+      },
+      {
+        "id": "sub_005",
+        "pseudonym": "3795d0c03f939d7a",
+        "narrative": "JOHN SMITH AWARDED CONTRACT TO XYZ INDUSTRIES WITHOUT PROPER BIDDING PROCESS.",
+        "timestamp": "2025-12-13T12:13:33.728926",
+        "evidence_type": "audio",
+        "metadata": {
+          "length": 77,
+          "words": 11,
+          "pattern_marker": "style_consistency"
+        }
+      }
+    ],
+    "metrics": {
+      "pattern": "style_consistency",
+      "similarity_score": 0.624,
+      "temporal_window_hours": 31.0,
+      "avg_time_diff_hours": 4.4,
+      "avg_narrative_length": 72.0,
+      "detection_difficulty": "medium"
+    },
+    "created": "2026-01-26T13:13:33.728926"
+  },
+  {
+    "id": "attack_004",
+    "group_size": 9,
+    "pattern": "identical_evidence",
+    "target": "David Miller",
+    "submissions": [
+      {
+        "id": "sub_000",
+        "pseudonym": "7c156e690a54b7a2",
+        "narrative": "Official David Miller accepted bribe of $239,974 from Global Enterprises on 2025-10-18.",
+        "timestamp": "2025-10-23T23:13:33.728926",
+        "evidence_type": "video",
+        "metadata": {
+          "length": 87,
+          "words": 12,
+          "pattern_marker": "identical_evidence"
+        }
+      },
+      {
+        "id": "sub_001",
+        "pseudonym": "f27ef2822a184b1b",
+        "narrative": "Official David Miller accepted bribe of $239,974 from Global Enterprises on 2025-10-18.",
+        "timestamp": "2025-10-19T12:13:33.728926",
+        "evidence_type": "document",
+        "metadata": {
+          "length": 87,
+          "words": 12,
+          "pattern_marker": "identical_evidence"
+        }
+      },
+      {
+        "id": "sub_002",
+        "pseudonym": "c62c81a0cb372ef0",
+        "narrative": "Official David Miller accepted bribe of $239,974 from Global Enterprises on 2025-10-18.",
+        "timestamp": "2025-10-19T17:13:33.728926",
+        "evidence_type": "image",
+        "metadata": {
+          "length": 87,
+          "words": 12,
+          "pattern_marker": "identical_evidence"
+        }
+      },
+      {
+        "id": "sub_003",
+        "pseudonym": "5deca5c8a6b0f1c2",
+        "narrative": "Official David Miller accepted bribe of $239,974 from Global Enterprises on 2025-10-18.",
+        "timestamp": "2025-10-25T05:13:33.728926",
+        "evidence_type": "image",
+        "metadata": {
+          "length": 87,
+          "words": 12,
+          "pattern_marker": "identical_evidence"
+        }
+      },
+      {
+        "id": "sub_004",
+        "pseudonym": "4fe709033e8aa885",
+        "narrative": "Official David Miller accepted bribe of $239,974 from Global Enterprises on 2025-10-18.",
+        "timestamp": "2025-10-23T01:13:33.728926",
+        "evidence_type": "document",
+        "metadata": {
+          "length": 87,
+          "words": 12,
+          "pattern_marker": "identical_evidence"
+        }
+      },
+      {
+        "id": "sub_005",
+        "pseudonym": "3795d0c03f939d7a",
+        "narrative": "Official David Miller accepted bribe of $239,974 from Global Enterprises on 2025-10-18.",
+        "timestamp": "2025-10-22T15:13:33.728926",
+        "evidence_type": "video",
+        "metadata": {
+          "length": 87,
+          "words": 12,
+          "pattern_marker": "identical_evidence"
+        }
+      },
+      {
+        "id": "sub_006",
+        "pseudonym": "b68ac46f537691e9",
+        "narrative": "Official David Miller accepted bribe of $239,974 from Global Enterprises on 2025-10-18.",
+        "timestamp": "2025-10-24T21:13:33.728926",
+        "evidence_type": "video",
+        "metadata": {
+          "length": 87,
+          "words": 12,
+          "pattern_marker": "identical_evidence"
+        }
+      },
+      {
+        "id": "sub_007",
+        "pseudonym": "1081bee9ea7c7e4d",
+        "narrative": "Official David Miller accepted bribe of $239,974 from Global Enterprises on 2025-10-18.",
+        "timestamp": "2025-10-24T04:13:33.728926",
+        "evidence_type": "audio",
+        "metadata": {
+          "length": 87,
+          "words": 12,
+          "pattern_marker": "identical_evidence"
+        }
+      },
+      {
+        "id": "sub_008",
+        "pseudonym": "7fe5ba06487d0a38",
+        "narrative": "Official David Miller accepted bribe of $239,974 from Global Enterprises on 2025-10-18.",
+        "timestamp": "2025-10-24T10:13:33.728926",
+        "evidence_type": "document",
+        "metadata": {
+          "length": 87,
+          "words": 12,
+          "pattern_marker": "identical_evidence"
+        }
+      }
+    ],
+    "metrics": {
+      "pattern": "identical_evidence",
+      "similarity_score": 1.0,
+      "temporal_window_hours": 132.0,
+      "avg_time_diff_hours": 1.38,
+      "avg_narrative_length": 87.0,
+      "detection_difficulty": "high"
+    },
+    "created": "2026-01-26T13:13:33.729940"
+  },
+  {
+    "id": "attack_005",
+    "group_size": 4,
+    "pattern": "identical_evidence",
+    "target": "Michael Brown",
+    "submissions": [
+      {
+        "id": "sub_000",
+        "pseudonym": "7c156e690a54b7a2",
+        "narrative": "Official Michael Brown accepted bribe of $366,699 from Premier Holdings on 2025-10-31.",
+        "timestamp": "2025-11-03T16:13:33.729940",
+        "evidence_type": "video",
+        "metadata": {
+          "length": 86,
+          "words": 12,
+          "pattern_marker": "identical_evidence"
+        }
+      },
+      {
+        "id": "sub_001",
+        "pseudonym": "f27ef2822a184b1b",
+        "narrative": "Official Michael Brown accepted bribe of $366,699 from Premier Holdings on 2025-10-31.",
+        "timestamp": "2025-11-02T05:13:33.729940",
+        "evidence_type": "video",
+        "metadata": {
+          "length": 86,
+          "words": 12,
+          "pattern_marker": "identical_evidence"
+        }
+      },
+      {
+        "id": "sub_002",
+        "pseudonym": "c62c81a0cb372ef0",
+        "narrative": "Official Michael Brown accepted bribe of $366,699 from Premier Holdings on 2025-10-31.",
+        "timestamp": "2025-10-31T13:13:33.729940",
+        "evidence_type": "audio",
+        "metadata": {
+          "length": 86,
+          "words": 12,
+          "pattern_marker": "identical_evidence"
+        }
+      },
+      {
+        "id": "sub_003",
+        "pseudonym": "5deca5c8a6b0f1c2",
+        "narrative": "Official Michael Brown accepted bribe of $366,699 from Premier Holdings on 2025-10-31.",
+        "timestamp": "2025-11-05T21:13:33.729940",
+        "evidence_type": "image",
+        "metadata": {
+          "length": 86,
+          "words": 12,
+          "pattern_marker": "identical_evidence"
+        }
+      }
+    ],
+    "metrics": {
+      "pattern": "identical_evidence",
+      "similarity_score": 1.0,
+      "temporal_window_hours": 128.0,
+      "avg_time_diff_hours": 17.67,
+      "avg_narrative_length": 86.0,
+      "detection_difficulty": "high"
+    },
+    "created": "2026-01-26T13:13:33.729940"
+  },
+  {
+    "id": "attack_006",
+    "group_size": 4,
+    "pattern": "style_consistency",
+    "target": "Mary Williams",
+    "submissions": [
+      {
+        "id": "sub_000",
+        "pseudonym": "7c156e690a54b7a2",
+        "narrative": "OFFICIAL MARY WILLIAMS ACCEPTED BRIBE OF $402,077 FROM XYZ INDUSTRIES ON 2025-10-06.",
+        "timestamp": "2025-10-08T03:13:33.729940",
+        "evidence_type": "audio",
+        "metadata": {
+          "length": 84,
+          "words": 12,
+          "pattern_marker": "style_consistency"
+        }
+      },
+      {
+        "id": "sub_001",
+        "pseudonym": "f27ef2822a184b1b",
+        "narrative": "MARY WILLIAMS ENGAGED IN FRAUDULENT ACTIVITIES WITH XYZ INDUSTRIES.",
+        "timestamp": "2025-10-06T14:13:33.729940",
+        "evidence_type": "document",
+        "metadata": {
+          "length": 67,
+          "words": 9,
+          "pattern_marker": "style_consistency"
+        }
+      },
+      {
+        "id": "sub_002",
+        "pseudonym": "c62c81a0cb372ef0",
+        "narrative": "MARY WILLIAMS FACILITATED ILLEGAL DEAL WORTH $402,077 WITH XYZ INDUSTRIES.",
+        "timestamp": "2025-10-07T08:13:33.729940",
+        "evidence_type": "image",
+        "metadata": {
+          "length": 74,
+          "words": 10,
+          "pattern_marker": "style_consistency"
+        }
+      },
+      {
+        "id": "sub_003",
+        "pseudonym": "5deca5c8a6b0f1c2",
+        "narrative": "OFFICIAL MARY WILLIAMS ACCEPTED BRIBE OF $402,077 FROM XYZ INDUSTRIES ON 2025-10-06.",
+        "timestamp": "2025-10-07T04:13:33.729940",
+        "evidence_type": "document",
+        "metadata": {
+          "length": 84,
+          "words": 12,
+          "pattern_marker": "style_consistency"
+        }
+      }
+    ],
+    "metrics": {
+      "pattern": "style_consistency",
+      "similarity_score": 0.426,
+      "temporal_window_hours": 18.0,
+      "avg_time_diff_hours": -7.67,
+      "avg_narrative_length": 77.2,
+      "detection_difficulty": "low"
+    },
+    "created": "2026-01-26T13:13:33.729940"
+  },
+  {
+    "id": "attack_007",
+    "group_size": 10,
+    "pattern": "linguistic_similarity",
+    "target": "Robert Johnson",
+    "submissions": [
+      {
+        "id": "sub_000",
+        "pseudonym": "7c156e690a54b7a2",
+        "narrative": "documented proof shows that corruption scheme involving robert johnson and xyz industries discovered.",
+        "timestamp": "2025-05-01T08:13:33.729940",
+        "evidence_type": "video",
+        "metadata": {
+          "length": 101,
+          "words": 13,
+          "pattern_marker": "linguistic_similarity"
+        }
+      },
+      {
+        "id": "sub_001",
+        "pseudonym": "f27ef2822a184b1b",
+        "narrative": "Moreover, credible sources confirm that robert johnson awarded contract to xyz industries without proper bidding process.",
+        "timestamp": "2025-04-30T04:13:33.729940",
+        "evidence_type": "video",
+        "metadata": {
+          "length": 121,
+          "words": 16,
+          "pattern_marker": "linguistic_similarity"
+        }
+      },
+      {
+        "id": "sub_002",
+        "pseudonym": "c62c81a0cb372ef0",
+        "narrative": "Moreover, reliable witnesses attest that robert johnson facilitated illegal deal worth $701,798 with xyz industries.",
+        "timestamp": "2025-04-30T22:13:33.729940",
+        "evidence_type": "document",
+        "metadata": {
+          "length": 116,
+          "words": 15,
+          "pattern_marker": "linguistic_similarity"
+        }
+      },
+      {
+        "id": "sub_003",
+        "pseudonym": "5deca5c8a6b0f1c2",
+        "narrative": "Additionally, credible sources confirm that robert johnson awarded contract to xyz industries without proper bidding process.",
+        "timestamp": "2025-04-30T08:13:33.729940",
+        "evidence_type": "document",
+        "metadata": {
+          "length": 125,
+          "words": 16,
+          "pattern_marker": "linguistic_similarity"
+        }
+      },
+      {
+        "id": "sub_004",
+        "pseudonym": "4fe709033e8aa885",
+        "narrative": "Additionally, credible sources confirm that robert johnson awarded contract to xyz industries without proper bidding process.",
+        "timestamp": "2025-04-28T22:13:33.729940",
+        "evidence_type": "document",
+        "metadata": {
+          "length": 125,
+          "words": 16,
+          "pattern_marker": "linguistic_similarity"
+        }
+      },
+      {
+        "id": "sub_005",
+        "pseudonym": "3795d0c03f939d7a",
+        "narrative": "Additionally, substantial evidence indicates that robert johnson awarded contract to xyz industries without proper bidding process.",
+        "timestamp": "2025-04-30T07:13:33.729940",
+        "evidence_type": "document",
+        "metadata": {
+          "length": 131,
+          "words": 16,
+          "pattern_marker": "linguistic_similarity"
+        }
+      },
+      {
+        "id": "sub_006",
+        "pseudonym": "b68ac46f537691e9",
+        "narrative": "Moreover, documented proof shows that robert johnson awarded contract to xyz industries without proper bidding process.",
+        "timestamp": "2025-05-01T03:13:33.729940",
+        "evidence_type": "image",
+        "metadata": {
+          "length": 119,
+          "words": 16,
+          "pattern_marker": "linguistic_similarity"
+        }
+      },
+      {
+        "id": "sub_007",
+        "pseudonym": "1081bee9ea7c7e4d",
+        "narrative": "Additionally, reliable witnesses attest that corruption scheme involving robert johnson and xyz industries discovered.",
+        "timestamp": "2025-05-01T01:13:33.729940",
+        "evidence_type": "video",
+        "metadata": {
+          "length": 118,
+          "words": 14,
+          "pattern_marker": "linguistic_similarity"
+        }
+      },
+      {
+        "id": "sub_008",
+        "pseudonym": "7fe5ba06487d0a38",
+        "narrative": "Additionally, substantial evidence indicates that robert johnson awarded contract to xyz industries without proper bidding process.",
+        "timestamp": "2025-04-30T20:13:33.729940",
+        "evidence_type": "audio",
+        "metadata": {
+          "length": 131,
+          "words": 16,
+          "pattern_marker": "linguistic_similarity"
+        }
+      },
+      {
+        "id": "sub_009",
+        "pseudonym": "6b762aab451cefb9",
+        "narrative": "Furthermore, reliable witnesses attest that investigation reveals robert johnson embezzled $701,798 from public funds.",
+        "timestamp": "2025-04-28T19:13:33.729940",
+        "evidence_type": "document",
+        "metadata": {
+          "length": 118,
+          "words": 14,
+          "pattern_marker": "linguistic_similarity"
+        }
+      }
+    ],
+    "metrics": {
+      "pattern": "linguistic_similarity",
+      "similarity_score": 0.809,
+      "temporal_window_hours": 33.0,
+      "avg_time_diff_hours": -6.78,
+      "avg_narrative_length": 120.5,
+      "detection_difficulty": "high"
+    },
+    "created": "2026-01-26T13:13:33.730940"
+  },
+  {
+    "id": "attack_008",
+    "group_size": 8,
+    "pattern": "linguistic_similarity",
+    "target": "Mary Williams",
+    "submissions": [
+      {
+        "id": "sub_000",
+        "pseudonym": "7c156e690a54b7a2",
+        "narrative": "credible sources confirm that mary williams engaged in fraudulent activities with xyz industries.",
+        "timestamp": "2025-03-30T19:13:33.730940",
+        "evidence_type": "image",
+        "metadata": {
+          "length": 97,
+          "words": 13,
+          "pattern_marker": "linguistic_similarity"
+        }
+      },
+      {
+        "id": "sub_001",
+        "pseudonym": "f27ef2822a184b1b",
+        "narrative": "Additionally, reliable witnesses attest that evidence shows mary williams received illegal payments from xyz industries.",
+        "timestamp": "2025-03-28T22:13:33.730940",
+        "evidence_type": "video",
+        "metadata": {
+          "length": 120,
+          "words": 15,
+          "pattern_marker": "linguistic_similarity"
+        }
+      },
+      {
+        "id": "sub_002",
+        "pseudonym": "c62c81a0cb372ef0",
+        "narrative": "Moreover, substantial evidence indicates that mary williams misused public funds totaling $209,448 for personal gain.",
+        "timestamp": "2025-03-31T10:13:33.730940",
+        "evidence_type": "document",
+        "metadata": {
+          "length": 117,
+          "words": 15,
+          "pattern_marker": "linguistic_similarity"
+        }
+      },
+      {
+        "id": "sub_003",
+        "pseudonym": "5deca5c8a6b0f1c2",
+        "narrative": "Additionally, credible sources confirm that mary williams misused public funds totaling $209,448 for personal gain.",
+        "timestamp": "2025-03-30T17:13:33.730940",
+        "evidence_type": "video",
+        "metadata": {
+          "length": 115,
+          "words": 15,
+          "pattern_marker": "linguistic_similarity"
+        }
+      },
+      {
+        "id": "sub_004",
+        "pseudonym": "4fe709033e8aa885",
+        "narrative": "Furthermore, credible sources confirm that mary williams engaged in fraudulent activities with xyz industries.",
+        "timestamp": "2025-03-28T20:13:33.730940",
+        "evidence_type": "image",
+        "metadata": {
+          "length": 110,
+          "words": 14,
+          "pattern_marker": "linguistic_similarity"
+        }
+      },
+      {
+        "id": "sub_005",
+        "pseudonym": "3795d0c03f939d7a",
+        "narrative": "Furthermore, substantial evidence indicates that investigation reveals mary williams embezzled $209,448 from public funds.",
+        "timestamp": "2025-03-29T22:13:33.730940",
+        "evidence_type": "video",
+        "metadata": {
+          "length": 122,
+          "words": 14,
+          "pattern_marker": "linguistic_similarity"
+        }
+      },
+      {
+        "id": "sub_006",
+        "pseudonym": "b68ac46f537691e9",
+        "narrative": "Moreover, reliable witnesses attest that evidence shows mary williams received illegal payments from xyz industries.",
+        "timestamp": "2025-03-31T12:13:33.730940",
+        "evidence_type": "video",
+        "metadata": {
+          "length": 116,
+          "words": 15,
+          "pattern_marker": "linguistic_similarity"
+        }
+      },
+      {
+        "id": "sub_007",
+        "pseudonym": "1081bee9ea7c7e4d",
+        "narrative": "Furthermore, credible sources confirm that corruption scheme involving mary williams and xyz industries discovered.",
+        "timestamp": "2025-03-29T16:13:33.730940",
+        "evidence_type": "document",
+        "metadata": {
+          "length": 115,
+          "words": 14,
+          "pattern_marker": "linguistic_similarity"
+        }
+      }
+    ],
+    "metrics": {
+      "pattern": "linguistic_similarity",
+      "similarity_score": 0.887,
+      "temporal_window_hours": 60.0,
+      "avg_time_diff_hours": -3.86,
+      "avg_narrative_length": 114.0,
+      "detection_difficulty": "high"
+    },
+    "created": "2026-01-26T13:13:33.730940"
+  },
+  {
+    "id": "attack_009",
+    "group_size": 3,
+    "pattern": "style_consistency",
+    "target": "John Smith",
+    "submissions": [
+      {
+        "id": "sub_000",
+        "pseudonym": "7c156e690a54b7a2",
+        "narrative": "CORRUPTION SCHEME INVOLVING JOHN SMITH AND ABC CORPORATION DISCOVERED.",
+        "timestamp": "2025-04-27T16:13:33.730940",
+        "evidence_type": "document",
+        "metadata": {
+          "length": 70,
+          "words": 9,
+          "pattern_marker": "style_consistency"
+        }
+      },
+      {
+        "id": "sub_001",
+        "pseudonym": "f27ef2822a184b1b",
+        "narrative": "CORRUPTION SCHEME INVOLVING JOHN SMITH AND ABC CORPORATION DISCOVERED.",
+        "timestamp": "2025-04-27T17:13:33.730940",
+        "evidence_type": "document",
+        "metadata": {
+          "length": 70,
+          "words": 9,
+          "pattern_marker": "style_consistency"
+        }
+      },
+      {
+        "id": "sub_002",
+        "pseudonym": "c62c81a0cb372ef0",
+        "narrative": "JOHN SMITH AWARDED CONTRACT TO ABC CORPORATION WITHOUT PROPER BIDDING PROCESS.",
+        "timestamp": "2025-04-28T14:13:33.730940",
+        "evidence_type": "document",
+        "metadata": {
+          "length": 78,
+          "words": 11,
+          "pattern_marker": "style_consistency"
+        }
+      }
+    ],
+    "metrics": {
+      "pattern": "style_consistency",
+      "similarity_score": 0.682,
+      "temporal_window_hours": 21.0,
+      "avg_time_diff_hours": 11.0,
+      "avg_narrative_length": 72.7,
+      "detection_difficulty": "medium"
+    },
+    "created": "2026-01-26T13:13:33.730940"
+  }
+]

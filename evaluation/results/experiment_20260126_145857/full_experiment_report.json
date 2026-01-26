@@ -1,0 +1,141 @@
+{
+  "setup": {
+    "timestamp": "2026-01-26T09:28:57.461831"
+  },
+  "layer_stats": {
+    "layer1_count": 15,
+    "layer2_count": 15,
+    "layer3_count": 15,
+    "layer4_processed": 15,
+    "layer5_count": 1,
+    "layer6_count": 15
+  },
+  "reports": [
+    {
+      "id": "sub_7912",
+      "evidence_hash": "c97a59fc2f7bb32c373ebe764fe0c6ac4bf006057b07032d4010daf456d76b07",
+      "status": "DISPUTED",
+      "credibility_score": 0.2801122605800629,
+      "timestamp": "2026-01-26T09:29:28.245920"
+    },
+    {
+      "id": "sub_1520",
+      "evidence_hash": "b8481884705d7c98465ab9f01bfd353d21d97e0470d016c37d91f7d12dbe9c4f",
+      "status": "REJECTED",
+      "credibility_score": 0.362984761595726,
+      "timestamp": "2026-01-26T09:29:28.616036"
+    },
+    {
+      "id": "sub_1488",
+      "evidence_hash": "cb3031bf91793bf3e95f2987fc91a955270dc088dd9a3cfec3eeab15b25f3183",
+      "status": "REJECTED",
+      "credibility_score": 0.31737303733825684,
+      "timestamp": "2026-01-26T09:29:28.979455"
+    },
+    {
+      "id": "sub_2535",
+      "evidence_hash": "ead56222b557f2fb69c01b24f457f289b2cdfec2cf411e059a9da5d7a59d907d",
+      "status": "REJECTED",
+      "credibility_score": 0.38385486602783203,
+      "timestamp": "2026-01-26T09:29:29.448413"
+    },
+    {
+      "id": "attack_007",
+      "evidence_hash": "e9a0e69491f718ed662edf2a2585bbf4165a971c329000d2bd4e5498a92d3ddb",
+      "status": "VERIFIED",
+      "credibility_score": 0.7,
+      "timestamp": "2026-01-26T09:29:29.822919"
+    },
+    {
+      "id": "attack_003",
+      "evidence_hash": "1cc45c1534994d9f579539c425c86e61817cb3f4c85a029759ab931a0ddbbacf",
+      "status": "VERIFIED",
+      "credibility_score": 0.7,
+      "timestamp": "2026-01-26T09:29:30.174329"
+    },
+    {
+      "id": "attack_002",
+      "evidence_hash": "598eb7f3e8308a7632f55262916fe45139a856655a6c0015274b23b170a91aa8",
+      "status": "REJECTED",
+      "credibility_score": 0.7,
+      "timestamp": "2026-01-26T09:29:30.550067"
+    },
+    {
+      "id": "attack_008",
+      "evidence_hash": "20b9fb7c740d7e63d9d90ce8ed6f6f60584708c7eecf191246a0371da4bbbb27",
+      "status": "VERIFIED",
+      "credibility_score": 0.7,
+      "timestamp": "2026-01-26T09:29:30.912214"
+    },
+    {
+      "id": "attack_005",
+      "evidence_hash": "e457413a47c37d80c9a41e66f34bea0e35dbe0a4e942e07545eacddc394fc698",
+      "status": "VERIFIED",
+      "credibility_score": 0.7,
+      "timestamp": "2026-01-26T09:29:31.314844"
+    },
+    {
+      "id": "attack_006",
+      "evidence_hash": "0ed6fcb47df53ed14346175c563ba2180d003c104e9834d9cce461a85076dce8",
+      "status": "VERIFIED",
+      "credibility_score": 0.7,
+      "timestamp": "2026-01-26T09:29:31.711881"
+    },
+    {
+      "id": "attack_009",
+      "evidence_hash": "704a9361848734d5c1a4fda1898f9c2a515ebc51e9832ec391be892763073dea",
+      "status": "VERIFIED",
+      "credibility_score": 0.7,
+      "timestamp": "2026-01-26T09:29:32.112679"
+    },
+    {
+      "id": "attack_004",
+      "evidence_hash": "da98e16690b36cc6ceb8f40a8402c63a29b730cf59b35ff94a27420fd13c66e7",
+      "status": "VERIFIED",
+      "credibility_score": 0.7,
+      "timestamp": "2026-01-26T09:29:32.479035"
+    },
+    {
+      "id": "attack_000",
+      "evidence_hash": "6f7f538bfa34cc499eec1a9afd2ef21f7535c47be36cde96f677f1edb3f54646",
+      "status": "VERIFIED",
+      "credibility_score": 0.7,
+      "timestamp": "2026-01-26T09:29:32.863159"
+    },
+    {
+      "id": "attack_001",
+      "evidence_hash": "293d6d28cbfb8de75701081d36c4e16d5721d86195962dfecac65fcba947bd97",
+      "status": "VERIFIED",
+      "credibility_score": 0.7,
+      "timestamp": "2026-01-26T09:29:33.405622"
+    },
+    {
+      "id": "sub_mismatched_001",
+      "evidence_hash": "cc3f67479b605eeec899a9c969ce2e09524ea3500a837fb429a77d6d2b08c02d",
+      "status": "REJECTED",
+      "credibility_score": 0.32700333893299105,
+      "timestamp": "2026-01-26T09:29:33.986249"
+    }
+  ],
+  "ledger_stats": {
+    "total_blocks": 16,
+    "chain_version": "1.0.0",
+    "genesis_timestamp": "2026-01-26T09:28:57.445050",
+    "latest_timestamp": "2026-01-26T09:29:33.989867",
+    "chain_age_seconds": 36.544817,
+    "chain_age_hours": 0.01,
+    "average_block_time_seconds": 2.4363211333333337,
+    "chain_verified": true,
+    "timestamp": "2026-01-26T09:29:34.022791"
+  },
+  "metrics": {
+    "accuracy": 0.7333333333333333,
+    "precision": 0.3333333333333333,
+    "recall": 1.0,
+    "f1_score": 0.5,
+    "auroc": 1.0,
+    "total_samples": 15,
+    "fake_samples": 2,
+    "real_samples": 13
+  }
+}

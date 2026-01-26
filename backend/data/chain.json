@@ -377,6 +377,15 @@
       "previous_hash": "e5de07d59873712730425059b50258eb711d1d108c016f11e0cc531428d23bb4",
       "metadata": {},
       "hash": "0b2f3b5b2f78f126477245812fd9a5f98aae4b88c3a15530b2fcf52999455941"
+    },
+    {
+      "index": 42,
+      "timestamp": "2026-01-24T17:43:49.978005",
+      "submission_id": "1b1f2d5d-5771-4775-a0f8-00df6206cd45",
+      "evidence_hash": "a74d00a2fb2b7701fe44f5642395cdff893a045e009b9f48bacceaa0b5f7ce42",
+      "previous_hash": "0b2f3b5b2f78f126477245812fd9a5f98aae4b88c3a15530b2fcf52999455941",
+      "metadata": {},
+      "hash": "8f827a741f9bb132e02e66147f8a4b2a3eaac97274e2a6996e2e017675f8011b"
     }
   ],
   "version": "1.0.0",

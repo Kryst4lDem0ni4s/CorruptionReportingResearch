@@ -1,0 +1,72 @@
+[
+    {
+        "id": "attack_group_1_a",
+        "text": "The mayor took a bribe of $50k in the parking lot at midnight.",
+        "narrative": "The mayor took a bribe of $50k in the parking lot at midnight.",
+        "timestamp_offset": 0,
+        "group": "obvious_coordination"
+    },
+    {
+        "id": "attack_group_1_b",
+        "text": "The mayor took a bribe of $50k in the parking lot at midnight.",
+        "narrative": "The mayor took a bribe of $50k in the parking lot at midnight.",
+        "timestamp_offset": 60,
+        "group": "obvious_coordination"
+    },
+    {
+        "id": "attack_group_1_c",
+        "text": "The mayor took a bribe of $50k in the parking lot at midnight.",
+        "narrative": "The mayor took a bribe of $50k in the parking lot at midnight.",
+        "timestamp_offset": 120,
+        "group": "obvious_coordination"
+    },
+    {
+        "id": "attack_group_subtle_a",
+        "text": "I witnessed local officials exchanging envelopes near the stadium late last night.",
+        "narrative": "I witnessed local officials exchanging envelopes near the stadium late last night.",
+        "timestamp_offset": 0,
+        "group": "subtle_coordination"
+    },
+    {
+        "id": "attack_group_subtle_b",
+        "text": "Suspicious activity by city council members at the sports complex after dark, money was handed over.",
+        "narrative": "Suspicious activity by city council members at the sports complex after dark, money was handed over.",
+        "timestamp_offset": 3600,
+        "group": "subtle_coordination"
+    },
+    {
+        "id": "attack_group_subtle_c",
+        "text": "Bribery incident observed: cash transaction between parking attendants and mayor's aide at the arena.",
+        "narrative": "Bribery incident observed: cash transaction between parking attendants and mayor's aide at the arena.",
+        "timestamp_offset": 7200,
+        "group": "subtle_coordination"
+    },
+    {
+        "id": "large_scale_1",
+        "text": "There is massive election fraud happening in District 9 right now.",
+        "narrative": "There is massive election fraud happening in District 9 right now.",
+        "timestamp_offset": 0,
+        "group": "large_scale"
+    },
+    {
+        "id": "large_scale_2",
+        "text": "District 9 voting machines are rigged, I saw it.",
+        "narrative": "District 9 voting machines are rigged, I saw it.",
+        "timestamp_offset": 120,
+        "group": "large_scale"
+    },
+    {
+        "id": "large_scale_3",
+        "text": "Stop the count in District 9, fraud detected!",
+        "narrative": "Stop the count in District 9, fraud detected!",
+        "timestamp_offset": 300,
+        "group": "large_scale"
+    },
+    {
+        "id": "large_scale_4",
+        "text": "They are stealing the votes in District 9.",
+        "narrative": "They are stealing the votes in District 9.",
+        "timestamp_offset": 600,
+        "group": "large_scale"
+    }
+]
