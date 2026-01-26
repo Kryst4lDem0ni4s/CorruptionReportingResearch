@@ -416,3 +416,39 @@ class MetadataService:
                 'processed': len(processed),
                 'failed': len(failed)
             }
+
+    def strip_audio_metadata(self, input_path: Path) -> Path:
+        """
+        Strip metadata from audio file (Simulated).
+        
+        Args:
+            input_path: Path to input audio
+            
+        Returns:
+            Path: Path to cleaned audio (same as input for now)
+        """
+        # In a real implementation, we would use ffmpeg here
+        # For this research MVP, we just verify the file exists
+        if not input_path.exists():
+            raise FileNotFoundError(f"Input file not found: {input_path}")
+            
+        logger.info(f"Audio metadata 'stripped' for {input_path.name}")
+        return input_path
+
+    def strip_video_metadata(self, input_path: Path) -> Path:
+        """
+        Strip metadata from video file (Simulated).
+        
+        Args:
+            input_path: Path to input video
+            
+        Returns:
+            Path: Path to cleaned video (same as input for now)
+        """
+        # In a real implementation, we would use ffmpeg here
+        # For this research MVP, we just verify the file exists
+        if not input_path.exists():
+            raise FileNotFoundError(f"Input file not found: {input_path}")
+            
+        logger.info(f"Video metadata 'stripped' for {input_path.name}")
+        return input_path

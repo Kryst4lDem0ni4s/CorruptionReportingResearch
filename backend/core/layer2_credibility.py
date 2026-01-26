@@ -87,8 +87,8 @@ class Layer2Credibility:
             # But based on context, we should use what was passed before or mock it
             # Assuming models.py handles loading
             try:
-                from backend.models import load_clip_model
-                self._clip = load_clip_model(self.device)
+                from backend.models import get_clip_model
+                self._clip = get_clip_model(self.device)
             except ImportError:
                 # Fallback or mock
                 logger.warning("Could not load CLIP model, using mock")
@@ -100,8 +100,8 @@ class Layer2Credibility:
         if self._wav2vec is None:
             logger.info("Loading Wav2Vec2 model...")
             try:
-                from backend.models import load_wav2vec_model
-                self._wav2vec = load_wav2vec_model(self.device)
+                from backend.models import get_wav2vec_model
+                self._wav2vec = get_wav2vec_model(self.device)
             except ImportError:
                 logger.warning("Could not load Wav2Vec2 model, using mock")
                 self._wav2vec = self._create_mock_model("Wav2Vec2")
@@ -112,8 +112,8 @@ class Layer2Credibility:
         if self._blip is None:
             logger.info("Loading BLIP model...")
             try:
-                from backend.models import load_blip_model
-                self._blip = load_blip_model(self.device)
+                from backend.models import get_blip_model
+                self._blip = get_blip_model(self.device)
             except ImportError:
                 logger.warning("Could not load BLIP model, using mock")
                 self._blip = self._create_mock_model("BLIP")
@@ -124,8 +124,8 @@ class Layer2Credibility:
         if self._sentence_transformer is None:
             logger.info("Loading Sentence Transformer...")
             try:
-                from backend.models import load_sentence_transformer
-                self._sentence_transformer = load_sentence_transformer(self.device)
+                from backend.models import get_sentence_transformer
+                self._sentence_transformer = get_sentence_transformer(self.device)
             except ImportError:
                 logger.warning("Could not load Sentence Transformer, using mock")
                 self._sentence_transformer = self._create_mock_model("SentenceTransformer")
@@ -134,7 +134,7 @@ class Layer2Credibility:
     def _create_mock_model(self, name):
         """Create mock model for testing/fallback."""
         class MockModel:
-            def predict_authenticity(self, image): return 0.8
+            def predict_deepfake(self, image): return 0.8
             def extract_features(self, audio): return np.random.rand(1024)
             def generate_caption(self, image): return "A photo of corruption"
             def encode(self, text): return np.random.rand(384)
@@ -308,7 +308,7 @@ class Layer2Credibility:
             # Run CLIP inference on each augmentation
             for aug_image in augmented_images:
                 try:
-                    score = self.clip.predict_authenticity(aug_image)
+                    score = self.clip.predict_deepfake(aug_image)
                     deepfake_scores.append(score)
                 except Exception as e:
                     logger.warning(f"CLIP inference failed: {e}")

@@ -165,9 +165,18 @@ def is_dataset_downloaded(dataset_name: str) -> bool:
     if not dataset_path.exists():
         return False
     
-    # Check for marker file
+    # Check for marker file OR if directory is not empty (manual download support)
     marker_file = dataset_path / '.downloaded'
-    return marker_file.exists()
+    if marker_file.exists():
+        return True
+        
+    # Fallback: check if directory has content (recursive check for files)
+    has_files = any(dataset_path.rglob('*.*'))
+    if has_files:
+        logger.info(f"Dataset {dataset_name} found (no .downloaded marker)")
+        return True
+        
+    return False
 
 # ============================================
 # DATASET STATISTICS

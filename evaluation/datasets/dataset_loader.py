@@ -250,9 +250,11 @@ class DatasetLoader:
     # FILE INDEX BUILDING
     # ========================================
     
+    
     def _build_file_index(self):
         """Build index of dataset files"""
         logger.info("Building file index...")
+        logger.info(f"Indexing dataset: {self.dataset_name} at {self.dataset_path}")
         
         if self.dataset_name == 'faceforensics':
             self._file_index = self._index_faceforensics()
@@ -265,8 +267,11 @@ class DatasetLoader:
         else:
             # Generic indexing
             self._file_index = self._index_generic()
-        
-        logger.info(f"Indexed {len(self._file_index['all'])} files")
+            
+        logger.info(f"Indexed {len(self._file_index['all'])} files for {self.dataset_name}")
+        for k, v in self._file_index.items():
+            if k != 'all': logger.info(f"  - {k}: {len(v)}")
+
     
     def _index_faceforensics(self) -> Dict[str, List[Dict]]:
         """Index FaceForensics++ dataset"""
@@ -367,9 +372,18 @@ class DatasetLoader:
         index = {'all': [], 'real': [], 'fake': []}
         
         # Determine directory structure
-        # Check if nested 'real_and_fake_face' exists
-        nested_dir = self.dataset_path / 'real_and_fake_face'
-        base_dir = nested_dir if nested_dir.exists() else self.dataset_path
+        # Check if nested 'real_and_fake_face' exists, potentially twice
+        # Structure seen: real-and-fake-face-detection/real_and_fake_face_detection/real_and_fake_face
+        
+        path1 = self.dataset_path / 'real_and_fake_face'
+        path2 = self.dataset_path / 'real_and_fake_face_detection' / 'real_and_fake_face'
+        
+        if path2.exists():
+            base_dir = path2
+        elif path1.exists():
+            base_dir = path1
+        else:
+            base_dir = self.dataset_path
 
         # Real images
         real_dirs = ['training_real', 'real']
